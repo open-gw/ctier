@@ -5,7 +5,7 @@ type: software
 authors:
   - family-names: Dhanaraj
     given-names: Rinu
-    orcid: 'https://orcid.org/0000-0000-0000-0000'   # <-- replace with your ORCID
+    orcid: 'https://orcid.org/0009-0007-9082-8846
 abstract: >-
   A runtime governance model for autonomous AI agents calling production APIs.
   Operations are classified by the consequence of incorrect execution across five
