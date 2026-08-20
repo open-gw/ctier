@@ -5,7 +5,7 @@ Rinu Dhanaraj · APIdays India, AI Collective Track
 
 This document stands alone. If you didn't see the talk, start at the recap. If you did, skip to the Monday plan.
 
----
+
 
 ## The recap, in one page
 
@@ -32,7 +32,7 @@ An agent can authenticate perfectly and still be catastrophic. Identity is not c
 
 **The architectural claim underneath all of it:** for Tiers 3 and 4 the human is never in the API request path. The gateway blocks execution and emits an asynchronous event; the human acts out-of-band. Anything else holds a connection open while somebody reads Slack.
 
----
+
 
 ## The Monday plan
 
@@ -77,13 +77,13 @@ A complete worked specification — ten operations across all four tiers, with O
 
 **What not to do first:** don't start by building a classification service, don't start with a policy document, and don't try to classify every endpoint before enforcing any of them. All three feel like progress and none of them produce a governed operation.
 
----
+
 
 # End-to-end walkthroughs
 
 Each of these follows one realistic agent task from first call to outcome. The point is that a single task spans several tiers — which is exactly why agent-level trust settings don't work.
 
----
+
 
 ## Healthcare
 
@@ -105,7 +105,7 @@ Each of these follows one realistic agent task from first call to outcome. The p
 
 **The laundering variant, and why it matters here.** Later the agent is asked to "summarise this patient's full history." It decomposes into forty individually-Tier-1 record reads. No single call crosses a threshold. Accumulated consequence weight for the session crosses the configured threshold at the eleventh read, the operation escalates to Tier 3, and a human sees a request to assemble a complete longitudinal record — which is exactly what it is. Without session-level accumulation, this is a bulk PHI extraction that every individual audit entry records as routine.
 
----
+
 
 ## Financial services
 
@@ -134,7 +134,7 @@ Each of these follows one realistic agent task from first call to outcome. The p
 
 **After tiering.** Three operations run autonomously, two get an out-of-band approval that costs the customer four minutes rather than a callback, and one — the refund — is performed by a person, on the record, as it should be.
 
----
+
 
 ## Retail and e-commerce
 
@@ -157,7 +157,7 @@ If you classify agent actions by data sensitivity alone, which is what most API 
 
 **After tiering.** Four operations autonomous, one approval that takes a lead ninety seconds, and one genuine escalation to the team that owns pricing — with the error already detected and the correction already drafted, which is the agent adding value precisely where it isn't allowed to act.
 
----
+
 
 # Frequently asked questions
 
@@ -294,7 +294,7 @@ No. It applies to anything that invokes operations without a human decision per 
 **Is there an implementation I can use?**
 A reference implementation and specification are being prepared for open release. In the meantime the mechanisms in this document are deliberately described at a level you can build from with the gateway you already run.
 
----
+
 
 ## The two things that break this
 
@@ -302,7 +302,7 @@ A reference implementation and specification are being prepared for open release
 
 **Scoring only at the call level.** Somebody will assemble a Tier 4 outcome from a sequence of Tier 1 calls. If you evaluate operations independently and never accumulate, the framework is decorative — and worse, it produces an audit trail that makes the extraction look routine.
 
----
+
 
 ## Classification worksheet
 
