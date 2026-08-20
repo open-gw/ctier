@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22020288.svg)](https://doi.org/10.5281/zenodo.22020288)
+
 # Consequence-Tiered API Governance
 
 A runtime governance model for autonomous AI agents calling production APIs.
@@ -14,7 +16,7 @@ This repository holds a specification and a worked reference for closing that ga
 each operation by the consequence of getting it wrong, declare the classification in the API
 specification, and enforce it at the gateway.
 
----
+
 
 ## The model in one page
 
@@ -53,7 +55,7 @@ agent's operation eventually executes with a named approver against it. In Tier 
 is withdrawn — the agent never executes it, and the human performs the action themselves under
 their own credentials.
 
----
+
 
 ## The architectural claim
 
@@ -78,7 +80,7 @@ Instead, for Tier 3 the gateway:
 
 The human decides on human timescales. No connection, worker, or client timeout is consumed.
 
----
+
 
 ## Declaration and resolution
 
@@ -116,7 +118,7 @@ paths:
 **No tier declared = Tier 4.** Unclassified operations fail closed, so coverage gaps surface
 instead of hiding.
 
----
+
 
 ## Exclusion is not Tier 4
 
@@ -131,7 +133,7 @@ losing the other.
 
 **Exclude at the scope; tier within it.**
 
----
+
 
 ## What's in this repository
 
@@ -157,7 +159,7 @@ Two operations in it are worth reading first:
   complete record is the obvious attack on any per-call control, and it has to be handled at
   session level or the whole model is decorative.
 
----
+
 
 ## Applying it
 
@@ -179,7 +181,7 @@ What not to do first: build a classification service, write a policy document, o
 classify every operation before enforcing any of them. All three feel like progress and none
 produce a governed operation.
 
----
+
 
 ## Status
 
