@@ -1,0 +1,686 @@
+openapi: 3.1.0
+
+# =============================================================================
+# Reference specification: consequence-tiered governance for autonomous agents
+#
+# Companion artefact to "Consequence-Tiered API Governance for Autonomous AI
+# Agents" (APIdays India, AI Collective Track).
+#
+# The point of this document is the relationship between two things that are
+# usually conflated:
+#
+#   security.scopes           -> WHO may call this, and what surface they reach
+#   x-consequence.tier        -> WHAT HAPPENS if this particular call is wrong
+#
+# Every operation below is inside an already-authorised scope. Scopes alone
+# cannot distinguish `getBalance` from `initiatePayment` when both are held by
+# the same agent under `payments:write`. The consequence tier can.
+#
+# Enforcement is at the gateway, before routing. An operation with no
+# x-consequence block is treated as Tier 4 (see x-consequence-defaults).
+# =============================================================================
+
+info:
+  title: Retail Banking API (consequence-tiered reference)
+  version: 1.4.0
+  description: |
+    Illustrative banking API annotated with consequence tiers. The domain is
+    incidental — the same annotations apply unchanged to healthcare, commerce,
+    platform operations, or multi-tenant SaaS.
+
+    Tiers are declared here at design time by the API owner and enforced at
+    runtime by the gateway. Agents never assert their own tier, for the same
+    reason a caller never asserts its own scopes.
+  contact:
+    name: API Center of Excellence
+  license:
+    name: CC-BY-4.0
+    identifier: CC-BY-4.0
+
+servers:
+  - url: https://api.example-bank.com/v1
+
+# -----------------------------------------------------------------------------
+# Governance defaults
+#
+# Read by the gateway at spec load. These are the rules that make the scheme
+# fail closed rather than fail open.
+# -----------------------------------------------------------------------------
+x-consequence-defaults:
+  spec-version: 1.0
+  undeclared-operation-tier: 4          # no x-consequence block -> Tier 4
+  # Exclusion and Tier 4 are different layers and must not be conflated.
+  #   exclusion  -> the agent's client never holds the scope. Refused at token
+  #                 validation, before classification. Nothing to tier.
+  #   Tier 4     -> the agent legitimately holds the scope and can reach the
+  #                 operation, but must not complete it.
+  # `undeclared-operation-tier` therefore applies only to operations already
+  # reachable within a granted scope — it is the net for a missed
+  # classification, not a statement about endpoints never granted.
+  on-excluded-operation-reached: refuse-and-alert
+  # An excluded operation reached by a live token means a scope was
+  # over-granted. That is a provisioning defect, not a governance event, and it
+  # should surface as one rather than being absorbed as a Tier 4 refusal.
+  enforcement-point: gateway            # classified before routing, never in-agent
+  runtime-classification: resolve-then-escalate
+  # The five criteria are evaluated by a human at design time and recorded below.
+  # At runtime the gateway RESOLVES the declared tier (a lookup, not an
+  # evaluation) and may then escalate it on context the spec cannot know:
+  # session accumulation, delegation-chain integrity, or a payload larger than
+  # the declaration assumed. Escalation is one-directional.
+  runtime-may-lower-declared-tier: false
+
+  # ---------------------------------------------------------------------------
+  # Client contract — obligations on the CALLING AGENT, not on the gateway.
+  #
+  # The pending-authorisation response is part of this API's contract. It is not
+  # an error and not an edge case to be handled later. An agent that treats it
+  # as a failure and retries defeats the entire design: the operation was
+  # withheld deliberately, and a retry either produces a duplicate submission or
+  # burns the approval the reviewer already gave.
+  #
+  # Conformance to these obligations should be asserted in agent integration
+  # tests before the agent is granted any scope reaching a Tier 3 operation.
+  # ---------------------------------------------------------------------------
+  agent-contract:
+    on-pending-authorization:
+      status-code: 202
+      is-error: false
+      MUST-NOT:
+        - retry-the-operation           # 202 is terminal for this attempt
+        - resubmit-with-a-new-payload   # divergence from what the reviewer saw
+        - block-the-task-awaiting-decision
+        - surface-the-response-as-a-failure-to-the-user
+      MUST:
+        - treat-202-as-a-terminal-outcome-for-this-operation
+        - persist-the-correlationId-against-the-task
+        - continue-with-unblocked-work-in-the-same-task
+        - inform-the-user-that-the-step-is-pending-review
+      MAY:
+        - poll-pollUrl-no-more-often-than: PT30S
+        - subscribe-to-the-decision-webhook-instead
+      conformance-note: >
+        Standard HTTP client resilience defaults will retry on 5xx and often on
+        429. 202 is chosen precisely because it is outside those default retry
+        classes, and no Retry-After header is emitted. Agents wrapping this API
+        must not add 202 to their retry set.
+    on-agent-suspended:
+      status-code: 423
+      is-error: true
+      MUST-NOT:
+        - retry-the-operation
+        - poll-for-a-decision            # there is no pending operation to poll
+        - attempt-an-alternative-path-to-the-same-outcome
+      MUST:
+        - treat-the-operation-as-terminally-refused
+        - halt-work-of-the-suspended-operation-type
+        - surface-the-incidentId-for-human-takeover
+        - hand-the-user-to-the-human-workflow-with-context-attached
+      conformance-note: >
+        Nothing is pending. The human performs the action separately, under
+        their own identity. An agent that seeks another route to the same
+        outcome is exactly the behaviour this tier exists to prevent, and the
+        attempt is itself a recordable incident.
+  human-in-request-path: false          # T3/T4 approval is always out-of-band
+  session-accumulation:
+    enabled: true
+    weights: { tier1: 1, tier2: 3, tier3: 9, tier4: null }   # null = always gate
+    escalate-above: 9                   # aggregate equal to one T3 is gated as one
+    correlation-scope: [session, task, delegation-chain]
+    decay: PT30M                        # weight decays so long sessions aren't punished
+  delegation:
+    require-scope-reduction: true       # child credential must be a subset of parent
+    on-authority-expansion: tier4       # child exceeding parent -> suspend the chain
+  tier-controls:
+    1:
+      execution: immediate
+      logging: [timestamp, agent-id, delegation-chain, operation, response-code]
+      approval: none
+    2:
+      execution: immediate
+      logging: [before-state, after-state, compensating-action-ref]
+      require-verified-compensating-action: true   # if no working undo, it isn't T2
+      reversible-until: effect-propagation
+      notify: async
+      approval: none
+    3:
+      execution: withheld-pending-approval
+      approval:
+        mode: async-out-of-band
+        persist-request: true           # executed from stored context, not resubmitted
+        agent-response: pending-non-retryable
+        idempotency-key: set-at-classification
+        record: [requester, approver, rationale, timestamp, declared-tier, escalated-from, escalation-reason]
+        on-timeout: deny                # never allow-on-timeout
+        on-reject: pause-agent-for-operation-type
+    4:
+      execution: refused
+      agent: suspend                    # tool permissions revoked, context frozen
+      auto-resume: false                # the withheld operation is never released
+      human: acts-in-own-tooling-under-own-identity
+      incident-log: at-attempt          # written when attempted, not when decided
+
+# -----------------------------------------------------------------------------
+# Security
+#
+# Note the deliberate mismatch in granularity. `accounts:read` covers both a
+# balance query and a full transaction history export. `payments:write` covers
+# both a ₹500 refund and a ₹5,00,000 transfer. That mismatch is the gap the
+# consequence tier closes.
+# -----------------------------------------------------------------------------
+components:
+  securitySchemes:
+    agentOAuth:
+      type: oauth2
+      description: |
+        Client-credentials flow for autonomous agents. Tokens are minted per
+        task and scope-reduced at every delegation hop; an orchestrator must
+        not hand its own token to a sub-agent unchanged.
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.example-bank.com/oauth2/token
+          scopes:
+            accounts:read: Read account balances, details and transaction history
+            accounts:write: Modify account attributes and customer profile data
+            payments:read: Read payment and transfer records
+            payments:write: Initiate, amend or reverse payments and transfers
+            disputes:write: Raise and progress transaction disputes
+            credit:write: Modify credit limits and lending terms
+            admin:config: Modify service configuration and feature flags
+            accounts:lifecycle: Open and close accounts (not granted to autonomous agents)
+
+    agentIdentity:
+      type: apiKey
+      in: header
+      name: X-Agent-Id
+      description: |
+        Stable identifier for the acting agent. Distinct from the credential.
+        Required so that an operation can be attributed to the reasoning entity
+        that caused it, not only to the credential it executed under.
+
+    delegationChain:
+      type: apiKey
+      in: header
+      name: X-Delegation-Chain
+      description: |
+        Ordered ancestry of the delegation that produced this call, root first,
+        e.g. `orchestrator-7 > kyc-agent-2 > enrichment-agent-9`. The gateway
+        checks each hop for authority expansion before classifying the
+        operation itself.
+
+  schemas:
+    Balance:
+      type: object
+      properties:
+        accountId: { type: string }
+        available: { type: number }
+        currency: { type: string, examples: [INR] }
+
+    CustomerProfile:
+      type: object
+      properties:
+        name: { type: string }
+        email: { type: string, format: email }
+        address: { type: string }
+
+    PaymentRequest:
+      type: object
+      required: [sourceAccountId, beneficiaryId, amount, currency]
+      properties:
+        sourceAccountId: { type: string }
+        beneficiaryId: { type: string }
+        amount: { type: number }
+        currency: { type: string, examples: [INR] }
+        reference: { type: string }
+
+    PendingAuthorization:
+      description: |
+        Returned for operations withheld at Tier 3. Deliberately shaped to
+        terminate the request rather than hold it open, and to suppress the
+        agent's automatic retry. The agent is released; the gateway holds the
+        persisted request.
+
+        This is a SUCCESS outcome for the request, not a failure. The correct
+        agent behaviour is to record the correlationId, continue with the rest
+        of the task, and tell the user that this step is pending review. See
+        `x-consequence-defaults.agent-contract`.
+      type: object
+      required: [status, correlationId, classifiedTier, expiresAt, retryable, agentAction]
+      properties:
+        status: { type: string, examples: [pending_authorization] }
+        correlationId: { type: string }
+        classifiedTier: { type: integer, examples: [3] }
+        expiresAt: { type: string, format: date-time }
+        pollUrl: { type: string, format: uri }
+        retryable:
+          type: boolean
+          const: false
+          description: Always false. Present so that generic client wrappers can branch on it.
+        agentAction:
+          type: string
+          const: continue_task_without_this_step
+          description: >
+            Machine-readable instruction to the calling agent. Emitted so the
+            expected behaviour does not depend on the agent's implementers
+            having read the prose.
+        userMessage:
+          type: string
+          description: >
+            Suggested wording for the end user, so the agent does not surface a
+            protocol state as an error.
+          examples: ["That's submitted and pending a quick review — you'll have confirmation shortly."]
+
+    AgentSuspended:
+      description: |
+        Returned for operations refused at Tier 4. There is no pending
+        operation and nothing to poll for — the human performs the action
+        separately, under their own identity.
+      type: object
+      properties:
+        status: { type: string, examples: [agent_suspended] }
+        incidentId: { type: string }
+        suspendedScope: { type: string, examples: ["operation:initiatePayment"] }
+        humanTakeoverRequired: { type: boolean, examples: [true] }
+        autoResume:
+          type: boolean
+          const: false
+          description: Always false. There is no pending operation and nothing to poll for.
+        agentAction:
+          type: string
+          const: halt_and_hand_off
+          description: >
+            Machine-readable instruction. The agent must not retry, must not
+            poll, and must not seek an alternative route to the same outcome.
+        userMessage:
+          type: string
+          examples: ["I can't complete that one myself — I'm passing it to a colleague who can."]
+
+  responses:
+    PendingAuthorization:
+      description: |
+        Withheld pending out-of-band human authorisation. Not an error, and not
+        retryable. `Retry-After` is deliberately absent so that standard client
+        resilience logic does not resubmit an operation that was intentionally
+        withheld.
+      headers:
+        X-Consequence-Tier: { schema: { type: integer }, description: Tier assigned at classification }
+        X-Correlation-Id: { schema: { type: string } }
+        Cache-Control: { schema: { type: string, examples: [no-store] } }
+        X-Agent-Action:
+          schema: { type: string, examples: [continue_task_without_this_step] }
+          description: >
+            Mirrors the body field in a header so that clients which branch on
+            headers before parsing bodies still see the instruction. NOTE the
+            deliberate absence of Retry-After — emitting one would invite the
+            retry this response exists to prevent.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/PendingAuthorization' }
+
+    AgentSuspended:
+      description: Refused at Tier 4. Agent suspended; human takeover initiated.
+      headers:
+        X-Consequence-Tier: { schema: { type: integer } }
+        X-Incident-Id: { schema: { type: string } }
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/AgentSuspended' }
+
+security:
+  - agentOAuth: []
+    agentIdentity: []
+    delegationChain: []
+
+# =============================================================================
+# Operations
+# =============================================================================
+paths:
+
+  # ---------------------------------------------------------------------------
+  # TIER 1 — undo restores the effect (nothing to undo), no compliance surface
+  # ---------------------------------------------------------------------------
+  /accounts/{accountId}/balance:
+    get:
+      operationId: getBalance
+      summary: Retrieve the available balance for one account
+      security:
+        - agentOAuth: [accounts:read]
+      x-consequence:
+        tier: 1
+        criteria:
+          reversibility: not-applicable      # read-only
+          blast-radius: single-record
+          data-sensitivity: internal
+          compliance-trigger: none
+          idempotency: inherently-safe
+        rationale: >
+          Read-only, single record, no state change and no downstream effect.
+          Logged for the trail, but logging does not gate execution.
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Balance retrieved
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Balance' }
+
+  # ---------------------------------------------------------------------------
+  # TIER 1 base, but note the accumulation hazard flagged for the gateway.
+  # A wide date range repeated across a session reconstructs a full financial
+  # profile — individually Tier 1, cumulatively not.
+  # ---------------------------------------------------------------------------
+  /accounts/{accountId}/transactions:
+    get:
+      operationId: listTransactions
+      summary: List transactions for one account
+      security:
+        - agentOAuth: [accounts:read]
+      x-consequence:
+        tier: 1
+        criteria:
+          reversibility: not-applicable
+          blast-radius: single-record
+          data-sensitivity: personal
+          compliance-trigger: none
+          idempotency: inherently-safe
+        accumulation:
+          contributes-weight: 2              # heavier than a plain Tier 1 read
+          escalate-if: repeated-across-session
+          escalate-to: 3
+          rationale: >
+            Individually low consequence. Repeated across a session with widening
+            ranges, this reconstructs a complete financial profile — the same
+            outcome a single Tier 3 bulk export would produce.
+      parameters:
+        - { name: accountId, in: path, required: true, schema: { type: string } }
+        - { name: from, in: query, schema: { type: string, format: date } }
+        - { name: to, in: query, schema: { type: string, format: date } }
+      responses:
+        '200': { description: Transactions retrieved }
+
+  # ---------------------------------------------------------------------------
+  # TIER 2 — the undo restores the effect, via a verified compensating action
+  # ---------------------------------------------------------------------------
+  /customers/{customerId}/preferences:
+    parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema: { type: string }
+    patch:
+      operationId: updatePreferences
+      summary: Update customer communication preferences
+      security:
+        - agentOAuth: [accounts:write]
+      x-consequence:
+        tier: 2
+        criteria:
+          reversibility: undo-restores-effect
+          blast-radius: single-customer
+          data-sensitivity: personal
+          compliance-trigger: none
+          idempotency: safe
+        compensating-action:
+          operation-ref: updatePreferences   # symmetric — prior state re-applied
+          verified: true                     # must exist before this may run at T2
+        reversible-until: downstream-sync
+        notify: async
+        rationale: >
+          Executes without approval. Remains reversible until downstream systems
+          consume the change — by the agent if it detects its own error, or by
+          the team that receives the notification. The human does not decide
+          whether it happens; the human decides whether it stands.
+      responses:
+        '200': { description: Preferences updated }
+
+  # ---------------------------------------------------------------------------
+  # TIER 3 — the undo restores the RECORD but not the EFFECT
+  # ---------------------------------------------------------------------------
+  /customers/{customerId}/profile:
+    parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema: { type: string }
+    put:
+      operationId: updateCustomerProfile
+      summary: Replace customer profile details
+      security:
+        - agentOAuth: [accounts:write]
+      x-consequence:
+        tier: 3
+        criteria:
+          reversibility: undo-restores-record-only
+          blast-radius: single-customer
+          data-sensitivity: personal
+          compliance-trigger: adjacent
+          idempotency: safe
+        approval:
+          mode: async-out-of-band
+          route-to: customer-operations
+          reviewer-context: [before-state, after-state, delegation-chain, initiating-task]
+          expires-in: PT2H
+          on-timeout: deny
+        rationale: >
+          The record can be restored, but statements posted, notifications sent
+          and downstream syncs performed against the wrong details cannot be
+          recalled. The reversal stops the bleeding without restoring the state.
+      responses:
+        '200': { description: Profile updated after authorisation }
+        '202': { $ref: '#/components/responses/PendingAuthorization' }
+
+  /credit/{accountId}/limit:
+    parameters:
+      - name: accountId
+        in: path
+        required: true
+        schema: { type: string }
+    patch:
+      operationId: modifyCreditLimit
+      summary: Modify the credit limit on an account
+      security:
+        - agentOAuth: [credit:write]
+      x-consequence:
+        tier: 3
+        criteria:
+          reversibility: undo-restores-record-only
+          blast-radius: single-customer
+          data-sensitivity: regulated
+          compliance-trigger: adjacent
+          idempotency: safe
+        approval:
+          mode: async-out-of-band
+          route-to: credit-risk
+          reviewer-context: [current-limit, proposed-limit, risk-score, delegation-chain]
+          expires-in: PT4H
+          on-timeout: deny
+        rationale: >
+          The limit can be set back, but drawdowns taken against the raised
+          limit in the interim stand, and the lending decision is on record.
+      responses:
+        '200': { description: Limit modified after authorisation }
+        '202': { $ref: '#/components/responses/PendingAuthorization' }
+
+  /disputes:
+    post:
+      operationId: raiseDispute
+      summary: Raise a transaction dispute
+      security:
+        - agentOAuth: [disputes:write]
+      x-consequence:
+        tier: 3
+        criteria:
+          reversibility: undo-restores-record-only
+          blast-radius: single-customer
+          data-sensitivity: regulated
+          compliance-trigger: direct
+          idempotency: key-required
+        approval:
+          mode: async-out-of-band
+          route-to: disputes-desk
+          expires-in: PT4H
+          on-timeout: deny
+        rationale: >
+          Withdrawing a dispute does not undo the scheme notification already
+          sent to the acquirer, nor the clock started on the regulatory
+          timetable.
+      responses:
+        '201': { description: Dispute raised after authorisation }
+        '202': { $ref: '#/components/responses/PendingAuthorization' }
+
+  # ---------------------------------------------------------------------------
+  # TIER 4 — no undo exists; the agent is removed from the path entirely
+  #
+  # Note that `payments:write` is the same scope that would cover a small
+  # refund. The scope does not distinguish them. The tier does.
+  # ---------------------------------------------------------------------------
+  /payments:
+    post:
+      operationId: initiatePayment
+      summary: Initiate an outbound payment or transfer
+      security:
+        - agentOAuth: [payments:write]
+      x-consequence:
+        tier: 4
+        criteria:
+          reversibility: none
+          blast-radius: single-customer
+          data-sensitivity: regulated
+          compliance-trigger: direct
+          idempotency: key-required
+        takeover:
+          route-to: payment-operations
+          human-tooling: payments-console      # NOT an approve button on this request
+          incident-context: [proposed-payment, reasoning-trace, delegation-chain, initiating-task]
+          auto-resume: false
+        rationale: >
+          Once settled, recovery depends on the receiving institution and may
+          require customer notification and regulatory reporting. The risk is
+          not only that the agent acts without permission — it is that the
+          agent's construction of the payment is wrong in a way a reviewer
+          would not catch. So the human composes and submits it personally.
+      responses:
+        '201': { description: Payment initiated by a human operator }
+        '423': { $ref: '#/components/responses/AgentSuspended' }
+
+  /customers/{customerId}/kyc-decision:
+    parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema: { type: string }
+    post:
+      operationId: recordKycDecision
+      summary: Record a KYC determination against a customer
+      security:
+        - agentOAuth: [accounts:write]
+      x-consequence:
+        tier: 4
+        criteria:
+          reversibility: none
+          blast-radius: single-customer
+          data-sensitivity: regulated
+          compliance-trigger: direct
+          idempotency: key-required
+        takeover:
+          route-to: financial-crime
+          human-tooling: kyc-workbench
+          auto-resume: false
+        rationale: >
+          A regulatory determination attributable to a named, accountable
+          person. An agent proposal approved by a human is a materially weaker
+          position than a decision made by that human.
+      responses:
+        '201': { description: Decision recorded by a compliance officer }
+        '423': { $ref: '#/components/responses/AgentSuspended' }
+
+  # ---------------------------------------------------------------------------
+  # TIER 4 by blast radius alone — no personal data anywhere in this operation.
+  # A data-sensitivity-only classifier would wave this through.
+  # ---------------------------------------------------------------------------
+  /config/feature-flags:
+    put:
+      operationId: updateFeatureFlags
+      summary: Update service feature flags
+      security:
+        - agentOAuth: [admin:config]
+      x-consequence:
+        tier: 4
+        criteria:
+          reversibility: undo-restores-record-only
+          blast-radius: system-wide
+          data-sensitivity: internal
+          compliance-trigger: none
+          idempotency: safe
+        takeover:
+          route-to: platform-engineering
+          human-tooling: change-management
+          auto-resume: false
+        rationale: >
+          Touches no personal or regulated data, and is nonetheless critical.
+          Blast radius and irrecoverability of the interim effect carry this
+          operation, not sensitivity. Included specifically to show that
+          classifying by data sensitivity alone misses the most dangerous
+          operations in the surface.
+      responses:
+        '200': { description: Flags updated by a platform engineer }
+        '423': { $ref: '#/components/responses/AgentSuspended' }
+
+  # ---------------------------------------------------------------------------
+  # EXPLICITLY EXCLUDED
+  #
+  # Not a tier. Enforcement is the absence of the scope grant, not this block.
+  # Declared so that a deliberate exclusion is distinguishable from an operation
+  # nobody has looked at yet, and so the gateway can detect over-granted scopes.
+  # ---------------------------------------------------------------------------
+  /accounts/{accountId}/closure:
+    parameters:
+      - name: accountId
+        in: path
+        required: true
+        schema: { type: string }
+    post:
+      operationId: closeAccount
+      summary: Close a customer account
+      security:
+        - agentOAuth: [accounts:lifecycle]     # deliberately NOT in any agent grant
+      x-consequence:
+        tier: excluded
+        excluded-from: autonomous-agents
+        enforcement: scope-not-granted
+        rationale: >
+          Agents have no role anywhere in the account closure workflow — not
+          initiating it, not preparing it, not drafting it. There is no
+          participation to govern, so this is an authorisation decision rather
+          than a consequence decision. If a token ever reaches this operation,
+          a scope has been over-granted: refuse and raise it as a provisioning
+          defect.
+        reviewed: '2026-08-14'
+      responses:
+        '403': { description: Scope not granted to autonomous callers }
+
+  # ---------------------------------------------------------------------------
+  # DELIBERATELY UNCLASSIFIED
+  #
+  # No x-consequence block. Per x-consequence-defaults, the gateway treats this
+  # as Tier 4 and refuses it until an owner classifies it. Coverage gaps are
+  # visible by failing, not invisible by passing.
+  # ---------------------------------------------------------------------------
+  /accounts/{accountId}/statements/export:
+    parameters:
+      - name: accountId
+        in: path
+        required: true
+        schema: { type: string }
+    post:
+      operationId: exportStatements
+      summary: Export account statements in bulk
+      security:
+        - agentOAuth: [accounts:read]
+      responses:
+        '202': { description: Export queued }
+        '423': { $ref: '#/components/responses/AgentSuspended' }

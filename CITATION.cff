@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+title: Consequence-Tiered API Governance for Autonomous AI Agents
+message: If you use this specification, please cite it.
+type: software
+authors:
+  - family-names: Dhanaraj
+    given-names: Rinu
+    orcid: 'https://orcid.org/0000-0000-0000-0000'   # <-- replace with your ORCID
+abstract: >-
+  A runtime governance model for autonomous AI agents calling production APIs.
+  Operations are classified by the consequence of incorrect execution across five
+  criteria, declared in the OpenAPI specification at design time, and enforced at
+  the API gateway at runtime. High-consequence operations are withheld at the
+  gateway and authorised out-of-band, so that no human occupies the agent's
+  synchronous request path.
+keywords:
+  - api-governance
+  - ai-agents
+  - agentic-ai
+  - api-gateway
+  - openapi
+  - authorization
+license: CC-BY-4.0
+version: 0.1.0
+date-released: '2026-08-18'
