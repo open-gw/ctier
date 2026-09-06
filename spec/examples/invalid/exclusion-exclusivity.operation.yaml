@@ -1,0 +1,7 @@
+# Violates: exclusion exclusivity
+# Exclusion is an authorisation decision taken before any tier is considered.
+# Schema accepts both keys; a validator must reject the combination.
+operationId: closeAccount
+x-ctier-exclude: true
+x-ctier-tier: 2
+x-ctier-status: declared

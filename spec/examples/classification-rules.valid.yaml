@@ -1,0 +1,27 @@
+ctierSchema: classification-rules/0.1.0
+rules:
+  - id: read-single-resource
+    when:
+      method: [get, head]
+      pathEndsWithParameter: true
+      responseIsCollection: false
+    propose:
+      criteria:
+        reversibility: not-applicable
+        blast-radius: single-record
+    rationale: Single-resource read; there is nothing to undo.
+    confidence: high
+  - id: delete-is-tier-3-floor
+    when:
+      method: [delete]
+    propose:
+      tier: 3
+    rationale: A delete restores the record at best.
+    confidence: high
+  - id: named-export
+    when:
+      operationIdMatches: [exportStatements]
+    propose:
+      tier: 4
+    rationale: Bulk export is a known high-consequence shape.
+    confidence: medium

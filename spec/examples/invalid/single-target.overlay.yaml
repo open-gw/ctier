@@ -1,0 +1,20 @@
+# Violates: single-target rule
+# Against consequence-tiered-api.yaml this JSONPath selects every GET, and
+# the update assigns Tier 2. Schema-valid as a recommendation set.
+ctierSchema: recommendation-set/0.1.0
+overlay: "1.1.0"
+info:
+  title: Blanket Tier 2 on all reads
+  version: 0.1.0
+actions:
+  - target: "$.paths[*].get"
+    update:
+      x-ctier-tier: 2
+      x-ctier-status: recommended
+    x-ctier-provenance:
+      inputText: all GET operations
+      inputDigest: sha256:44d8928e827125992f4712981e469bf623cdec3731de67bd7e549d39e142c40b
+      source: blanket-read
+      version: 0.1.0
+      confidence: low
+      timestamp: "2026-09-05T20:14:02Z"

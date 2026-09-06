@@ -1,0 +1,9 @@
+# Violates: bounds coherence
+# `notAParameter` is not a parameter on getBalance. Schema accepts any string;
+# a validator against the description must reject.
+operationId: getBalance
+x-ctier-tier: 1
+x-ctier-bounds:
+  parameter: notAParameter
+  max: 10
+x-ctier-status: declared

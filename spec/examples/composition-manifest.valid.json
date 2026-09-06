@@ -1,0 +1,33 @@
+{
+  "ctierSchema": "composition-manifest/0.1.0",
+  "composedAt": "2026-09-05T20:14:02Z",
+  "compositionDigest": "sha256:5823ce42f83a0e9c6677267a685a2fa2e2c9e2e370393138a71698579fb71c44",
+  "inputs": [
+    {
+      "role": "description",
+      "path": "openapi.yaml",
+      "digest": "sha256:d910ba2ef878f7db0223a966b81c8b3f3b65027bb39e4431bb05140171eece39"
+    },
+    {
+      "role": "overlay",
+      "path": "governance/pharmacy.overlay.yaml",
+      "digest": "sha256:d344c05fc427a2d1cd8fa95baae03afa18ea54ff362de153ffaeaf67d7e0e7de",
+      "order": 0
+    }
+  ],
+  "rules": {
+    "path": "ctier-rules.yaml",
+    "digest": "sha256:823344420b7aee2cb4cae923d6acceba43fee8fc1194cc4ae1660ad2800eb8f9"
+  },
+  "operations": 214,
+  "coverage": {
+    "declared": 186,
+    "recommended": 22,
+    "absent": 6
+  },
+  "generator": {
+    "target": "apigee",
+    "mode": "bundle",
+    "version": "0.2.0"
+  }
+}

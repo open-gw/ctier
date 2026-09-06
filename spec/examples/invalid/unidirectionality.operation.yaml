@@ -1,0 +1,7 @@
+# Violates: unidirectionality
+# escalate-to resolves below the declared tier. Schema accepts the integers;
+# a validator with evaluation context must reject.
+operationId: listTransactions
+x-ctier-tier: 3
+x-ctier-escalate-to: 1
+x-ctier-status: declared

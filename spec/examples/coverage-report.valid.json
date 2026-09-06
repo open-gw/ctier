@@ -1,0 +1,50 @@
+{
+  "ctierSchema": "coverage-report/0.1.0",
+  "compositionDigest": "sha256:5823ce42f83a0e9c6677267a685a2fa2e2c9e2e370393138a71698579fb71c44",
+  "totals": {
+    "declared": 4,
+    "recommended": 1,
+    "absent": 0
+  },
+  "operations": [
+    {
+      "operationId": "initiatePayment",
+      "method": "post",
+      "path": "/payments",
+      "status": "declared",
+      "declaredTier": 4,
+      "recommendedTier": 4
+    },
+    {
+      "operationId": "exportStatements",
+      "method": "post",
+      "path": "/accounts/{accountId}/statements/export",
+      "status": "recommended",
+      "recommendedTier": 4
+    },
+    {
+      "operationId": "updateCustomerProfile",
+      "method": "put",
+      "path": "/customers/{customerId}/profile",
+      "status": "declared",
+      "declaredTier": 3,
+      "recommendedTier": 3
+    },
+    {
+      "operationId": "updatePreferences",
+      "method": "patch",
+      "path": "/customers/{customerId}/preferences",
+      "status": "declared",
+      "declaredTier": 2,
+      "recommendedTier": 2
+    },
+    {
+      "operationId": "getBalance",
+      "method": "get",
+      "path": "/accounts/{accountId}/balance",
+      "status": "declared",
+      "declaredTier": 1,
+      "recommendedTier": 1
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+ctierSchema: recommendation-set/0.1.0
+overlay: "1.1.0"
+info:
+  title: Recommended tiers for the retail banking reference
+  version: 0.1.0
+extends: ../consequence-tiered-api.yaml
+actions:
+  - target: "$.paths['/accounts/{accountId}/statements/export'].post"
+    description: Bulk export has no declaration; recommend Tier 4.
+    update:
+      x-ctier-tier: 4
+      x-ctier-status: recommended
+      x-ctier-criteria:
+        reversibility: none
+        blast-radius: single-customer
+        data-sensitivity: regulated
+        compliance-trigger: adjacent
+        idempotency: unsafe
+      x-ctier-rationale: Bulk export of statements; disclosure cannot be undone.
+    x-ctier-provenance:
+      inputText: Export account statements in bulk
+      inputDigest: sha256:44d8928e827125992f4712981e469bf623cdec3731de67bd7e549d39e142c40b
+      source: named-export
+      version: 0.1.0
+      confidence: medium
+      timestamp: "2026-09-05T20:14:02Z"
