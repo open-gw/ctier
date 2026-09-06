@@ -1,0 +1,12 @@
+# Schema-invalid: x-ctier-status is declared and carries x-ctier-recommended-at.
+# A confirmed tier has no proposal date.
+operationId: ping
+x-ctier-tier: 1
+x-ctier-status: declared
+x-ctier-recommended-at: "2026-09-06T14:00:00Z"
+x-ctier-criteria:
+  reversibility: not-applicable
+  blast-radius: single-record
+  data-sensitivity: public
+  compliance-trigger: none
+  idempotency: inherently-safe

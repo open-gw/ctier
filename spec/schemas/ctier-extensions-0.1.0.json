@@ -109,6 +109,41 @@
     },
     "exclude": { "type": "boolean" },
     "rationale": { "type": "string" },
+    "recommendedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339 date-time. When this tier was proposed. Required when x-ctier-status is recommended; forbidden when it is not. The minimum a qualified spec carries about a recommendation — full provenance stays on the recommendation-set."
+    },
+    "operation": {
+      "type": "object",
+      "description": "An Operation Object or fragment. additionalProperties is true so OpenAPI fields pass. if/then/else on x-ctier-status requires x-ctier-recommended-at when recommended and forbids it otherwise.",
+      "additionalProperties": true,
+      "properties": {
+        "x-ctier-tier": { "$ref": "#/$defs/tier" },
+        "x-ctier-criteria": { "$ref": "#/$defs/criteria" },
+        "x-ctier-exclude": { "$ref": "#/$defs/exclude" },
+        "x-ctier-bounds": { "$ref": "#/$defs/bounds" },
+        "x-ctier-handoff": { "$ref": "#/$defs/handoff" },
+        "x-ctier-status": { "$ref": "#/$defs/status" },
+        "x-ctier-recommended-at": { "$ref": "#/$defs/recommendedAt" },
+        "x-ctier-rationale": { "$ref": "#/$defs/rationale" },
+        "x-ctier-weight": { "$ref": "#/$defs/weight" },
+        "x-ctier-escalate-to": { "$ref": "#/$defs/tier" },
+        "x-ctier-reverses": { "$ref": "#/$defs/reverses" }
+      },
+      "if": {
+        "properties": {
+          "x-ctier-status": { "const": "recommended" }
+        },
+        "required": ["x-ctier-status"]
+      },
+      "then": {
+        "required": ["x-ctier-recommended-at"]
+      },
+      "else": {
+        "not": { "required": ["x-ctier-recommended-at"] }
+      }
+    },
     "reverses": {
       "type": "string",
       "minLength": 1,

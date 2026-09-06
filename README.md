@@ -188,7 +188,7 @@ produce a governed operation.
 
 ## Status
 
-Specification **1.1.2** and reference example. A reference implementation is in
+Specification **1.1.3** and reference example. A reference implementation is in
 preparation.
 
 **Naming.** 1.0.0 — the archived specification at

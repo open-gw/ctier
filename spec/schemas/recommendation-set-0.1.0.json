@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/open-gw/ctier/spec/schemas/recommendation-set-0.1.0.json",
   "title": "ctier recommendation set",
-  "description": "An Overlay 1.1.0 document. Each action carries ctier extensions in update and provenance on the action. Provenance stays here; the qualified spec carries only x-ctier-status.",
+  "description": "An Overlay 1.1.0 document. Each action carries ctier extensions in update and provenance on the action. Full provenance stays here. The qualified spec carries x-ctier-status and, when recommended, x-ctier-recommended-at — the date expiry needs.",
   "type": "object",
   "additionalProperties": true,
   "required": ["ctierSchema", "overlay", "info", "actions"],
@@ -57,6 +57,9 @@
         },
         "x-ctier-status": {
           "$ref": "ctier-extensions-0.1.0.json#/$defs/status"
+        },
+        "x-ctier-recommended-at": {
+          "$ref": "ctier-extensions-0.1.0.json#/$defs/recommendedAt"
         },
         "x-ctier-rationale": {
           "$ref": "ctier-extensions-0.1.0.json#/$defs/rationale"

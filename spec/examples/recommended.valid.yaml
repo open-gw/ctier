@@ -1,0 +1,21 @@
+# Valid: recommended status carries x-ctier-recommended-at.
+# Full provenance stays on the recommendation-set; the date is here for expiry.
+openapi: 3.1.0
+info:
+  title: Recommended with a date
+  version: 0.1.0
+paths:
+  /ping:
+    get:
+      operationId: ping
+      x-ctier-tier: 1
+      x-ctier-status: recommended
+      x-ctier-recommended-at: "2026-09-06T14:00:00Z"
+      x-ctier-criteria:
+        reversibility: not-applicable
+        blast-radius: single-record
+        data-sensitivity: public
+        compliance-trigger: none
+        idempotency: inherently-safe
+      responses:
+        "200": { description: ok }

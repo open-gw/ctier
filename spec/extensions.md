@@ -1,14 +1,15 @@
 # ctier extension reference
 
-Specification 1.1.2. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.1.3. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
 **Naming.** 1.0.0 used `x-consequence-*`. 1.1.0 renames to the `ctier`
 namespace. 1.1.1 requires all five criteria fields and adds `x-ctier-reverses`.
 1.1.2 permits self-reversal where idempotency is `safe` or `inherently-safe`.
-The 1.0.0 archive (DOI 10.5281/zenodo.22020288) is unaltered and remains
-resolvable.
+1.1.3 requires `x-ctier-recommended-at` whenever `x-ctier-status` is
+`recommended`, and forbids it on `declared`. The 1.0.0 archive
+(DOI 10.5281/zenodo.22020288) is unaltered and remains resolvable.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.
@@ -28,7 +29,7 @@ Object. Optional. Fail-closed values apply when a field is omitted.
 | `undeclaredTier` | integer 1–4 | no | Tier applied to a reachable operation with no `x-ctier-tier`. Default `4`. Applies only inside a granted scope. |
 | `escalateAbove` | integer ≥ 0 | no | Accumulated-weight threshold at which the scope floor rises. Default `9`. |
 | `decaySeconds` | integer ≥ 0 | no | Window after which accumulated weight is forgotten. Default `1800`. |
-| `recommendationTtlDays` | integer ≥ 0 | no | How long a `recommended` status remains current. Default `90`. |
+| `recommendationTtlDays` | integer ≥ 0 | no | How long a `recommended` status remains current, aged against `x-ctier-recommended-at`. Default `90`. |
 
 ---
 
@@ -129,8 +130,21 @@ Enum: `declared` | `recommended`. Optional.
 - `recommended` — awaiting review
 
 Absence on an otherwise unclassified operation is `absent` for coverage
-purposes. Provenance for a recommendation lives on the recommendation-set
-overlay, not here.
+purposes. `recommended` MUST carry `x-ctier-recommended-at`. `declared` MUST
+NOT. Full provenance — input text and digest, rule or model version, confidence
+— stays on the recommendation-set overlay. The date is here because expiry
+operates on the composed document.
+
+### `x-ctier-recommended-at`
+
+String, RFC 3339 date-time. When this tier was proposed. Required whenever
+`x-ctier-status` is `recommended`. Forbidden when status is `declared` — a
+confirmed tier has no proposal date, and carrying one invites the reader to
+think it expires.
+
+This is the minimum a qualified spec carries about a recommendation. There is
+no missing-timestamp case: a recommendation without a date is invalid, the
+same way a criteria object missing a field is invalid.
 
 ### `x-ctier-rationale`
 

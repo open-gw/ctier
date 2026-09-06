@@ -33,6 +33,19 @@ These are true or false of a document in isolation.
 - `x-ctier-weight` is an integer ≥ 0 when present. Zero is a value.
 - Overlay documents that are recommendation sets carry `overlay: "1.1.0"` and
   per-action `x-ctier-provenance`.
+- An Operation Object validated against `$defs/operation` in
+  `ctier-extensions-0.1.0.json`: `x-ctier-status: recommended` requires
+  `x-ctier-recommended-at`; any other status, or no status, forbids it.
+  Both halves are `if`/`then`/`else` on `x-ctier-status`. Field-by-field
+  validation of the leaf `$defs` cannot see the conditional — the validator
+  applies `$defs/operation` to each Operation Object.
+
+An operation whose `x-ctier-status` is `recommended` MUST carry
+`x-ctier-recommended-at`. An operation whose status is `declared` MUST NOT —
+a confirmed tier has no proposal date, and carrying one invites the reader to
+think it expires. JSON Schema 2020-12 expresses both halves, including a date
+with no status (the `else`). The validator's job is to apply `$defs/operation`
+to each Operation Object, not to re-check the conditional.
 
 ---
 
