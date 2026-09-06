@@ -28,6 +28,19 @@ rules:
       tier: 3
     rationale: A delete restores the record at best.
     confidence: high
+  - id: nested-item-path
+    when:
+      pathSegmentCount: { min: 3 }
+      pathParameterCount: 2
+    propose:
+      criteria:
+        reversibility: not-applicable
+        blast-radius: single-record
+        data-sensitivity: personal
+        compliance-trigger: none
+        idempotency: inherently-safe
+    rationale: Two-parameter path; a nested item read.
+    confidence: medium
   - id: named-export
     when:
       operationIdMatches: [exportStatements]

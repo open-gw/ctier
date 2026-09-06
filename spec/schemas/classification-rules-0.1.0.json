@@ -63,8 +63,25 @@
         "isReversedByAnotherOperation": {
           "type": "boolean",
           "description": "True when some other operation in the composed description sets x-ctier-reverses to this operationId. A lookup, not a name inference."
-        }
+        },
+        "pathSegmentCount": { "$ref": "#/$defs/countMatch" },
+        "pathParameterCount": { "$ref": "#/$defs/countMatch" }
       }
+    },
+    "countMatch": {
+      "description": "An exact count, or an inclusive min/max range. Path shape only — no expressions.",
+      "oneOf": [
+        { "type": "integer", "minimum": 0 },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "min": { "type": "integer", "minimum": 0 },
+            "max": { "type": "integer", "minimum": 0 }
+          }
+        }
+      ]
     },
     "propose": {
       "type": "object",

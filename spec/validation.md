@@ -25,7 +25,8 @@ These are true or false of a document in isolation.
 - `when` contains only the closed predicate keys: `method`,
   `pathEndsWithParameter`, `responseIsCollection`, `hasRequestBody`,
   `securitySchemes`, `tagIn`, `operationIdMatches`,
-  `isReversedByAnotherOperation`.
+  `isReversedByAnotherOperation`, `pathSegmentCount`, `pathParameterCount`.
+- `pathSegmentCount` and `pathParameterCount` are an integer or `{min, max}`.
 - `operationIdMatches` is a list of exact strings, not a pattern.
 - Digests match `sha256:` followed by 64 lowercase hex characters.
 - Required fields on each document type, as declared in the schema.
@@ -88,6 +89,18 @@ Exclusion is an authorisation decision taken before any tier is considered.
 `compositionDigest` is over canonical JSON of the composed document (keys
 sorted lexicographically, no insignificant whitespace, UTF-8). Per-input
 digests are over raw bytes. Schema checks the string form, not the bytes.
+
+### Pagination is refused as a predicate
+
+Pagination is not standardised in OpenAPI — `limit`/`offset`, `page`/`size`,
+`cursor` and others are all in use. Detecting it means heuristics over
+parameter names, which is precisely the kind of inference that would diverge
+between a Python composer and a generated Spectral ruleset. A bounded operation
+is one whose bound the author has **declared**, via `x-ctier-bounds`. ctier does
+not guess.
+
+No pagination predicate exists. If a recommender wants that signal, it uses
+`x-ctier-bounds` being present or absent.
 
 ### Engine `Criteria` defaults are not the contract
 
