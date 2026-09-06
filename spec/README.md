@@ -1,19 +1,23 @@
-# The `x-consequence` extension
+# The `x-ctier` extension
 
 Field reference for the annotations used in `consequence-tiered-api.yaml`.
 
-Two extension points: `x-consequence-defaults` at the document root, holding rules the gateway
-applies globally, and `x-consequence` on each operation, holding that operation's classification.
+**Naming.** Specification 1.0.0 used `x-consequence-*`. 1.1.0 renames to the
+`ctier` namespace. The 1.0.0 archive (DOI 10.5281/zenodo.22020288) is unaltered
+and remains resolvable. This tree is 1.1.0.
+
+Two extension points: `x-ctier-defaults` at the document root, holding rules the
+gateway applies globally, and the flat `x-ctier-*` keys on each operation.
 
 ---
 
-## `x-consequence-defaults`
+## `x-ctier-defaults`
 
 Document-level governance rules, read by the gateway at specification load.
 
 | Field | Purpose |
 |---|---|
-| `undeclared-operation-tier` | Tier applied to a reachable operation carrying no `x-consequence` block. Set to `4`. Applies only within authority the agent already holds — it is the net for a missed classification, not a statement about operations never granted. |
+| `undeclared-operation-tier` | Tier applied to a reachable operation carrying no `x-ctier` block. Set to `4`. Applies only within authority the agent already holds — it is the net for a missed classification, not a statement about operations never granted. |
 | `on-excluded-operation-reached` | What to do when a live credential reaches an operation annotated `tier: excluded`. Set to `refuse-and-alert`: this is a provisioning defect, not a governance event, and should surface as one. |
 | `enforcement-point` | Where classification occurs. Always before routing, never inside the agent. |
 | `runtime-classification` | `resolve-then-escalate`. The five criteria are evaluated by a human at design time; at runtime the gateway resolves the recorded tier by lookup and may then escalate on context. |
@@ -60,10 +64,10 @@ the agent is granted any scope reaching a Tier 3 operation.
 
 ---
 
-## `x-consequence` (per operation)
+## `x-ctier` (per operation)
 
 ```yaml
-x-consequence:
+x-ctier:
   tier: 3
   criteria:
     reversibility: undo-restores-record-only

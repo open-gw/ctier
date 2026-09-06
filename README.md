@@ -102,12 +102,12 @@ paths:
   /accounts/{accountId}/balance:
     get:
       operationId: getBalance
-      x-consequence-tier: 1
+      x-ctier-tier: 1
 
   /payments:
     post:
       operationId: initiatePayment
-      x-consequence-tier: 4
+      x-ctier-tier: 4
 
   /customers/{customerId}/profile:
     put:
@@ -140,7 +140,7 @@ losing the other.
 | Path | What it is |
 |---|---|
 | `spec/consequence-tiered-api.yaml` | Complete worked OpenAPI 3.1 example — ten operations across all four tiers, plus one explicitly excluded and one deliberately unclassified |
-| `spec/README.md` | Field-by-field reference for the `x-consequence` extension |
+| `spec/README.md` | Specification 1.1.0 index and naming note |
 | `docs/` | Classification worksheet, domain walkthroughs, FAQ |
 
 The example specification is deliberately built so the argument is visible in its structure:
@@ -185,7 +185,15 @@ produce a governed operation.
 
 ## Status
 
-Specification and reference example. A reference implementation is in preparation.
+Specification **1.1.0** and reference example. A reference implementation is in
+preparation.
+
+**Naming.** 1.0.0 — the archived specification at
+[doi.org/10.5281/zenodo.22020288](https://doi.org/10.5281/zenodo.22020288) —
+used `x-consequence-*`. 1.1.0 renames those extensions to the `ctier`
+namespace (`x-ctier-tier`, `x-ctier-criteria`, `x-ctier-exclude`,
+`x-ctier-defaults`, and the other flat keys in `spec/`). The 1.0.0 archive is
+unaltered and remains resolvable at that DOI.
 
 Subject matter described here is the subject of US provisional patent application 64/137,066
 (filed 19 August 2026). The specification and documentation are licensed CC BY 4.0; that licence

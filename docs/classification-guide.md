@@ -51,13 +51,13 @@ paths:
   /accounts/{id}/balance:
     get:
       operationId: getBalance
-      x-consequence-tier: 1          # read-only, undo restores the effect, no compliance surface
+      x-ctier-tier: 1          # read-only, undo restores the effect, no compliance surface
 
   /payments:
     post:
       operationId: initiatePayment
-      x-consequence-tier: 4          # no undo exists, regulated, no safe retry
-      x-consequence-criteria:
+      x-ctier-tier: 4          # no undo exists, regulated, no safe retry
+      x-ctier-criteria:
         reversibility: none
         blast-radius: individual
         data-sensitivity: regulated
@@ -71,7 +71,7 @@ paths:
 
 The last stanza matters as much as the first two: fail-closed should be a property of the mechanism rather than a rule people have to remember.
 
-A complete worked specification — ten operations across all four tiers, with OAuth scopes, the Tier 3 pending-authorisation response, the Tier 4 suspension response, delegation-chain headers and session accumulation rules — is published alongside this document as `consequence-tiered-api.yaml`. The optional `x-consequence-criteria` block records *why* a tier was assigned, which is what makes a later reclassification reviewable instead of arbitrary.
+A complete worked specification — ten operations across all four tiers, with OAuth scopes, the Tier 3 pending-authorisation response, the Tier 4 suspension response, delegation-chain headers and session accumulation rules — is published alongside this document as `consequence-tiered-api.yaml`. The optional `x-ctier-criteria` object records *why* a tier was assigned, which is what makes a later reclassification reviewable instead of arbitrary.
 
 **5. Enforce one tier, at one gateway, for one agent.** Start with Tier 3 on a single high-value endpoint. You'll learn more from one working async approval path than from a classification scheme covering everything and enforcing nothing.
 
