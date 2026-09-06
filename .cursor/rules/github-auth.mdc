@@ -1,0 +1,14 @@
+---
+description: GitHub auth for this repo — bash_profile + rdGitHub
+alwaysApply: true
+---
+
+# GitHub authentication
+
+For `gh` and HTTPS `git` against GitHub in this project:
+
+1. `source ~/.bash_profile`
+2. Run `rdGitHub` (sets `GH_TOKEN`)
+3. Then run `gh` or `git push`
+
+Do not print `GH_TOKEN`. Do not commit tokens. Do not use the `rgdGitHub` token unless the user asks for that identity.
