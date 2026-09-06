@@ -360,6 +360,69 @@ paths:
         '202': { $ref: '#/components/responses/PendingAuthorization' }
 
   # ---------------------------------------------------------------------------
+  # TIER 2 — a deletion whose absence has no downstream effect
+  #
+  # A DELETE with a declared reversal floors at 3 (undo restores the record).
+  # A saved search is one of the few deletions where nothing acts on the
+  # gap, so restoring it restores the effect. The human confirms 2.
+  # ---------------------------------------------------------------------------
+  /saved-searches/{searchId}:
+    parameters:
+      - name: searchId
+        in: path
+        required: true
+        schema: { type: string }
+    delete:
+      operationId: deleteSavedSearch
+      summary: Delete a saved search
+      security:
+        - agentOAuth: [accounts:write]
+      x-ctier-tier: 2
+      x-ctier-status: declared
+      x-ctier-reverses: restoreSavedSearch
+      x-ctier-criteria:
+        reversibility: undo-restores-effect
+        blast-radius: single-record
+        data-sensitivity: personal
+        compliance-trigger: none
+        idempotency: safe
+      x-ctier-rationale: >
+        Structurally this is a deletion and deletions usually restore the
+        record rather than the effect. Here nothing acts on a saved
+        search's absence: no message is suppressed, no scheduled work
+        fails, no downstream consumer observes it. Restoring it restores
+        the effect.
+      responses:
+        '200': { description: Saved search deleted }
+
+  /saved-searches/{searchId}/restore:
+    parameters:
+      - name: searchId
+        in: path
+        required: true
+        schema: { type: string }
+    post:
+      operationId: restoreSavedSearch
+      summary: Restore a previously deleted saved search
+      security:
+        - agentOAuth: [accounts:write]
+      x-ctier-tier: 2
+      x-ctier-status: declared
+      x-ctier-reverses: deleteSavedSearch
+      x-ctier-criteria:
+        reversibility: undo-restores-effect
+        blast-radius: single-record
+        data-sensitivity: personal
+        compliance-trigger: none
+        idempotency: safe
+      x-ctier-rationale: >
+        The compensating action for deleteSavedSearch. Re-creating the
+        search puts the customer back where they were; nothing happened
+        in the interval.
+      responses:
+        '200': { description: Saved search restored }
+
+  # ---------------------------------------------------------------------------
   # TIER 3 — the undo restores the RECORD but not the EFFECT
   # ---------------------------------------------------------------------------
   /customers/{customerId}/profile:
