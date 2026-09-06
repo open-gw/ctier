@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/open-gw/ctier/spec/schemas/ctier-extensions-0.1.0.json",
+  "title": "ctier OpenAPI extensions",
+  "description": "Reusable subschemas for the flat x-ctier-* keys. Shape only. Semantic constraints are in spec/validation.md. Enumerations match ctier-engine engine/ctier/models.py.",
+  "$defs": {
+    "ctierSchemaId": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+/[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "digest": {
+      "type": "string",
+      "description": "sha256:<64 lowercase hex>. Composition digest is over canonical JSON of the composed document. Per-input digests are over raw bytes.",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "tier": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4
+    },
+    "status": {
+      "type": "string",
+      "enum": ["declared", "recommended"]
+    },
+    "reversibility": {
+      "type": "string",
+      "enum": [
+        "not-applicable",
+        "undo-restores-effect",
+        "undo-restores-record-only",
+        "none"
+      ]
+    },
+    "blastRadius": {
+      "type": "string",
+      "enum": [
+        "single-record",
+        "single-customer",
+        "population",
+        "system-wide"
+      ]
+    },
+    "dataSensitivity": {
+      "type": "string",
+      "enum": ["public", "internal", "personal", "regulated"]
+    },
+    "complianceTrigger": {
+      "type": "string",
+      "enum": ["none", "adjacent", "direct"]
+    },
+    "idempotency": {
+      "type": "string",
+      "enum": ["inherently-safe", "safe", "key-required", "unsafe"]
+    },
+    "criteria": {
+      "type": "object",
+      "description": "Omitted fields default to highest-consequence values. A partial object classifies high.",
+      "additionalProperties": false,
+      "properties": {
+        "reversibility": {
+          "$ref": "#/$defs/reversibility",
+          "default": "none"
+        },
+        "blast-radius": {
+          "$ref": "#/$defs/blastRadius",
+          "default": "system-wide"
+        },
+        "data-sensitivity": {
+          "$ref": "#/$defs/dataSensitivity",
+          "default": "regulated"
+        },
+        "compliance-trigger": {
+          "$ref": "#/$defs/complianceTrigger",
+          "default": "direct"
+        },
+        "idempotency": {
+          "$ref": "#/$defs/idempotency",
+          "default": "unsafe"
+        }
+      }
+    },
+    "bounds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["parameter", "max"],
+      "properties": {
+        "parameter": { "type": "string", "minLength": 1 },
+        "max": { "type": "integer" }
+      }
+    },
+    "handoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authority"],
+      "properties": {
+        "authority": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Authority class, not a person. The consuming application resolves the person."
+        }
+      }
+    },
+    "defaults": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "undeclaredTier": { "$ref": "#/$defs/tier", "default": 4 },
+        "escalateAbove": { "type": "integer", "minimum": 0, "default": 9 },
+        "decaySeconds": { "type": "integer", "minimum": 0, "default": 1800 },
+        "recommendationTtlDays": { "type": "integer", "minimum": 0, "default": 90 }
+      }
+    },
+    "weight": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Zero is meaningful (does not accumulate) and is distinct from absent."
+    },
+    "exclude": { "type": "boolean" },
+    "rationale": { "type": "string" }
+  }
+}

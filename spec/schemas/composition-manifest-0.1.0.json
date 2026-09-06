@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/open-gw/ctier/spec/schemas/composition-manifest-0.1.0.json",
+  "title": "ctier composition manifest",
+  "description": "Records every input to a composition and the digest the assignment is bound to (C13). compositionDigest is over a canonical JSON serialisation of the composed document — keys sorted lexicographically, no insignificant whitespace, UTF-8 — never over the source YAML. Per-input digests are over raw bytes.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "ctierSchema",
+    "composedAt",
+    "compositionDigest",
+    "inputs",
+    "operations",
+    "coverage"
+  ],
+  "properties": {
+    "ctierSchema": { "const": "composition-manifest/0.1.0" },
+    "composedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Non-normative stamp. Not included in compositionDigest."
+    },
+    "compositionDigest": {
+      "$ref": "ctier-extensions-0.1.0.json#/$defs/digest"
+    },
+    "inputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/input" }
+    },
+    "rules": { "$ref": "#/$defs/artefact" },
+    "operations": { "type": "integer", "minimum": 0 },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["declared", "recommended", "absent"],
+      "properties": {
+        "declared": { "type": "integer", "minimum": 0 },
+        "recommended": { "type": "integer", "minimum": 0 },
+        "absent": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "generator": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["target", "mode", "version"],
+      "properties": {
+        "target": { "type": "string", "minLength": 1 },
+        "mode": { "type": "string", "enum": ["bundle", "fragments"] },
+        "version": { "type": "string", "minLength": 1 }
+      }
+    }
+  },
+  "$defs": {
+    "artefact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "digest"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "digest": {
+          "$ref": "ctier-extensions-0.1.0.json#/$defs/digest",
+          "description": "Digest of the file's raw bytes."
+        }
+      }
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "path", "digest"],
+      "properties": {
+        "role": { "type": "string", "enum": ["description", "overlay"] },
+        "path": { "type": "string", "minLength": 1 },
+        "digest": {
+          "$ref": "ctier-extensions-0.1.0.json#/$defs/digest",
+          "description": "Digest of the file's raw bytes."
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Required when role is overlay. Application order."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/open-gw/ctier/spec/schemas/classification-rules-0.1.0.json",
+  "title": "ctier classification rules",
+  "description": "Rule document for the recommender. First-match by document order — the same evaluation model as the reference classifier. The when vocabulary is closed and declarative: no expressions, no code, no regular expressions over arbitrary fields. A Spectral ruleset and a Python composer MUST interpret one file identically.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["ctierSchema", "rules"],
+  "properties": {
+    "ctierSchema": { "const": "classification-rules/0.1.0" },
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/rule" }
+    }
+  },
+  "$defs": {
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "when", "propose", "rationale", "confidence"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "when": { "$ref": "#/$defs/when" },
+        "propose": { "$ref": "#/$defs/propose" },
+        "rationale": { "type": "string", "minLength": 1 },
+        "confidence": { "type": "string", "enum": ["high", "medium", "low"] }
+      }
+    },
+    "when": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "method": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": ["get", "put", "post", "delete", "patch", "head", "options", "trace"]
+          }
+        },
+        "pathEndsWithParameter": { "type": "boolean" },
+        "responseIsCollection": { "type": "boolean" },
+        "hasRequestBody": { "type": "boolean" },
+        "securitySchemes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "tagIn": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "operationIdMatches": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Exact operationId values, not a pattern.",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "propose": {
+      "type": "object",
+      "additionalProperties": false,
+      "oneOf": [
+        { "required": ["tier"], "not": { "required": ["criteria"] } },
+        { "required": ["criteria"], "not": { "required": ["tier"] } }
+      ],
+      "properties": {
+        "tier": {
+          "$ref": "ctier-extensions-0.1.0.json#/$defs/tier"
+        },
+        "criteria": {
+          "$ref": "ctier-extensions-0.1.0.json#/$defs/criteria"
+        }
+      }
+    }
+  }
+}

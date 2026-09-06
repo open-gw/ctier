@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/open-gw/ctier/spec/schemas/coverage-report-0.1.0.json",
+  "title": "ctier coverage report",
+  "description": "Per-operation classification status and totals. operations is ordered by recommended tier descending, absent last, so the highest consequence is reviewed first. Sort order is validator-checked, not schema-checked.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["ctierSchema", "compositionDigest", "totals", "operations"],
+  "properties": {
+    "ctierSchema": { "const": "coverage-report/0.1.0" },
+    "compositionDigest": {
+      "$ref": "ctier-extensions-0.1.0.json#/$defs/digest"
+    },
+    "totals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["declared", "recommended", "absent"],
+      "properties": {
+        "declared": { "type": "integer", "minimum": 0 },
+        "recommended": { "type": "integer", "minimum": 0 },
+        "absent": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "operations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/operation" }
+    }
+  },
+  "$defs": {
+    "operation": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["method", "path", "status"],
+      "properties": {
+        "operationId": { "type": "string" },
+        "method": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "status": {
+          "type": "string",
+          "enum": ["declared", "recommended", "absent"]
+        },
+        "recommendedTier": {
+          "$ref": "ctier-extensions-0.1.0.json#/$defs/tier",
+          "description": "Present when a recommendation exists, including when status is declared and a recommender also ran."
+        },
+        "declaredTier": {
+          "$ref": "ctier-extensions-0.1.0.json#/$defs/tier"
+        }
+      }
+    }
+  }
+}
