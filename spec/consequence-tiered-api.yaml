@@ -469,6 +469,53 @@ paths:
         '201': { description: Payment initiated by a human operator }
         '423': { $ref: '#/components/responses/AgentSuspended' }
 
+  # ---------------------------------------------------------------------------
+  # TIER 4 whose description understates it
+  #
+  # GET of one payment-authorization resource. The structural rules read a
+  # single-record fetch (floor 1). The operation releases funds. The method
+  # is wrong; the example exists so the understatement is visible, not so
+  # that GET-with-side-effects is treated as a pattern.
+  # ---------------------------------------------------------------------------
+  /payments/{paymentId}/authorizations/{authorizationId}:
+    parameters:
+      - name: paymentId
+        in: path
+        required: true
+        schema: { type: string }
+      - name: authorizationId
+        in: path
+        required: true
+        schema: { type: string }
+    get:
+      operationId: getPaymentAuthorization
+      summary: Release a pending payment authorization (legacy GET)
+      security:
+        - agentOAuth: [payments:write]
+      x-ctier-tier: 4
+      x-ctier-status: declared
+      x-ctier-handoff:
+        authority: payment-operations
+      x-ctier-criteria:
+        reversibility: none
+        blast-radius: single-customer
+        data-sensitivity: regulated
+        compliance-trigger: direct
+        idempotency: unsafe
+      x-ctier-rationale: >
+        The method is wrong. This endpoint releases funds and cannot be
+        reversed. It is included here because the pattern exists in
+        production systems, and because it is the clearest case of a
+        description that misleads: the recommender and an autonomous
+        agent read the same document, and both will read GET as safe.
+      responses:
+        '200':
+          description: Authorization released
+          content:
+            application/json:
+              schema: { type: object }
+        '423': { $ref: '#/components/responses/AgentSuspended' }
+
   /customers/{customerId}/kyc-decision:
     parameters:
       - name: customerId
