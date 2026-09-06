@@ -1,0 +1,21 @@
+# Violates: x-ctier-reverses target must exist
+# restorePreferences names an operationId that is not in this description.
+openapi: 3.1.0
+info:
+  title: Dangling reverses
+  version: 0.1.0
+paths:
+  /customers/{customerId}/preferences:
+    put:
+      operationId: restorePreferences
+      x-ctier-tier: 3
+      x-ctier-status: declared
+      x-ctier-reverses: doesNotExist
+      x-ctier-criteria:
+        reversibility: undo-restores-effect
+        blast-radius: single-customer
+        data-sensitivity: personal
+        compliance-trigger: none
+        idempotency: safe
+      responses:
+        '200': { description: restored }

@@ -108,6 +108,11 @@
       "description": "Zero is meaningful (does not accumulate) and is distinct from absent."
     },
     "exclude": { "type": "boolean" },
-    "rationale": { "type": "string" }
+    "rationale": { "type": "string" },
+    "reverses": {
+      "type": "string",
+      "minLength": 1,
+      "description": "operationId this operation reverses. A declared compensating action, not an inferred name."
+    }
   }
 }

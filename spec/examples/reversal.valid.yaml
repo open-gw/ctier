@@ -1,0 +1,33 @@
+# Valid: updatePreferences is Tier 2 and is named by restorePreferences.
+openapi: 3.1.0
+info:
+  title: Reversal pair
+  version: 0.1.0
+paths:
+  /customers/{customerId}/preferences:
+    patch:
+      operationId: updatePreferences
+      x-ctier-tier: 2
+      x-ctier-status: declared
+      x-ctier-reverses: restorePreferences
+      x-ctier-criteria:
+        reversibility: undo-restores-effect
+        blast-radius: single-customer
+        data-sensitivity: personal
+        compliance-trigger: none
+        idempotency: safe
+      responses:
+        '200': { description: updated }
+    put:
+      operationId: restorePreferences
+      x-ctier-tier: 2
+      x-ctier-status: declared
+      x-ctier-reverses: updatePreferences
+      x-ctier-criteria:
+        reversibility: undo-restores-effect
+        blast-radius: single-customer
+        data-sensitivity: personal
+        compliance-trigger: none
+        idempotency: safe
+      responses:
+        '200': { description: restored }

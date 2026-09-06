@@ -11,8 +11,11 @@ against.
 | `composition-manifest.valid.json` | `composition-manifest/0.1.0` | schema pass |
 | `recommendation-set.valid.yaml` | `recommendation-set/0.1.0` | schema pass |
 | `coverage-report.valid.json` | `coverage-report/0.1.0` | schema pass |
+| `reversal.valid.yaml` | qualified spec | validator pass — Tier 2 named by `x-ctier-reverses` |
 | `invalid/single-target.overlay.yaml` | Overlay + extensions | violates **single-target** against `consequence-tiered-api.yaml` |
 | `invalid/unidirectionality.operation.yaml` | extensions | violates **unidirectionality** |
 | `invalid/bounds-coherence.operation.yaml` | extensions | violates **bounds coherence** |
 | `invalid/exclusion-exclusivity.operation.yaml` | extensions | violates **exclusion exclusivity** |
 | `invalid/criteria-incomplete.yaml` | `classification-rules/0.1.0` | **schema fail** — missing `compliance-trigger` |
+| `invalid/tier2-unverified.yaml` | qualified spec | violates **Tier 2 verified compensating action** |
+| `invalid/reverses-dangling.yaml` | qualified spec | violates **dangling x-ctier-reverses** |

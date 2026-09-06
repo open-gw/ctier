@@ -5,7 +5,7 @@ and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
 **Naming.** 1.0.0 used `x-consequence-*`. 1.1.0 renames to the `ctier`
-namespace. 1.1.1 requires all five criteria fields.
+namespace. 1.1.1 requires all five criteria fields and adds `x-ctier-reverses`.
 The 1.0.0 archive (DOI 10.5281/zenodo.22020288) is unaltered and remains
 resolvable.
 
@@ -67,6 +67,15 @@ is a validation concern, not a classification one.
 
 Values are taken from the reference implementation's enumerations so the schema
 and the code cannot drift.
+
+### `x-ctier-reverses`
+
+String. Optional. The `operationId` this operation reverses. Declares a
+compensating action. Do not infer reversal from naming.
+
+The named `operationId` must exist in the same composed description. An
+operation declaring `x-ctier-tier: 2`, or criteria resolving to Tier 2, MUST
+be named by some other operation's `x-ctier-reverses`. See `validation.md`.
 
 ### `x-ctier-exclude`
 

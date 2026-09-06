@@ -24,7 +24,8 @@ These are true or false of a document in isolation.
 - `propose` contains `tier` or `criteria`, never both.
 - `when` contains only the closed predicate keys: `method`,
   `pathEndsWithParameter`, `responseIsCollection`, `hasRequestBody`,
-  `securitySchemes`, `tagIn`, `operationIdMatches`.
+  `securitySchemes`, `tagIn`, `operationIdMatches`,
+  `isReversedByAnotherOperation`.
 - `operationIdMatches` is a list of exact strings, not a pattern.
 - Digests match `sha256:` followed by 64 lowercase hex characters.
 - Required fields on each document type, as declared in the schema.
@@ -62,6 +63,15 @@ point in evaluation. Schema cannot see the evaluation context.
 ### Bounds coherence
 
 `x-ctier-bounds.parameter` must name a parameter that exists on the operation.
+
+### Tier 2 requires a verified compensating action
+
+An operation declaring `x-ctier-tier: 2`, or criteria resolving to Tier 2,
+MUST be named by the `x-ctier-reverses` field of some other operation in the
+same composed description. An operation naming a `x-ctier-reverses` target
+that does not exist is invalid.
+
+Do not infer reversal from operation names. The author declares it.
 
 ### Exclusion exclusivity
 

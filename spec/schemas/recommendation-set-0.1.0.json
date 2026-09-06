@@ -75,6 +75,9 @@
         },
         "x-ctier-escalate-to": {
           "$ref": "ctier-extensions-0.1.0.json#/$defs/tier"
+        },
+        "x-ctier-reverses": {
+          "$ref": "ctier-extensions-0.1.0.json#/$defs/reverses"
         }
       }
     },

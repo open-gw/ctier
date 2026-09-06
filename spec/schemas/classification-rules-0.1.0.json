@@ -59,6 +59,10 @@
           "minItems": 1,
           "description": "Exact operationId values, not a pattern.",
           "items": { "type": "string", "minLength": 1 }
+        },
+        "isReversedByAnotherOperation": {
+          "type": "boolean",
+          "description": "True when some other operation in the composed description sets x-ctier-reverses to this operationId. A lookup, not a name inference."
         }
       }
     },

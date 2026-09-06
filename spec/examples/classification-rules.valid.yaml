@@ -14,6 +14,13 @@ rules:
         idempotency: inherently-safe
     rationale: Single-resource read; there is nothing to undo.
     confidence: high
+  - id: has-declared-reverser
+    when:
+      isReversedByAnotherOperation: true
+    propose:
+      tier: 2
+    rationale: Another operation declares that it reverses this one.
+    confidence: high
   - id: delete-is-tier-3-floor
     when:
       method: [delete]
