@@ -1,4 +1,4 @@
-# ctier specification 1.1.4
+# ctier specification 1.1.5
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -15,6 +15,11 @@ unaltered and remains resolvable.
 | [`schemas/`](schemas/) | JSON Schema 2020-12 for the ctier-authored formats, 0.1.0 |
 | [`examples/`](examples/) | Valid instances, and invalid instances one per semantic rule |
 | [`consequence-tiered-api.yaml`](consequence-tiered-api.yaml) | Worked OpenAPI 3.1 example |
+
+`exportStatements` is unclassified **on purpose**. It is the one `absent`
+operation in the reference document. Absence is Tier 4 by C2 — fail-closed —
+and completing that classification as tidying would remove the example of the
+default the model rests on.
 
 The qualified spec is an OpenAPI document carrying the Part 2 extensions. It
 has no schema of its own; it has a validation profile in `validation.md`.

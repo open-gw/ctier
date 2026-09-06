@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.1.4. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.1.5. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -9,8 +9,10 @@ namespace. 1.1.1 requires all five criteria fields and adds `x-ctier-reverses`.
 1.1.2 permits self-reversal where idempotency is `safe` or `inherently-safe`.
 1.1.3 requires `x-ctier-recommended-at` whenever `x-ctier-status` is
 `recommended`, and forbids it on `declared`. 1.1.4 splits criteria: a
-declaration must be complete; a proposal may be a non-empty subset. The 1.0.0
-archive (DOI 10.5281/zenodo.22020288) is unaltered and remains resolvable.
+declaration must be complete; a proposal may be a non-empty subset. 1.1.5
+adds two reference operations that exercise the two divergence directions,
+and documents those signals. The 1.0.0 archive
+(DOI 10.5281/zenodo.22020288) is unaltered and remains resolvable.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.
@@ -100,6 +102,27 @@ API developer.
 
 The reference document's `updateDisplayPreferences` and
 `updateCommunicationPreferences` are that pair.
+
+#### Divergence is two findings
+
+A recommender classifies from the description alone and produces a
+**structural floor**: the minimum tier the visible shape supports, filling
+unknown criteria at lowest consequence. The confirmed tier is compared to
+that floor. The two directions are not the same kind of finding.
+
+**Confirmed well above the floor** — the description understates the
+operation. This is a defect in the interface description, and it affects
+every automated reader equally, agents included. The reference document's
+`getPaymentAuthorization` is that case: a GET of one resource floors at
+Tier 1; releasing funds is Tier 4.
+
+**Confirmed below the floor** — a human overrode structure downward.
+Usually because they know something the description cannot express;
+occasionally because a tier is being lowered that should not be. Always
+worth a second pair of eyes, never an accusation on its own. The
+reference document's `deleteSavedSearch` is that case: a DELETE with a
+declared reversal floors at Tier 3; nothing acts on a saved search's
+absence, so restoring it restores the effect and Tier 2 is correct.
 
 ### `x-ctier-reverses`
 
