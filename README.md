@@ -139,7 +139,7 @@ losing the other.
 
 | Path | What it is |
 |---|---|
-| `spec/consequence-tiered-api.yaml` | Complete worked OpenAPI 3.1 example — ten operations across all four tiers, plus one explicitly excluded and one deliberately unclassified |
+| `spec/consequence-tiered-api.yaml` | Complete worked OpenAPI 3.1 example — operations across all four tiers, plus one explicitly excluded and one deliberately unclassified |
 | `spec/README.md` | Specification 1.1.0 index and naming note |
 | `spec/extensions.md` | Flat `x-ctier-*` keys |
 | `spec/schemas/` | JSON Schema 2020-12 for the document contract, 0.1.0 |

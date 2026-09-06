@@ -301,21 +301,25 @@ paths:
         '200': { description: Transactions retrieved }
 
   # ---------------------------------------------------------------------------
-  # TIER 2 — the undo restores the effect, via a verified compensating action
+  # TIER 2 / TIER 3 — same shape, different reversibility
+  #
+  # Two preference writes that look identical in the interface. They classify
+  # differently because of what happens while the wrong state stands.
   # ---------------------------------------------------------------------------
-  /customers/{customerId}/preferences:
+  /customers/{customerId}/preferences/display:
     parameters:
       - name: customerId
         in: path
         required: true
         schema: { type: string }
-    patch:
-      operationId: updatePreferences
-      summary: Update customer communication preferences
+    put:
+      operationId: updateDisplayPreferences
+      summary: Replace customer display-language preferences
       security:
         - agentOAuth: [accounts:write]
       x-ctier-tier: 2
       x-ctier-status: declared
+      x-ctier-reverses: updateDisplayPreferences
       x-ctier-criteria:
         reversibility: undo-restores-effect
         blast-radius: single-customer
@@ -323,12 +327,37 @@ paths:
         compliance-trigger: none
         idempotency: safe
       x-ctier-rationale: >
-        Executes without approval. Remains reversible until downstream systems
-        consume the change — by the agent if it detects its own error, or by
-        the team that receives the notification. The human does not decide
-        whether it happens; the human decides whether it stands.
+        A self-reversing PUT: restore the captured before-state and nothing
+        persists from the interval — a language set to French and put back to
+        English left no downstream effect.
       responses:
-        '200': { description: Preferences updated }
+        '200': { description: Display preferences replaced }
+
+  /customers/{customerId}/preferences/communication:
+    parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema: { type: string }
+    put:
+      operationId: updateCommunicationPreferences
+      summary: Replace customer communication preferences
+      security:
+        - agentOAuth: [accounts:write]
+      x-ctier-tier: 3
+      x-ctier-status: declared
+      x-ctier-criteria:
+        reversibility: undo-restores-record-only
+        blast-radius: single-customer
+        data-sensitivity: personal
+        compliance-trigger: none
+        idempotency: safe
+      x-ctier-rationale: >
+        The record reverts, but messages suppressed while *do not email* stood
+        were never sent — restoring the preference does not restore them.
+      responses:
+        '200': { description: Communication preferences replaced after authorisation }
+        '202': { $ref: '#/components/responses/PendingAuthorization' }
 
   # ---------------------------------------------------------------------------
   # TIER 3 — the undo restores the RECORD but not the EFFECT

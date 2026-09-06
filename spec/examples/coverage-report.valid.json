@@ -2,7 +2,7 @@
   "ctierSchema": "coverage-report/0.1.0",
   "compositionDigest": "sha256:5823ce42f83a0e9c6677267a685a2fa2e2c9e2e370393138a71698579fb71c44",
   "totals": {
-    "declared": 4,
+    "declared": 5,
     "recommended": 1,
     "absent": 0
   },
@@ -31,12 +31,20 @@
       "recommendedTier": 3
     },
     {
-      "operationId": "updatePreferences",
-      "method": "patch",
-      "path": "/customers/{customerId}/preferences",
+      "operationId": "updateDisplayPreferences",
+      "method": "put",
+      "path": "/customers/{customerId}/preferences/display",
       "status": "declared",
       "declaredTier": 2,
       "recommendedTier": 2
+    },
+    {
+      "operationId": "updateCommunicationPreferences",
+      "method": "put",
+      "path": "/customers/{customerId}/preferences/communication",
+      "status": "declared",
+      "declaredTier": 3,
+      "recommendedTier": 3
     },
     {
       "operationId": "getBalance",
