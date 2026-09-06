@@ -54,29 +54,21 @@
     },
     "criteria": {
       "type": "object",
-      "description": "Omitted fields default to highest-consequence values. A partial object classifies high.",
+      "description": "All five fields are required. There are no defaults. A partial object is an unfinished judgement, not a fail-closed classification.",
       "additionalProperties": false,
+      "required": [
+        "reversibility",
+        "blast-radius",
+        "data-sensitivity",
+        "compliance-trigger",
+        "idempotency"
+      ],
       "properties": {
-        "reversibility": {
-          "$ref": "#/$defs/reversibility",
-          "default": "none"
-        },
-        "blast-radius": {
-          "$ref": "#/$defs/blastRadius",
-          "default": "system-wide"
-        },
-        "data-sensitivity": {
-          "$ref": "#/$defs/dataSensitivity",
-          "default": "regulated"
-        },
-        "compliance-trigger": {
-          "$ref": "#/$defs/complianceTrigger",
-          "default": "direct"
-        },
-        "idempotency": {
-          "$ref": "#/$defs/idempotency",
-          "default": "unsafe"
-        }
+        "reversibility": { "$ref": "#/$defs/reversibility" },
+        "blast-radius": { "$ref": "#/$defs/blastRadius" },
+        "data-sensitivity": { "$ref": "#/$defs/dataSensitivity" },
+        "compliance-trigger": { "$ref": "#/$defs/complianceTrigger" },
+        "idempotency": { "$ref": "#/$defs/idempotency" }
       }
     },
     "bounds": {

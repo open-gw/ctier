@@ -19,6 +19,8 @@ These are true or false of a document in isolation.
 - `ctierSchema` equals the expected `<name>/<version>` string.
 - Enumerations: tier 1–4; criteria values as in `extensions.md`; status
   `declared` | `recommended`; rule `confidence` `high` | `medium` | `low`.
+- Where `x-ctier-criteria` is present, all five fields are required. There are
+  no criteria defaults. A missing field is a schema error naming that field.
 - `propose` contains `tier` or `criteria`, never both.
 - `when` contains only the closed predicate keys: `method`,
   `pathEndsWithParameter`, `responseIsCollection`, `hasRequestBody`,
@@ -77,10 +79,15 @@ Exclusion is an authorisation decision taken before any tier is considered.
 sorted lexicographically, no insignificant whitespace, UTF-8). Per-input
 digests are over raw bytes. Schema checks the string form, not the bytes.
 
-### Fail-closed criteria
+### Engine `Criteria` defaults are not the contract
 
-A missing criteria field is its highest-consequence value. Schema may record
-`default`; only a validator applying those defaults classifies a partial object.
+The reference implementation's `Criteria` model retains permissive Python
+defaults so tests can construct objects without filling every field. Those
+defaults are **not** the document contract and must never be relied upon by a
+document. A document that omits a criteria field is invalid.
+
+Fail-closed is C2: an operation with no `x-ctier-*` declaration is Tier 4.
+That guarantee does not fill in a half-written criteria object.
 
 ---
 

@@ -9,6 +9,9 @@ rules:
       criteria:
         reversibility: not-applicable
         blast-radius: single-record
+        data-sensitivity: internal
+        compliance-trigger: none
+        idempotency: inherently-safe
     rationale: Single-resource read; there is nothing to undo.
     confidence: high
   - id: delete-is-tier-3-floor

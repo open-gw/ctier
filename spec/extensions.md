@@ -1,12 +1,13 @@
 # ctier extension reference
 
-Specification 1.1.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.1.1. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
 **Naming.** 1.0.0 used `x-consequence-*`. 1.1.0 renames to the `ctier`
-namespace. The 1.0.0 archive (DOI 10.5281/zenodo.22020288) is unaltered and
-remains resolvable.
+namespace. 1.1.1 requires all five criteria fields.
+The 1.0.0 archive (DOI 10.5281/zenodo.22020288) is unaltered and remains
+resolvable.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.
@@ -41,10 +42,10 @@ Integer 1–4. Optional. The declared tier. Absence is Tier 4
 
 ### `x-ctier-criteria`
 
-Object. Optional. The five criteria. Recorded so a later reclassification is
-reviewable. The gateway resolves the declared tier; it does not recompute from
-these at request time. A validator may compute a tier from them when checking
-the single-target rule.
+Object. Optional. When present, all five fields are required. Recorded so a
+later reclassification is reviewable. The gateway resolves the declared tier;
+it does not recompute from these at request time. A validator may compute a
+tier from them when checking the single-target rule.
 
 | Field | Values |
 |---|---|
@@ -54,10 +55,15 @@ the single-target rule.
 | `compliance-trigger` | `none`, `adjacent`, `direct` |
 | `idempotency` | `inherently-safe`, `safe`, `key-required`, `unsafe` |
 
-**Fail-closed defaults.** An omitted field defaults to its highest-consequence
-value: `reversibility: none`, `blast-radius: system-wide`,
-`data-sensitivity: regulated`, `compliance-trigger: direct`,
-`idempotency: unsafe`. A partially-filled object classifies high, deliberately.
+There are no criteria defaults. The five criteria are the design-time
+judgement. Half of that judgement is not a weaker version of it — it is an
+author who has not finished. A schema `required` says so with an error naming
+the missing field; a fail-closed default says so with a Tier 4 the author
+cannot account for.
+
+Fail-closed is unaffected. C2 operates one level up: an operation carrying no
+`x-ctier-*` declaration at all is Tier 4. Completeness *within* a declaration
+is a validation concern, not a classification one.
 
 Values are taken from the reference implementation's enumerations so the schema
 and the code cannot drift.

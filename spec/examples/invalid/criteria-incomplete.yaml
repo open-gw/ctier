@@ -1,0 +1,15 @@
+# Schema-invalid: x-ctier-criteria / propose.criteria requires all five fields.
+# Expected error names `compliance-trigger`.
+ctierSchema: classification-rules/0.1.0
+rules:
+  - id: incomplete-criteria
+    when:
+      method: [get]
+    propose:
+      criteria:
+        reversibility: not-applicable
+        blast-radius: single-record
+        data-sensitivity: internal
+        idempotency: inherently-safe
+    rationale: Missing compliance-trigger; must fail with that field named.
+    confidence: high

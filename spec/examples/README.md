@@ -15,3 +15,4 @@ against.
 | `invalid/unidirectionality.operation.yaml` | extensions | violates **unidirectionality** |
 | `invalid/bounds-coherence.operation.yaml` | extensions | violates **bounds coherence** |
 | `invalid/exclusion-exclusivity.operation.yaml` | extensions | violates **exclusion exclusivity** |
+| `invalid/criteria-incomplete.yaml` | `classification-rules/0.1.0` | **schema fail** — missing `compliance-trigger` |

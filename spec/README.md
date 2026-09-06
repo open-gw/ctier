@@ -1,4 +1,4 @@
-# ctier specification 1.1.0
+# ctier specification 1.1.1
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
