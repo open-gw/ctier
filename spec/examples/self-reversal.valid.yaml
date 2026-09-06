@@ -1,0 +1,20 @@
+# Valid self-reversal: PUT names itself; idempotency is safe.
+openapi: 3.1.0
+info:
+  title: Self-reversing PUT
+  version: 0.1.0
+paths:
+  /customers/{customerId}/preferences/display:
+    put:
+      operationId: updateDisplayPreferences
+      x-ctier-tier: 2
+      x-ctier-status: declared
+      x-ctier-reverses: updateDisplayPreferences
+      x-ctier-criteria:
+        reversibility: undo-restores-effect
+        blast-radius: single-customer
+        data-sensitivity: personal
+        compliance-trigger: none
+        idempotency: safe
+      responses:
+        '200': { description: replaced }

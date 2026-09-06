@@ -25,7 +25,7 @@ These are true or false of a document in isolation.
 - `when` contains only the closed predicate keys: `method`,
   `pathEndsWithParameter`, `responseIsCollection`, `hasRequestBody`,
   `securitySchemes`, `tagIn`, `operationIdMatches`,
-  `isReversedByAnotherOperation`, `pathSegmentCount`, `pathParameterCount`.
+  `hasDeclaredReversal`, `pathSegmentCount`, `pathParameterCount`.
 - `pathSegmentCount` and `pathParameterCount` are an integer or `{min, max}`.
 - `operationIdMatches` is a list of exact strings, not a pattern.
 - Digests match `sha256:` followed by 64 lowercase hex characters.
@@ -68,11 +68,25 @@ point in evaluation. Schema cannot see the evaluation context.
 ### Tier 2 requires a verified compensating action
 
 An operation declaring `x-ctier-tier: 2`, or criteria resolving to Tier 2,
-MUST be named by the `x-ctier-reverses` field of some other operation in the
-same composed description. An operation naming a `x-ctier-reverses` target
-that does not exist is invalid.
+MUST be named by an `x-ctier-reverses` field in the same composed description.
+The namer may be another operation, or the operation itself. An
+`x-ctier-reverses` target that does not exist is invalid.
 
 Do not infer reversal from operation names. The author declares it.
+
+### Self-reversal
+
+An operation MAY name itself in `x-ctier-reverses`, asserting that re-invoking
+it with the captured prior state restores the effect. Self-reversal is valid
+only where `x-ctier-criteria.idempotency` is `inherently-safe` or `safe`. An
+operation that is `key-required` or `unsafe` cannot reverse itself:
+re-invoking it is not a restoration, it is a second mutation.
+
+The model already requires Tier 2 to carry an audit trail with
+before-and-after state. That capture is precisely what makes self-reversal
+possible — the compensating action *is* "invoke this operation again with the
+captured before-state." The audit requirement and the compensating-action
+requirement are the same mechanism seen from two ends.
 
 ### Exclusion exclusivity
 

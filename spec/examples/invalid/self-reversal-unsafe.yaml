@@ -1,0 +1,21 @@
+# Violates: self-reversal idempotency guard
+# Names itself, but idempotency is unsafe — re-invoke is a second mutation.
+openapi: 3.1.0
+info:
+  title: Invalid self-reversal
+  version: 0.1.0
+paths:
+  /ledger/entries:
+    post:
+      operationId: postLedgerEntry
+      x-ctier-tier: 2
+      x-ctier-status: declared
+      x-ctier-reverses: postLedgerEntry
+      x-ctier-criteria:
+        reversibility: undo-restores-effect
+        blast-radius: single-record
+        data-sensitivity: internal
+        compliance-trigger: none
+        idempotency: unsafe
+      responses:
+        '201': { description: posted }

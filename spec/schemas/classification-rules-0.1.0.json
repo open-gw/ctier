@@ -60,9 +60,9 @@
           "description": "Exact operationId values, not a pattern.",
           "items": { "type": "string", "minLength": 1 }
         },
-        "isReversedByAnotherOperation": {
+        "hasDeclaredReversal": {
           "type": "boolean",
-          "description": "True when some other operation in the composed description sets x-ctier-reverses to this operationId. A lookup, not a name inference."
+          "description": "True when an x-ctier-reverses in the composed description names this operationId — another operation, or this one. A lookup, not a name inference."
         },
         "pathSegmentCount": { "$ref": "#/$defs/countMatch" },
         "pathParameterCount": { "$ref": "#/$defs/countMatch" }

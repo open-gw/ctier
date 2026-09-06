@@ -112,7 +112,7 @@
     "reverses": {
       "type": "string",
       "minLength": 1,
-      "description": "operationId this operation reverses. A declared compensating action, not an inferred name."
+      "description": "operationId this operation reverses. May be this operation's own operationId (self-reversal). Self-reversal is valid only when idempotency is inherently-safe or safe — that guard is validator-checked, not schema-checked."
     }
   }
 }

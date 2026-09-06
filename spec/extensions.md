@@ -1,11 +1,12 @@
 # ctier extension reference
 
-Specification 1.1.1. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.1.2. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
 **Naming.** 1.0.0 used `x-consequence-*`. 1.1.0 renames to the `ctier`
 namespace. 1.1.1 requires all five criteria fields and adds `x-ctier-reverses`.
+1.1.2 permits self-reversal where idempotency is `safe` or `inherently-safe`.
 The 1.0.0 archive (DOI 10.5281/zenodo.22020288) is unaltered and remains
 resolvable.
 
@@ -75,7 +76,11 @@ compensating action. Do not infer reversal from naming.
 
 The named `operationId` must exist in the same composed description. An
 operation declaring `x-ctier-tier: 2`, or criteria resolving to Tier 2, MUST
-be named by some other operation's `x-ctier-reverses`. See `validation.md`.
+be named by an `x-ctier-reverses` — another operation's, or its own. See
+`validation.md`.
+
+Self-reversal is valid only where `idempotency` is `inherently-safe` or
+`safe`. `key-required` and `unsafe` cannot reverse themselves.
 
 ### `x-ctier-exclude`
 
