@@ -141,7 +141,10 @@ losing the other.
 |---|---|
 | `spec/consequence-tiered-api.yaml` | Complete worked OpenAPI 3.1 example — ten operations across all four tiers, plus one explicitly excluded and one deliberately unclassified |
 | `spec/README.md` | Specification 1.1.0 index and naming note |
+| `spec/extensions.md` | Flat `x-ctier-*` keys |
+| `spec/schemas/` | JSON Schema 2020-12 for the document contract, 0.1.0 |
 | `docs/` | Classification worksheet, domain walkthroughs, FAQ |
+| `docs/adr/0009-the-contract-is-the-documents.md` | Why the contract is documents, not a library API |
 
 The example specification is deliberately built so the argument is visible in its structure:
 the OAuth scopes are drawn at the granularity real systems use, so the mismatch between scope
