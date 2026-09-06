@@ -52,17 +52,9 @@
       "type": "string",
       "enum": ["inherently-safe", "safe", "key-required", "unsafe"]
     },
-    "criteria": {
+    "criteriaFields": {
       "type": "object",
-      "description": "All five fields are required. There are no defaults. A partial object is an unfinished judgement, not a fail-closed classification.",
       "additionalProperties": false,
-      "required": [
-        "reversibility",
-        "blast-radius",
-        "data-sensitivity",
-        "compliance-trigger",
-        "idempotency"
-      ],
       "properties": {
         "reversibility": { "$ref": "#/$defs/reversibility" },
         "blast-radius": { "$ref": "#/$defs/blastRadius" },
@@ -70,6 +62,28 @@
         "compliance-trigger": { "$ref": "#/$defs/complianceTrigger" },
         "idempotency": { "$ref": "#/$defs/idempotency" }
       }
+    },
+    "criteria": {
+      "description": "A declaration. All five fields are required. There are no defaults. A partial object is an unfinished judgement, not a fail-closed classification.",
+      "allOf": [
+        { "$ref": "#/$defs/criteriaFields" },
+        {
+          "required": [
+            "reversibility",
+            "blast-radius",
+            "data-sensitivity",
+            "compliance-trigger",
+            "idempotency"
+          ]
+        }
+      ]
+    },
+    "criteriaProposal": {
+      "description": "A proposal. Same properties and enums as criteria; any non-empty subset. The empty fields are the ones a human has to supply.",
+      "allOf": [
+        { "$ref": "#/$defs/criteriaFields" },
+        { "minProperties": 1 }
+      ]
     },
     "bounds": {
       "type": "object",

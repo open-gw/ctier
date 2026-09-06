@@ -10,6 +10,7 @@ against.
 | `classification-rules.valid.yaml` | `classification-rules/0.1.0` | schema pass |
 | `composition-manifest.valid.json` | `composition-manifest/0.1.0` | schema pass |
 | `recommendation-set.valid.yaml` | `recommendation-set/0.1.0` | schema pass |
+| `recommendation-partial.valid.yaml` | `recommendation-set/0.1.0` | **schema pass** — proposes only `reversibility` and `blast-radius` |
 | `coverage-report.valid.json` | `coverage-report/0.1.0` | schema pass |
 | `reversal.valid.yaml` | qualified spec | validator pass — Tier 2 named by another operation |
 | `self-reversal.valid.yaml` | qualified spec | validator pass — self-reversal, idempotency `safe` |
@@ -18,7 +19,8 @@ against.
 | `invalid/unidirectionality.operation.yaml` | extensions | violates **unidirectionality** |
 | `invalid/bounds-coherence.operation.yaml` | extensions | violates **bounds coherence** |
 | `invalid/exclusion-exclusivity.operation.yaml` | extensions | violates **exclusion exclusivity** |
-| `invalid/criteria-incomplete.yaml` | `classification-rules/0.1.0` | **schema fail** — missing `compliance-trigger` |
+| `invalid/criteria-incomplete.yaml` | `classification-rules/0.1.0` | **schema fail** — missing `compliance-trigger` (declaration `$defs/criteria`, not `criteriaProposal`) |
+| `invalid/criteria-proposal-empty.yaml` | `recommendation-set/0.1.0` | **schema fail** — empty `criteriaProposal` |
 | `invalid/tier2-unverified.yaml` | qualified spec | violates **Tier 2 verified compensating action** |
 | `invalid/reverses-dangling.yaml` | qualified spec | violates **dangling x-ctier-reverses** |
 | `invalid/self-reversal-unsafe.yaml` | qualified spec | violates **self-reversal idempotency guard** |

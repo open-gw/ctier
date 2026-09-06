@@ -19,8 +19,13 @@ These are true or false of a document in isolation.
 - `ctierSchema` equals the expected `<name>/<version>` string.
 - Enumerations: tier 1–4; criteria values as in `extensions.md`; status
   `declared` | `recommended`; rule `confidence` `high` | `medium` | `low`.
-- Where `x-ctier-criteria` is present, all five fields are required. There are
-  no criteria defaults. A missing field is a schema error naming that field.
+- Where `x-ctier-criteria` appears on a description or qualified spec, all
+  five fields are required (`$defs/criteria`). A missing field is a schema
+  error naming that field, not `criteriaProposal`. There are no criteria
+  defaults.
+- A recommendation set MAY propose a partial criteria object
+  (`$defs/criteriaProposal`: any subset, at least one). An empty criteria
+  object is a schema error.
 - `propose` contains `tier` or `criteria`, never both.
 - `when` contains only the closed predicate keys: `method`,
   `pathEndsWithParameter`, `responseIsCollection`, `hasRequestBody`,
@@ -46,6 +51,17 @@ a confirmed tier has no proposal date, and carrying one invites the reader to
 think it expires. JSON Schema 2020-12 expresses both halves, including a date
 with no status (the `else`). The validator's job is to apply `$defs/operation`
 to each Operation Object, not to re-check the conditional.
+
+A recommendation set MAY propose a partial criteria object. The composer MUST
+reject a description or qualified spec whose criteria are partial, whether they
+arrived inline or through an overlay. Completeness is required at the point of
+declaration, not at the point of proposal.
+
+`ctier recommend --apply` writes a recommendation into the description. Applying
+a partial proposal inline therefore produces an **invalid description**, by
+design. The command must either refuse to apply an incomplete proposal, or
+apply it and report the document as incomplete. That behaviour is the
+recommender's; the invalidity is intended rather than a defect.
 
 ---
 

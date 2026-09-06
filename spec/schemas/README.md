@@ -8,7 +8,7 @@ recognise.
 
 | Schema | Document |
 |---|---|
-| `ctier-extensions-0.1.0.json` | Reusable `x-ctier-*` subschemas, including `$defs/operation` |
+| `ctier-extensions-0.1.0.json` | Reusable `x-ctier-*` subschemas, including `$defs/operation`, `$defs/criteria`, `$defs/criteriaProposal` |
 | `classification-rules-0.1.0.json` | Recommender rule document |
 | `composition-manifest-0.1.0.json` | Composition inputs and C13 digest |
 | `recommendation-set-0.1.0.json` | Overlay 1.1.0 plus per-action provenance |

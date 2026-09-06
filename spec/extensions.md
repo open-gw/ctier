@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.1.3. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.1.4. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -8,8 +8,9 @@ and to validate.
 namespace. 1.1.1 requires all five criteria fields and adds `x-ctier-reverses`.
 1.1.2 permits self-reversal where idempotency is `safe` or `inherently-safe`.
 1.1.3 requires `x-ctier-recommended-at` whenever `x-ctier-status` is
-`recommended`, and forbids it on `declared`. The 1.0.0 archive
-(DOI 10.5281/zenodo.22020288) is unaltered and remains resolvable.
+`recommended`, and forbids it on `declared`. 1.1.4 splits criteria: a
+declaration must be complete; a proposal may be a non-empty subset. The 1.0.0
+archive (DOI 10.5281/zenodo.22020288) is unaltered and remains resolvable.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.
@@ -44,10 +45,27 @@ Integer 1–4. Optional. The declared tier. Absence is Tier 4
 
 ### `x-ctier-criteria`
 
-Object. Optional. When present, all five fields are required. Recorded so a
-later reclassification is reviewable. The gateway resolves the declared tier;
-it does not recompute from these at request time. A validator may compute a
-tier from them when checking the single-target rule.
+Object. Optional. **Where it appears changes what completeness means.**
+
+| Where | Shape | Why |
+|---|---|---|
+| Description or qualified spec (`$defs/criteria`) | all five required | it is a **declaration** |
+| Recommendation set (`$defs/criteriaProposal`) | any subset, at least one | it is a **proposal** |
+
+A declaration is a completed judgement and must be complete. A proposal is an
+observation about what the description makes visible, and the fields it leaves
+empty are the ones a human has to supply. Requiring a proposal to be complete
+would force the recommender to invent the two criteria — data sensitivity and
+compliance trigger — that the interface description cannot express and that
+carry the most consequence when wrong.
+
+The enums are shared. Only the required-set differs.
+
+In a description or qualified spec, all five fields are required when the
+object is present. Recorded so a later reclassification is reviewable. The
+gateway resolves the declared tier; it does not recompute from these at
+request time. A validator may compute a tier from them when checking the
+single-target rule.
 
 | Field | Values |
 |---|---|
@@ -57,11 +75,12 @@ tier from them when checking the single-target rule.
 | `compliance-trigger` | `none`, `adjacent`, `direct` |
 | `idempotency` | `inherently-safe`, `safe`, `key-required`, `unsafe` |
 
-There are no criteria defaults. The five criteria are the design-time
-judgement. Half of that judgement is not a weaker version of it — it is an
-author who has not finished. A schema `required` says so with an error naming
-the missing field; a fail-closed default says so with a Tier 4 the author
-cannot account for.
+There are no criteria defaults. In a declaration the five criteria are the
+design-time judgement. Half of that judgement is not a weaker version of it —
+it is an author who has not finished. A schema `required` says so with an
+error naming the missing field; a fail-closed default says so with a Tier 4
+the author cannot account for. A proposal is allowed to be that unfinished
+object, because the missing fields are the human's.
 
 Fail-closed is unaffected. C2 operates one level up: an operation carrying no
 `x-ctier-*` declaration at all is Tier 4. Completeness *within* a declaration

@@ -1,0 +1,19 @@
+# Schema-invalid: recommendation-set x-ctier-criteria must have at least one field.
+# Expected error is minProperties on criteriaProposal, not a missing declaration field.
+ctierSchema: recommendation-set/0.1.0
+overlay: "1.1.0"
+info:
+  title: Empty criteria proposal
+  version: 0.1.0
+actions:
+  - target: "$.paths['/accounts/{accountId}'].get"
+    update:
+      x-ctier-status: recommended
+      x-ctier-criteria: {}
+    x-ctier-provenance:
+      inputText: Get a single account
+      inputDigest: sha256:44d8928e827125992f4712981e469bf623cdec3731de67bd7e549d39e142c40b
+      source: empty-criteria
+      version: 0.1.0
+      confidence: low
+      timestamp: "2026-09-06T14:00:00Z"

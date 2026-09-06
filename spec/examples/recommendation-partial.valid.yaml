@@ -1,0 +1,23 @@
+# Valid recommendation set: proposes only what the description makes visible.
+# data-sensitivity and compliance-trigger are left for a human.
+ctierSchema: recommendation-set/0.1.0
+overlay: "1.1.0"
+info:
+  title: Partial criteria proposal
+  version: 0.1.0
+extends: ../consequence-tiered-api.yaml
+actions:
+  - target: "$.paths['/accounts/{accountId}'].get"
+    description: Single-resource read; reversibility and blast radius are visible.
+    update:
+      x-ctier-status: recommended
+      x-ctier-criteria:
+        reversibility: not-applicable
+        blast-radius: single-record
+    x-ctier-provenance:
+      inputText: Get a single account
+      inputDigest: sha256:44d8928e827125992f4712981e469bf623cdec3731de67bd7e549d39e142c40b
+      source: read-single-resource
+      version: 0.1.0
+      confidence: high
+      timestamp: "2026-09-06T14:00:00Z"

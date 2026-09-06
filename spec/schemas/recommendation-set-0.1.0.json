@@ -53,7 +53,7 @@
           "$ref": "ctier-extensions-0.1.0.json#/$defs/tier"
         },
         "x-ctier-criteria": {
-          "$ref": "ctier-extensions-0.1.0.json#/$defs/criteria"
+          "$ref": "ctier-extensions-0.1.0.json#/$defs/criteriaProposal"
         },
         "x-ctier-status": {
           "$ref": "ctier-extensions-0.1.0.json#/$defs/status"
