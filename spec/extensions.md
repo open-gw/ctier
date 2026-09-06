@@ -69,6 +69,18 @@ is a validation concern, not a classification one.
 Values are taken from the reference implementation's enumerations so the schema
 and the code cannot drift.
 
+#### Reversibility is not the record
+
+Two operations with the same method, the same shape and the same data can
+classify differently. The question is not whether the record can be restored
+but whether anything acted on the state while it stood. Where the answer
+depends on downstream consumers rather than on the operation itself, the
+classification belongs to whoever knows those consumers — which is rarely the
+API developer.
+
+The reference document's `updateDisplayPreferences` and
+`updateCommunicationPreferences` are that pair.
+
 ### `x-ctier-reverses`
 
 String. Optional. The `operationId` this operation reverses. Declares a
