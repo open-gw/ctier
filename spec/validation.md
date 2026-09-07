@@ -247,6 +247,15 @@ C12 are exercised by the compiled targets and the corpus. **C8's
 rejection branch is not**, and cannot be until the authorisation layer
 exists. Expiry is distinct and does run.
 
+The same finding now applies to the specification's own artefacts,
+not only to its criteria. Four have been corrected after something
+was built against them — ADR-006's fail-closed floor, C10's
+record-before-act, the `standard` profile, and the composition digest
+on the ledger — and each named a mechanism where it meant a
+property. The remedy has been the same every time and it is not more
+careful writing: the correction was only ever found by an
+implementation.
+
 ---
 
 ## What a validator is
