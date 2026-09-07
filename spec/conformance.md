@@ -102,9 +102,18 @@ reasoned about.
   differential against the reference adapter: that adapter constructs a
   fresh classifier per request and would escalate on the crossing
   call — a different mechanism, not a disagreement.
+- **Standard profile** — implemented and live-verified against Keycloak
+  26.3.3 in the reference rig. The deploy-time bound applies. Until
+  13c, neither profile had an implementation of delegation-chain
+  integrity: standard was undeployable on this pin, constrained was
+  deliberately not built. A reader of the earlier evidence section
+  could not have discovered that. A specification that quietly
+  acquires an implementation reads the same as one that always claimed
+  to have one.
 - **Apigee** — golden-file correct, differentially **unproven**. No
   local runtime exists; verification waits on a real organisation.
 - **Constrained profile** — no cases. Nothing has been built for it.
+  It is now the only profile with no implementation.
 - **C8's rejection branch** — not exercisable until the authorisation
   layer exists.
 
