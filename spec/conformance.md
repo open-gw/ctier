@@ -67,6 +67,14 @@ sub-agent at runtime with an arbitrary narrower scope. Any
 implementation of this profile inherits that bound — it follows from
 the mechanism, not from a choice the reference implementation made.
 
+The digest identifies the deployment, from which the **declared**
+delegation topology can be recovered. It does not record which parent
+initiated a given exchange. In the reference implementation those are
+the same thing, because a sub-agent identity may be declared under at
+most one parent; an implementation permitting a shared sub-agent
+identity recovers an ambiguous topology from the same digest and MUST
+NOT claim chain evidence from it.
+
 ---
 
 ## The bounded imprecision
