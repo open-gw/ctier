@@ -1,4 +1,4 @@
-# ctier specification 1.1.8
+# ctier specification 1.1.9
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -128,6 +128,28 @@ handover: a human performs the operation under their own credential, and
 the agent does not. A location in the agent's response makes the agent
 the mediator of a handover it was excluded from. The exclusion is the
 control.
+
+**C10 — No operation executes without a decision having been made.** The
+decision MUST precede the action. That precedence may arise from the
+decision being bound into the enforcement point's configuration at
+deploy time, or from a synchronous evaluation before the request
+proceeds; both satisfy this criterion and an implementation MUST state
+which it relies on.
+
+The **record** of a decision is evidence that it was made, not the
+decision itself. It MUST carry the declared tier, the applied tier, the
+escalation reason and the composition digest. It MAY be written
+asynchronously, and MUST be durable — an implementation whose records
+can be lost has not recorded them.
+
+Where the policy service is unavailable and the enforcement point
+refuses without classifying, the refusal MUST itself be recorded,
+marking the applied tier as undetermined. A refusal to decide is a
+decision.
+
+If the record sink is unavailable alongside the policy service, that
+window has no record. ADR-005 accepts this rather than implying a
+guarantee the design cannot make.
 
 **Excluded — `403`.** Refused at credential validation, before consequence
 evaluation. If this is reached by a live token, a scope has been over-granted.

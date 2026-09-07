@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.1.8. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.1.9. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -20,8 +20,10 @@ scopes byte-identity to method, target, query and body; C8's
 rejection is observed, not announced. 1.1.8: no agent-facing response
 carries a URL; C7 names `Idempotency-Key` and excludes headers from
 derivation. 1.1.8 also records which criteria have been exercised.
-The
-1.0.0 archive
+1.1.9 restates C10 as a property — no operation executes without a
+decision having been made — rather than as a request-time write. The
+record is evidence that a decision was made, MAY be written
+asynchronously, and MUST be durable. The 1.0.0 archive
 (DOI 10.5281/zenodo.22020288) is unaltered and remains resolvable.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
