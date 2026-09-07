@@ -225,16 +225,21 @@ document names them. It does not schematise them.
 
 ### On the maturity of these criteria
 
-C5, C6, C7 and C9 each turned out to have a gap that appeared only when
-something was built against them, and in every case the plain reading
-pointed the unsafe way — add a polling affordance, store a credential,
-derive a key from one, hand the agent a location. That is not
-coincidence: a criterion written from the design's intent omits
-prohibitions, because its author did not consider doing the wrong thing.
+C5, C6, C7, C9 and C10 have each now been built against. Each turned
+out to have a gap that appeared only when something implemented them.
 
-C10 has not yet been built against. It should be treated as unverified
-rather than settled, and the implementation that first builds against it
-should expect to find something.
+Each of these gaps pointed the unsafe way — add a polling affordance,
+store a credential, derive a key from one, hand the agent a location,
+describe a mechanism instead of the property it protects. A criterion
+written from a design's intent omits prohibitions, because its author
+did not consider doing the wrong thing. The remedy is not more careful
+writing; it is building something against each criterion and reporting
+what the plain reading permits.
+
+This closes that pattern. Of the remainder: C1, C2, C3, C4, C11 and
+C12 are exercised by the compiled targets and the corpus. **C8's
+rejection branch is not**, and cannot be until the authorisation layer
+exists. Expiry is distinct and does run.
 
 ---
 

@@ -24,7 +24,9 @@ derivation. 1.1.8 also records which criteria have been exercised.
 decision having been made — rather than as a request-time write. The
 record is evidence that a decision was made, MAY be written
 asynchronously, and MUST be durable. Names the three ledger record
-types — decision, attempt, outcome — without schematising them. The 1.0.0 archive
+types — decision, attempt, outcome — without schematising them. Closes
+the maturity note: C5, C6, C7, C9 and C10 have each been built against.
+The 1.0.0 archive
 (DOI 10.5281/zenodo.22020288) is unaltered and remains resolvable.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
