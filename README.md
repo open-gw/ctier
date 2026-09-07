@@ -51,9 +51,10 @@ restoring the state.
 | 4 — Critical | No undo exists | Agent suspended before the action; no auto-resume | Performs it personally |
 
 **Tier 3 is a delay. Tier 4 is a handover.** In Tier 3 the operation is deferred and the
-agent's operation eventually executes with a named approver against it. In Tier 4 the operation
-is withdrawn — the agent never executes it, and the human performs the action themselves under
-their own credentials.
+policy service eventually executes it under its own identity, with the originating agent and
+the authorising person recorded as attribution. In Tier 4 the operation is withdrawn — the
+agent never executes it, and the human performs the action themselves under their own
+credentials.
 
 
 
