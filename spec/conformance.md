@@ -1,0 +1,96 @@
+# Conformance corpus
+
+The artefact a second implementation is held to. It cannot serve that
+purpose while it lives in one implementation's test directory; 1.2.0
+promotes it as `conformance-corpus/0.3.0`.
+
+It is **normative, not 1.0.0**. This format reaches 1.0.0 when an
+implementation **other than the reference one** has been held to a
+corpus in it. Until then it defines what conformance means, but it has
+only ever been read by its author, which is a weaker claim than
+stability. A format used by one implementation is a serialisation; a
+format used by two is an interface, and only the second has been tested
+as one.
+
+---
+
+## What it establishes
+
+**Classification agreement.** Given a composed description and a
+request, two implementations resolve the same applied tier. Under a
+declared `deployment` level, they select the same disposition.
+
+That is the whole claim.
+
+## What it does not
+
+That either implementation is **correct**. Both can agree and both be
+wrong. The corpus compares them to each other and to an expected pair;
+it does not prove the pair.
+
+Nor anything about custody's internals, the authorisation layer, or an
+agent's behaviour on receiving a response. Those are other contracts.
+
+---
+
+## The dimensions a case declares
+
+| Field | Why |
+|---|---|
+| `profile` | `standard` assumes an authorisation server enforcing scope reduction at token exchange; `constrained` does not, and puts delegation-chain checking back at the enforcement point where it becomes testable |
+| `deployment` | `level-2` has no custody, so Tier 3 is a provisioning refusal; `level-3` has it, so Tier 3 withholds. Same classification, different disposition |
+| `sequence` | Accumulation is stateful. A single request cannot express a decomposition |
+
+A single-request case is a sequence of one. Existing cases did not need
+rewriting when the schema grew; the shape stayed valid.
+
+`profile` and `deployment` are properties of the run as well as of a
+case. A case may override the document `profile`. `deployment` is
+declared once, on the document, because it is how the system is
+installed, not how one operation is classified.
+
+---
+
+## The bounded imprecision
+
+An escalating case asserts `appliedTierAtLeast` rather than an exact
+tier on a specific request, because the accumulated floor is published
+out of band and read from gateway-local state. Escalation is guaranteed
+within threshold-crossing plus one poll interval, not on a nominated
+request.
+
+The measured window, from the implementation that first built the
+poller (`ctier-engine` `docs/findings/12a.md`):
+
+> With a poller the true window is **threshold-crossing plus up to one
+> poll interval (1000 ms)**.
+
+An exact expectation on the escalating request would encode that
+interval into the corpus and make it flaky. The assertion that matters
+is that escalation happened within the bound.
+
+---
+
+## What has been run against it
+
+Keep this section current. A reader deciding whether to trust the
+corpus needs to know which targets have been run and which have been
+reasoned about.
+
+- **Kong** — differentially proven at level-2 and level-3, standard
+  profile, for **stateless** cases (24/24). Sequential cases have run
+  live against Kong at level-3 (decomposition, under-threshold,
+  interleaved scopes, decay, unavailable floor). They are not
+  differential against the reference adapter: that adapter constructs a
+  fresh classifier per request and would escalate on the crossing
+  call — a different mechanism, not a disagreement.
+- **Apigee** — golden-file correct, differentially **unproven**. No
+  local runtime exists; verification waits on a real organisation.
+- **Constrained profile** — no cases. Nothing has been built for it.
+- **C8's rejection branch** — not exercisable until the authorisation
+  layer exists.
+
+The three record schemas (`decision-record/0.1.0`,
+`attempt-record/0.1.0`, `outcome-record/0.1.0`) have held a Decision,
+an Attempt, and an Outcome through a full withhold-approve-execute
+cycle on the same Kong stack. Same status: normative, not 1.0.0.

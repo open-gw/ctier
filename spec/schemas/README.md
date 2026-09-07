@@ -25,3 +25,6 @@ recognise.
 
 The qualified spec is OpenAPI plus the extensions in `../extensions.md`. It has
 no schema of its own.
+
+What the corpus establishes, and what has been run against it, is
+[`../conformance.md`](../conformance.md).

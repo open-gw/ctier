@@ -143,6 +143,7 @@ losing the other.
 |---|---|
 | `spec/consequence-tiered-api.yaml` | Complete worked OpenAPI 3.1 example — operations across all four tiers, plus one explicitly excluded and one deliberately unclassified |
 | `spec/README.md` | Specification 1.2.0 index and naming note |
+| `spec/conformance.md` | What the corpus establishes and what it does not |
 | `spec/extensions.md` | Flat `x-ctier-*` keys |
 | `spec/schemas/` | JSON Schema 2020-12 for the document contract |
 | `docs/` | Classification worksheet, domain walkthroughs, FAQ |

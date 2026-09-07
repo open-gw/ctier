@@ -12,6 +12,7 @@ unaltered and remains resolvable.
 |---|---|
 | [`extensions.md`](extensions.md) | Flat `x-ctier-*` keys: meaning, location, type, required |
 | [`validation.md`](validation.md) | Schema-checked shape versus validator-checked semantics |
+| [`conformance.md`](conformance.md) | What the corpus establishes, the case dimensions, and which targets have been run |
 | [`schemas/`](schemas/) | JSON Schema 2020-12 for the ctier-authored formats |
 | [`examples/`](examples/) | Valid instances, invalid instances one per semantic rule, and bound-comparison request cases |
 | [`consequence-tiered-api.yaml`](consequence-tiered-api.yaml) | Worked OpenAPI 3.1 example |
