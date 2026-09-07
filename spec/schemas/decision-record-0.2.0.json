@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/open-gw/ctier/spec/schemas/decision-record-0.1.0.json",
+  "$id": "https://github.com/open-gw/ctier/spec/schemas/decision-record-0.2.0.json",
   "title": "ctier decision record",
-  "description": "An operation was classified and acted upon. Applied tier is determined; that is what distinguishes a Decision from an Attempt. This format reaches 1.0.0 when an implementation other than the reference one has been held to records in it. Until then it is normative — it defines what a Decision is — but it has only ever been read by its author, which is a weaker claim than stability.",
+  "description": "An operation was classified and acted upon. Applied tier is determined; that is what distinguishes a Decision from an Attempt. deploymentDigest identifies the deployment that produced the decision — composed description, tier declarations, and declared agent identities — and is renamed from composition so a 0.1.0 record is obviously old. 0.2.0 follows 0.1.0 by days because 12b promoted these formats as normative, not stable, and reserved 1.0.0 for the point at which a second implementation has been held to them; this is that case. This format reaches 1.0.0 when an implementation other than the reference one has been held to records in it. Until then it is normative — it defines what a Decision is — but it has only ever been read by its author, which is a weaker claim than stability.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -16,10 +16,10 @@
     "escalationReason",
     "disposition",
     "idempotencyKey",
-    "composition"
+    "deploymentDigest"
   ],
   "properties": {
-    "ctierSchema": { "const": "decision-record/0.1.0" },
+    "ctierSchema": { "const": "decision-record/0.2.0" },
     "id": { "type": "string", "minLength": 1 },
     "timestamp": { "type": "string", "minLength": 1 },
     "operationAnchor": { "type": "string", "minLength": 1 },
@@ -44,7 +44,7 @@
       "enum": ["execute", "withhold", "refuse-and-suspend", "refuse-provisioning"]
     },
     "idempotencyKey": { "type": "string", "minLength": 1 },
-    "composition": {
+    "deploymentDigest": {
       "$ref": "ctier-extensions-0.1.0.json#/$defs/digest"
     }
   }

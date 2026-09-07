@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.3.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.4.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -31,8 +31,13 @@ the three record schemas (`decision-record/0.1.0`, `attempt-record/0.1.0`,
 `outcome-record/0.1.0`). They are normative, not 1.0.0. 1.3.0 restates
 the `standard` profile as client entitlement, not token lineage, and
 records the deploy-time delegation bound that follows from it. The
-`profile` enum is unchanged. The 1.0.0 archive
-(DOI 10.5281/zenodo.22020288) is unaltered and remains resolvable.
+`profile` enum is unchanged. 1.4.0 renames the ledger digest to
+`deploymentDigest` — composed description, tier declarations, and
+declared agent identities — so a record written under `composition`
+is obviously old. Decision and attempt records are `0.2.0`. The
+outcome record never carried a digest and stays `0.1.0`. The 1.0.0
+archive (DOI 10.5281/zenodo.22020288) is unaltered and remains
+resolvable.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

@@ -176,8 +176,14 @@ Exclusion is an authorisation decision taken before any tier is considered.
 ### Digest discipline
 
 `compositionDigest` is over canonical JSON of the composed document (keys
-sorted lexicographically, no insignificant whitespace, UTF-8). Per-input
-digests are over raw bytes. Schema checks the string form, not the bytes.
+sorted lexicographically, no insignificant whitespace, UTF-8). That is
+the compose-time binding (C13). `deploymentDigest` is over every input
+the generator consumed: the composed description, the tier
+declarations, and the declared agent identities with their
+entitlements. Regenerating from identical inputs MUST produce an
+identical digest. A change to any input MUST change it. Per-input
+digests are over raw bytes. Schema checks the string form, not the
+bytes.
 
 ### Pagination is refused as a predicate
 
@@ -207,18 +213,19 @@ Three types. An attempt is not a decision with nulls. An outcome is the
 only record that proves C6 held.
 
 **Decision** — an operation was classified and acted upon. Declared
-tier, applied tier, escalation reason, disposition, composition digest.
+tier, applied tier, escalation reason, disposition, deployment digest.
 
 **Attempt** — the enforcement point refused without classifying,
 because the policy service was unavailable. Carries the declared tier,
-the composition digest and the reason, and marks the applied tier
+the deployment digest and the reason, and marks the applied tier
 undetermined.
 
 **Outcome** — what happened when an approved Tier 3 executed.
 Correlation, approver, executed-at, result, whether it failed. Written
-after the fact by definition.
+after the fact by definition. No digest; it joins a Decision by
+`correlationId`.
 
-Their schemas are `decision-record/0.1.0`, `attempt-record/0.1.0` and
+Their schemas are `decision-record/0.2.0`, `attempt-record/0.2.0` and
 `outcome-record/0.1.0`. They are normative. They reach 1.0.0 when an
 implementation other than the reference one has been held to them.
 

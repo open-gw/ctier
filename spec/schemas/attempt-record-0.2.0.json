@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/open-gw/ctier/spec/schemas/attempt-record-0.2.0.json",
+  "title": "ctier attempt record",
+  "description": "The enforcement point refused without classifying, because the policy service was unavailable. Not a Decision with a null applied tier. deploymentDigest identifies the deployment in force — composed description, tier declarations, and declared agent identities — and is renamed from composition so a 0.1.0 record is obviously old. 0.2.0 follows 0.1.0 by days because 12b promoted these formats as normative, not stable, and reserved 1.0.0 for the point at which a second implementation has been held to them; this is that case. This format reaches 1.0.0 when an implementation other than the reference one has been held to records in it. Until then it is normative — it defines what an Attempt is — but it has only ever been read by its author, which is a weaker claim than stability.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "ctierSchema",
+    "id",
+    "timestamp",
+    "operationAnchor",
+    "declaredTier",
+    "appliedTier",
+    "deploymentDigest",
+    "reason"
+  ],
+  "properties": {
+    "ctierSchema": { "const": "attempt-record/0.2.0" },
+    "id": { "type": "string", "minLength": 1 },
+    "timestamp": { "type": "string", "minLength": 1 },
+    "operationAnchor": { "type": "string", "minLength": 1 },
+    "agentId": { "type": ["string", "null"] },
+    "correlationScope": { "type": ["string", "null"] },
+    "declaredTier": { "type": "integer", "minimum": 1, "maximum": 4 },
+    "appliedTier": { "type": "null" },
+    "deploymentDigest": {
+      "$ref": "ctier-extensions-0.1.0.json#/$defs/digest"
+    },
+    "reason": { "type": "string", "minLength": 1 }
+  }
+}

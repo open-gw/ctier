@@ -117,7 +117,7 @@ reasoned about.
 - **C8's rejection branch** — not exercisable until the authorisation
   layer exists.
 
-The three record schemas (`decision-record/0.1.0`,
-`attempt-record/0.1.0`, `outcome-record/0.1.0`) have held a Decision,
+The three record schemas (`decision-record/0.2.0`,
+`attempt-record/0.2.0`, `outcome-record/0.1.0`) have held a Decision,
 an Attempt, and an Outcome through a full withhold-approve-execute
 cycle on the same Kong stack. Same status: normative, not 1.0.0.

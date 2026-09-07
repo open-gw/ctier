@@ -10,7 +10,7 @@
     },
     "digest": {
       "type": "string",
-      "description": "sha256:<64 lowercase hex>. Composition digest is over canonical JSON of the composed document. Per-input digests are over raw bytes.",
+      "description": "sha256:<64 lowercase hex>. A composition digest is over canonical JSON of the composed document. A deployment digest is over every input the generator consumed: composed description, tier declarations, and declared agent identities. Regenerating from identical inputs MUST produce an identical digest; a change to any input MUST change it. Per-input digests are over raw bytes.",
       "pattern": "^sha256:[0-9a-f]{64}$"
     },
     "tier": {

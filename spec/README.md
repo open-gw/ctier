@@ -1,4 +1,4 @@
-# ctier specification 1.3.0
+# ctier specification 1.4.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -35,6 +35,11 @@ interface.
 requesting the exchange, not reduction by token lineage, and records
 the deploy-time bound that follows from that mechanism. The `profile`
 enum is unchanged.
+
+1.4.0 renames the ledger digest to `deploymentDigest` and widens it
+to cover declared agent identities. Decision and attempt records move
+to `0.2.0`. The outcome record never carried a digest and stays
+`0.1.0`. The corpus does not assert a digest value and is not bumped.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
