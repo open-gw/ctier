@@ -138,7 +138,10 @@ components:
 
         This is a SUCCESS outcome for the request, not a failure. The correct
         agent behaviour is to record the correlationId, continue with the rest
-        of the task, and tell the user that this step is pending review. See
+        of the task, and tell the user that this step is pending review. The
+        agent's involvement ends here. The response MUST NOT carry a polling
+        URL, a callback URL, a status endpoint, or any other affordance by
+        which the agent could observe the pending operation's progress. See
         the response contracts in `spec/README.md`.
       type: object
       required: [status, correlationId, classifiedTier, expiresAt, retryable, agentAction]
@@ -147,7 +150,6 @@ components:
         correlationId: { type: string }
         classifiedTier: { type: integer, examples: [3] }
         expiresAt: { type: string, format: date-time }
-        pollUrl: { type: string, format: uri }
         retryable:
           type: boolean
           const: false

@@ -1,4 +1,4 @@
-# ctier specification 1.1.6
+# ctier specification 1.1.7
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -36,11 +36,24 @@ demo, not before. Consumers MUST ignore fields they do not recognise.
 
 These are interface behaviour, not extension keys.
 
-**Tier 3 — `202`, `PendingAuthorization`.** A success outcome, not a failure.
-Carries `correlationId`, `expiresAt`, `retryable: false`, and a machine-readable
-`agentAction` mirrored in an `X-Agent-Action` header. `Retry-After` is
-deliberately absent. `202` sits outside the classes client resilience
-implementations retry by default.
+**C5 — The withheld response is terminal and non-retryable.** Status `202`,
+outside conventionally retried classes. No `Retry-After`. `retryable: false`.
+A machine-readable `agentAction`, mirrored in an `X-Agent-Action` header.
+
+The withheld response MUST NOT carry a polling URL, a callback URL, a status
+endpoint, or any other affordance by which the agent could observe the pending
+operation's progress. An implementer who adds a `pollUrl` has not retried the
+operation — they have left the agent engaged with it. The effect is the one
+the design exists to prevent: custody acquires a caller for the length of a
+human review, and the connection occupancy that out-of-band approval was
+meant to eliminate reappears under another name.
+
+The agent's involvement with a withheld operation ends when it receives the
+response. What happens next happens to the operation, not to the agent.
+
+Carries `correlationId`, `expiresAt`, `retryable: false`, and `agentAction`.
+`202` sits outside the classes client resilience implementations retry by
+default.
 
 **Tier 4 — `423`, `AgentSuspended`.** Carries `incidentId`, `autoResume: false`,
 and `agentAction: halt_and_hand_off`. No correlation identifier. The agent must

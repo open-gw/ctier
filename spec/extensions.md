@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.1.6. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.1.7. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -12,7 +12,8 @@ namespace. 1.1.1 requires all five criteria fields and adds `x-ctier-reverses`.
 declaration must be complete; a proposal may be a non-empty subset. 1.1.5
 adds two reference operations that exercise the two divergence directions,
 and documents those signals. 1.1.6 defines the bound comparison as
-decimal-numeric. The 1.0.0 archive
+decimal-numeric. 1.1.7: the withheld response MUST NOT carry a polling
+affordance. The 1.0.0 archive
 (DOI 10.5281/zenodo.22020288) is unaltered and remains resolvable.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
