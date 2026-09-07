@@ -238,7 +238,9 @@ That matters for two reasons. First, Tier 4 exists for cases where the risk is n
 Then Tier 4 has collapsed into Tier 3 and you have added ceremony rather than control. That is a real implementation failure and worth checking for. The test: if you cannot say what the human would do *differently* from approving, the operation belongs in Tier 3. Some organisations will conclude they need three tiers rather than four, and that is a legitimate outcome.
 
 **Does a Tier 3 rejection pause the agent? What about a timeout?**
-Treat them differently. A rejection is evidence about the agent's judgement, so pause the agent on that operation type and escalate. A timeout is evidence about approver availability, so deny the single operation and leave the agent working. Conflating the two means a slow reviewer degrades an agent that did nothing wrong. Whichever way you decide, decide it explicitly — this is the first question a careful reviewer will ask.
+Treat them differently. A rejection is evidence about the agent's judgement, so pause the agent on that operation type. A timeout is evidence about approver availability, so deny the single operation and leave the agent working. Conflating the two means a slow reviewer degrades an agent that did nothing wrong.
+
+The effect of a rejection is observed, not announced. A paused agent discovers its state on its next attempt at an operation of that class, which is refused. No notification, callback or status affordance is created for it. The pause is state, not a message.
 
 **My Tier 4 isn't your Tier 4. Doesn't that make the framework useless?**
 Where you draw the boundary is yours to set, and it should differ by domain and risk appetite. What is shared is the classification method and the enforcement architecture. If your refund threshold is different from mine, the framework is working.

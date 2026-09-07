@@ -16,7 +16,8 @@ decimal-numeric. 1.1.7: the withheld response MUST NOT carry a polling
 affordance; the policy service constructs the body; `authority` and
 `expiresAt` are required; a policy service never persists an agent
 credential; Tier 3 and Tier 4 execute under different identities; C6
-scopes byte-identity to method, target, query and body. The
+scopes byte-identity to method, target, query and body; C8's
+rejection is observed, not announced. The
 1.0.0 archive
 (DOI 10.5281/zenodo.22020288) is unaltered and remains resolvable.
 

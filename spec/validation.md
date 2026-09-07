@@ -116,6 +116,15 @@ implementation that stores a token in order to compute a deadline has
 stored a token. Schema cannot see a request header; this is a security
 property of the design, not an implementation preference.
 
+### Agent suspension is an authorisation concern
+
+Agent suspension — required by both Tier 4 and by C8's rejection branch —
+is enforced at the authorisation layer as a property of the credential. An
+implementation without it may record a rejection but cannot produce its
+effect, and MUST NOT simulate the effect by consulting the policy service
+on every request: that reintroduces into the request path the dependency
+the out-of-band design removes.
+
 ### Tier 2 requires a verified compensating action
 
 An operation declaring `x-ctier-tier: 2`, or criteria resolving to Tier 2,

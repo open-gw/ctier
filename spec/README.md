@@ -88,6 +88,15 @@ forbids. A store of live agent credentials awaiting replay is a larger
 liability than the one custody exists to manage, and credentials expire on
 a schedule unrelated to human review.
 
+**C8 — Expiry and rejection differ.** Rejection pauses the agent for the
+operation class. Expiry refuses the single operation and leaves the agent
+working.
+
+The effect of a rejection is **observed, not announced**. A paused agent
+discovers its state on its next attempt at an operation of that class, which
+is refused. No notification, callback or status affordance is created for
+it. The pause is state, not a message.
+
 **Tier 4 — `423`, `AgentSuspended`.** Carries `incidentId`, `autoResume: false`,
 and `agentAction: halt_and_hand_off`. No correlation identifier. The agent must
 not seek an alternative route to the same outcome.
