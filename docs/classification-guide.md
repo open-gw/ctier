@@ -283,7 +283,13 @@ They will, if the volume is high and the context is thin. That is an argument fo
 On recorded evidence, not on opinion. Track the approval-to-rejection ratio, the incidence of rollback, the deviation between what the agent proposed and what a reviewer would have done, and elapsed time without an adverse event. Scope the promotion to a specific agent version, record the basis in the ledger, and revoke automatically on an adverse event or an agent change.
 
 **What do I tell my auditor?**
-That every agent-initiated operation is classified before execution, that the classification and its basis are recorded before the operation is routed or refused, that operations above a defined consequence threshold cannot execute without a recorded human approver, and that operations at the top tier are performed by a human under their own identity. That is a stronger position than most organisations can currently state about human-initiated operations.
+That every agent-initiated operation is classified before execution, that no
+operation executes without a decision having been made and that the record of
+that decision is durable, that operations above a defined consequence threshold
+cannot execute without a recorded human approver, and that operations at the
+top tier are performed by a human under their own identity. That is a stronger
+position than most organisations can currently state about human-initiated
+operations.
 
 ## Positioning
 
