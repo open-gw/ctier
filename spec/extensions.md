@@ -15,7 +15,8 @@ and documents those signals. 1.1.6 defines the bound comparison as
 decimal-numeric. 1.1.7: the withheld response MUST NOT carry a polling
 affordance; the policy service constructs the body; `authority` and
 `expiresAt` are required; a policy service never persists an agent
-credential; Tier 3 and Tier 4 execute under different identities. The
+credential; Tier 3 and Tier 4 execute under different identities; C6
+scopes byte-identity to method, target, query and body. The
 1.0.0 archive
 (DOI 10.5281/zenodo.22020288) is unaltered and remains resolvable.
 

@@ -71,13 +71,14 @@ twice.
 Instead, for Tier 3 the gateway:
 
 1. **Withholds** the operation. Nothing is routed.
-2. **Persists** the full request, the delegation chain, an idempotency key and an expiry.
+2. **Persists** the request (method, target, query, body), the delegation chain, an
+   idempotency key and an expiry — not the agent's credential.
 3. **Emits** an asynchronous authorisation event to an orchestration layer.
 4. **Returns** a terminal, deliberately non-retryable response to the agent, which is then free
    to continue with the rest of its task.
-5. **Executes from the persisted context** on approval — so the operation that runs is
-   byte-identical to the one the reviewer saw, rather than whatever the agent would have
-   re-planned in the interim.
+5. **Executes from the persisted context** on approval — method, request target, query and body
+   byte-identical to what the reviewer saw. The policy service is the HTTP client. The agent is
+   not involved.
 
 The human decides on human timescales. No connection, worker, or client timeout is consumed.
 

@@ -75,6 +75,19 @@ never sees anything that authenticates.
 `202` sits outside the classes client resilience implementations retry by
 default.
 
+**C6 — Execution is from persisted context.** On approval, the operation
+executed is byte-identical to the operation described in the approval event
+in **method, request target, query and body**. The agent does not resubmit
+and is not involved.
+
+Byte-identity does **not** extend to the credential. The executed request
+carries the policy service's own identity; the originating agent and the
+authorising person are recorded as attribution. A policy service that
+replays the agent's credential has stored one, which `spec/validation.md`
+forbids. A store of live agent credentials awaiting replay is a larger
+liability than the one custody exists to manage, and credentials expire on
+a schedule unrelated to human review.
+
 **Tier 4 — `423`, `AgentSuspended`.** Carries `incidentId`, `autoResume: false`,
 and `agentAction: halt_and_hand_off`. No correlation identifier. The agent must
 not seek an alternative route to the same outcome.

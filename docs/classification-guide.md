@@ -116,19 +116,19 @@ Each of these follows one realistic agent task from first call to outcome. The p
 | 1 | `GET /accounts/{id}/balance` | Read-only, single record, inherently idempotent | **1** | Logs and routes. |
 | 2 | `GET /accounts/{id}/transactions?range=90d` | Read-only, individual scope | **1** | Logs and routes. |
 | 3 | `POST /analysis/spend-summary` | Derived output, no state change, PII read | **2** | Routes; records the derivation and inputs. |
-| 4 | `POST /disputes` | Initiates a regulated process. Not auto-reversible. Downstream obligations. | **3** | **Blocks. Persists the full request. Emits async approval event. Returns non-retryable pending response to the agent.** |
+| 4 | `POST /disputes` | Initiates a regulated process. Not auto-reversible. Downstream obligations. | **3** | **Blocks. Persists the request (not the credential). Emits async approval event. Returns non-retryable pending response to the agent.** |
 | 5 | `PATCH /accounts/{id}/credit-limit` | Not auto-reversible; regulatory adjacency; requires approver of record | **3** | Blocks; second async approval event. |
 | 6 | `POST /payments/refund` | **Irreversible once processed. Direct regulatory trigger. No retries.** | **4** | **Blocks. Suspends the agent. Human acts through the payments console under their own identity.** |
 
 **The Tier 3 trace in detail** — this is the mechanism worth copying:
 
-- **T+0ms** — Gateway classifies operation 4 as Tier 3 and does not route it. It persists the full request payload, the caller and delegation identities, an idempotency key, and an expiry.
+- **T+0ms** — Gateway classifies operation 4 as Tier 3 and does not route it. It persists the request (method, target, query, body), the caller and delegation identities as attribution, an idempotency key, and an expiry — not the agent's credential.
 - **T+3ms** — Async approval event published to the orchestration layer, carrying a plain-language description of the dispute, the classification and the criteria that produced it, and the anticipated downstream effects.
 - **T+5ms** — Gateway returns a deliberately non-retryable response to the agent with a correlation ID. **The agent is released.** No connection held, no worker consumed, no retry fired.
 - **T+4 minutes** — A disputes analyst receives the request in the queue they already work from, approves it.
 - **T+4m 200ms** — The policy service retrieves the persisted context and executes under its own identity, under the idempotency key set at classification time. The originating agent and the authorising person are recorded as attribution, along with rationale, timestamp and before/after state — and whether the operation was Tier 3 as declared or escalated to Tier 3 at runtime. Those are different events: the second one tells you an agent was probing.
 
-**The detail people miss:** the operation that executed is byte-identical to the one the analyst reviewed. If you make the agent resubmit after approval, it may have re-planned in between — and you have approved one payload while executing another.
+**The detail people miss:** the operation that executed is byte-identical to the one the analyst reviewed in method, request target, query and body. The credential is not replayed — the policy service presents its own identity. If you make the agent resubmit after approval, it may have re-planned in between — and you have approved one payload while executing another.
 
 **Before tiering.** "The payments agent" was treated as a single trust level. Set it permissive and a wire transfer goes unsupervised; set it restrictive and a balance query needs a human. Neither is operable, so the agent stayed in a sandbox.
 
@@ -252,7 +252,7 @@ Target single-digit milliseconds for Tier 1 and Tier 2 classification at gateway
 Two mechanisms, and you need both. The response returned to the agent is shaped to be non-retryable — not a status its resilience logic treats as transient. And an idempotency key is persisted at classification time and applied at execution, so neither a duplicate agent submission nor a duplicate decision event can double-execute. This failure mode is what kills naive synchronous approval designs: a control built to prevent an operation causes it to happen twice.
 
 **Why persist the request instead of asking the agent to resubmit?**
-Because the agent may re-plan between the pending response and the approval. Resubmission means you approved one payload and executed another. Persisting the request means what executes is byte-identical to what was reviewed.
+Because the agent may re-plan between the pending response and the approval. Resubmission means you approved one payload and executed another. Persisting the request means what executes is byte-identical to what was reviewed in method, request target, query and body. The policy service is the client; the agent's credential is not stored and not replayed.
 
 **What happens if nobody approves?**
 A configured timeout disposition. Default to deny. A stricter posture escalates to Tier 4 and suspends the agent. Never default to allow-on-timeout — that converts an approval gate into a delay, which is worse than having no gate at all because it looks like one.
