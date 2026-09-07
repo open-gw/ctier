@@ -17,6 +17,9 @@ recognise.
 The qualified spec is OpenAPI plus the extensions in `../extensions.md`. It has
 no schema of its own.
 
-**Deferred:** the conformance corpus format (task 08) and the ledger record
-formats (task 11). ADR-009 §7 warns against specifying formats before the
-implementation has taught us what they hold.
+**Deferred:** the conformance corpus format (task 08). Ledger record
+formats exist in the reference implementation as `0.1.0-draft` (decision,
+attempt, outcome) and are named, not schematised, in `../validation.md`.
+ADR-009 §7 warned against specifying formats before the implementation
+had taught us what they hold; that contact has happened, promotion has
+not.

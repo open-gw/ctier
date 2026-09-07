@@ -25,7 +25,9 @@ The qualified spec is an OpenAPI document carrying the Part 2 extensions. It
 has no schema of its own; it has a validation profile in `validation.md`.
 
 **Deferred**, because the implementation has not yet taught us what they hold:
-the conformance corpus format (task 08) and the ledger record formats (task 11).
+the conformance corpus format (task 08). Ledger record formats exist in the
+reference implementation as `0.1.0-draft` (decision, attempt, outcome); they
+are named in `validation.md` and promote on the same condition as the corpus.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.

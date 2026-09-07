@@ -201,6 +201,28 @@ document. A document that omits a criteria field is invalid.
 Fail-closed is C2: an operation with no `x-ctier-*` declaration is Tier 4.
 That guarantee does not fill in a half-written criteria object.
 
+### Ledger records
+
+Three types. An attempt is not a decision with nulls. An outcome is the
+only record that proves C6 held.
+
+**Decision** — an operation was classified and acted upon. Declared
+tier, applied tier, escalation reason, disposition, composition digest.
+
+**Attempt** — the enforcement point refused without classifying,
+because the policy service was unavailable. Carries the declared tier,
+the composition digest and the reason, and marks the applied tier
+undetermined.
+
+**Outcome** — what happened when an approved Tier 3 executed.
+Correlation, approver, executed-at, result, whether it failed. Written
+after the fact by definition.
+
+Their formats live in the reference implementation as `0.1.0-draft`, on
+the same footing as the conformance corpus, and promote on the same
+condition — once they have held whatever accumulation requires. This
+document names them. It does not schematise them.
+
 ### On the maturity of these criteria
 
 C5, C6, C7 and C9 each turned out to have a gap that appeared only when
