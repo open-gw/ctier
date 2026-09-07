@@ -87,6 +87,27 @@ forbids. A store of live agent credentials awaiting replay is a larger
 liability than the one custody exists to manage, and credentials expire on
 a schedule unrelated to human review.
 
+**C7 — Idempotency keys are derived, not generated.** Derived from the
+declared `operationId` (or method + path template) plus a canonical
+serialisation of the request specifics, so a resubmission resolves to the
+pending context rather than creating a second one.
+
+Request specifics for the purpose of derivation are the **request target,
+query, body, agent identity and task identity**. Headers are not included.
+A derivation that includes a credential produces a key that changes when
+the credential rotates, which defeats the guarantee.
+
+The derived key is transmitted to the target in the `Idempotency-Key`
+request header.
+
+The key is derived once, when the operation is first classified, and stored
+with the persisted context. It is **not** re-derived at execution time.
+Re-deriving from a reconstructed request risks deriving from something
+subtly different from the original, which defeats the guarantee it exists
+to provide. A second implementation choosing `X-Idempotency-Key` produces
+a backend that silently does not deduplicate, with no error raised
+anywhere.
+
 **C8 — Expiry and rejection differ.** Rejection pauses the agent for the
 operation class. Expiry refuses the single operation and leaves the agent
 working.
