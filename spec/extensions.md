@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.1.9. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.2.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -26,7 +26,9 @@ record is evidence that a decision was made, MAY be written
 asynchronously, and MUST be durable. Names the three ledger record
 types — decision, attempt, outcome — without schematising them. Closes
 the maturity note: C5, C6, C7, C9 and C10 have each been built against.
-The 1.0.0 archive
+1.2.0 promotes the conformance corpus (`conformance-corpus/0.3.0`) and
+the three record schemas (`decision-record/0.1.0`, `attempt-record/0.1.0`,
+`outcome-record/0.1.0`). They are normative, not 1.0.0. The 1.0.0 archive
 (DOI 10.5281/zenodo.22020288) is unaltered and remains resolvable.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in

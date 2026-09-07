@@ -218,10 +218,9 @@ undetermined.
 Correlation, approver, executed-at, result, whether it failed. Written
 after the fact by definition.
 
-Their formats live in the reference implementation as `0.1.0-draft`, on
-the same footing as the conformance corpus, and promote on the same
-condition — once they have held whatever accumulation requires. This
-document names them. It does not schematise them.
+Their schemas are `decision-record/0.1.0`, `attempt-record/0.1.0` and
+`outcome-record/0.1.0`. They are normative. They reach 1.0.0 when an
+implementation other than the reference one has been held to them.
 
 ### On the maturity of these criteria
 

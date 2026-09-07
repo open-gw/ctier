@@ -1,4 +1,4 @@
-# ctier specification 1.1.9
+# ctier specification 1.2.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -12,7 +12,7 @@ unaltered and remains resolvable.
 |---|---|
 | [`extensions.md`](extensions.md) | Flat `x-ctier-*` keys: meaning, location, type, required |
 | [`validation.md`](validation.md) | Schema-checked shape versus validator-checked semantics |
-| [`schemas/`](schemas/) | JSON Schema 2020-12 for the ctier-authored formats, 0.1.0 |
+| [`schemas/`](schemas/) | JSON Schema 2020-12 for the ctier-authored formats |
 | [`examples/`](examples/) | Valid instances, invalid instances one per semantic rule, and bound-comparison request cases |
 | [`consequence-tiered-api.yaml`](consequence-tiered-api.yaml) | Worked OpenAPI 3.1 example |
 
@@ -24,10 +24,11 @@ default the model rests on.
 The qualified spec is an OpenAPI document carrying the Part 2 extensions. It
 has no schema of its own; it has a validation profile in `validation.md`.
 
-**Deferred**, because the implementation has not yet taught us what they hold:
-the conformance corpus format (task 08). Ledger record formats exist in the
-reference implementation as `0.1.0-draft` (decision, attempt, outcome); they
-are named in `validation.md` and promote on the same condition as the corpus.
+1.2.0 promotes the conformance corpus (`conformance-corpus/0.3.0`) and the
+three ledger record types (`decision-record/0.1.0`, `attempt-record/0.1.0`,
+`outcome-record/0.1.0`). They are normative, not 1.0.0: a format used by
+one implementation is a serialisation; a format used by two is an
+interface.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.

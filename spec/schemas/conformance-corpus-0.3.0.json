@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/open-gw/ctier/spec/schemas/conformance-corpus-0.3.0.json",
+  "title": "ctier conformance corpus",
+  "description": "Classification-agreement cases. A case is a sequence; a single-request case is a sequence of one. This format reaches 1.0.0 when an implementation other than the reference one has been held to a corpus in it. Until then it is normative — it defines what conformance means — but it has only ever been read by its author, which is a weaker claim than stability.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["ctierSchema", "composition", "cases", "deployment"],
+  "properties": {
+    "ctierSchema": { "const": "conformance-corpus/0.3.0" },
+    "profile": {
+      "type": "string",
+      "enum": ["standard", "constrained"],
+      "default": "standard"
+    },
+    "deployment": {
+      "type": "string",
+      "enum": ["level-2", "level-3"]
+    },
+    "composition": {
+      "$ref": "ctier-extensions-0.1.0.json#/$defs/digest"
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/case" }
+    }
+  },
+  "$defs": {
+    "disposition": {
+      "type": "string",
+      "enum": [
+        "execute",
+        "withhold",
+        "refuse-and-suspend",
+        "refuse-provisioning"
+      ]
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "profile": { "type": "string", "enum": ["standard", "constrained"] },
+        "placeholder": { "type": "boolean" },
+        "scope": { "type": "string", "minLength": 1 },
+        "request": { "$ref": "#/$defs/request" },
+        "agent": { "$ref": "#/$defs/agent" },
+        "expect": { "$ref": "#/$defs/expect" },
+        "sequence": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/step" }
+        }
+      },
+      "anyOf": [
+        { "required": ["request", "agent", "expect"] },
+        { "required": ["sequence"] }
+      ]
+    },
+    "step": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["request", "expect"],
+      "properties": {
+        "request": { "$ref": "#/$defs/request" },
+        "expect": { "$ref": "#/$defs/expect" }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["method", "path"],
+      "properties": {
+        "method": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "query": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "headers": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "body": { "type": ["string", "null"] }
+      }
+    },
+    "agent": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "taskId": { "type": "string" }
+      }
+    },
+    "expect": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "appliedTier": {
+          "type": ["integer", "null"],
+          "minimum": 1,
+          "maximum": 4
+        },
+        "appliedTierAtLeast": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4
+        },
+        "disposition": { "$ref": "#/$defs/disposition" },
+        "dispositionByLevel": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "level-2": { "$ref": "#/$defs/disposition" },
+            "level-3": { "$ref": "#/$defs/disposition" }
+          }
+        }
+      },
+      "anyOf": [
+        {
+          "required": ["appliedTier"],
+          "anyOf": [
+            { "required": ["disposition"] },
+            { "required": ["dispositionByLevel"] }
+          ]
+        },
+        { "required": ["appliedTierAtLeast"] }
+      ]
+    }
+  }
+}

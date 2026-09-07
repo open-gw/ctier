@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/open-gw/ctier/spec/schemas/decision-record-0.1.0.json",
+  "title": "ctier decision record",
+  "description": "An operation was classified and acted upon. Applied tier is determined; that is what distinguishes a Decision from an Attempt. This format reaches 1.0.0 when an implementation other than the reference one has been held to records in it. Until then it is normative — it defines what a Decision is — but it has only ever been read by its author, which is a weaker claim than stability.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "ctierSchema",
+    "id",
+    "timestamp",
+    "operationAnchor",
+    "agentId",
+    "correlationScope",
+    "appliedTier",
+    "escalationReason",
+    "disposition",
+    "idempotencyKey",
+    "composition"
+  ],
+  "properties": {
+    "ctierSchema": { "const": "decision-record/0.1.0" },
+    "id": { "type": "string", "minLength": 1 },
+    "timestamp": { "type": "string", "minLength": 1 },
+    "operationAnchor": { "type": "string", "minLength": 1 },
+    "agentId": { "type": "string", "minLength": 1 },
+    "correlationScope": { "type": "string", "minLength": 1 },
+    "correlationId": { "type": ["string", "null"] },
+    "declaredTier": { "type": ["integer", "null"], "minimum": 1, "maximum": 4 },
+    "appliedTier": { "type": "integer", "minimum": 1, "maximum": 4 },
+    "escalationReason": {
+      "type": "string",
+      "enum": [
+        "none",
+        "session-accumulation",
+        "delegation-authority-expansion",
+        "payload-exceeds-declared-bounds",
+        "computed-tier-exceeds-declared",
+        "undeclared-operation"
+      ]
+    },
+    "disposition": {
+      "type": "string",
+      "enum": ["execute", "withhold", "refuse-and-suspend", "refuse-provisioning"]
+    },
+    "idempotencyKey": { "type": "string", "minLength": 1 },
+    "composition": {
+      "$ref": "ctier-extensions-0.1.0.json#/$defs/digest"
+    }
+  }
+}
