@@ -94,6 +94,15 @@ point in evaluation. Schema cannot see the evaluation context.
 
 `x-ctier-bounds.parameter` must name a parameter that exists on the operation.
 
+### Bound comparison
+
+An implementation MUST interpret a bound parameter's value as a decimal number.
+An implementation that parses it as an integer will fail to escalate on
+fractional values that exceed the bound, which is a fail-open.
+
+This is runtime interpretation of a request, not document shape. Schema sees
+`max` as an integer and `parameter` as a string; it cannot see `101.0`.
+
 ### Tier 2 requires a verified compensating action
 
 An operation declaring `x-ctier-tier: 2`, or criteria resolving to Tier 2,

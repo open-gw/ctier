@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.1.5. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.1.6. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -11,7 +11,8 @@ namespace. 1.1.1 requires all five criteria fields and adds `x-ctier-reverses`.
 `recommended`, and forbids it on `declared`. 1.1.4 splits criteria: a
 declaration must be complete; a proposal may be a non-empty subset. 1.1.5
 adds two reference operations that exercise the two divergence directions,
-and documents those signals. The 1.0.0 archive
+and documents those signals. 1.1.6 defines the bound comparison as
+decimal-numeric. The 1.0.0 archive
 (DOI 10.5281/zenodo.22020288) is unaltered and remains resolvable.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
@@ -154,6 +155,16 @@ Object. Optional. The request bound the declared tier assumes.
 
 `parameter` must name a parameter that exists on the operation. That check is
 validator-enforced; see `validation.md`.
+
+The comparison is **numeric**. The parameter's value is interpreted as a
+decimal number, not as an integer. `101.0` and `1.01e2` both exceed a `max` of
+`100`.
+
+A value that does not parse as a decimal number does not escalate. A request
+omitting the parameter entirely does not escalate. Neither is an error: the
+declared tier stands and the operation proceeds under it.
+
+`max` itself is declared as an integer.
 
 ### `x-ctier-handoff`
 
