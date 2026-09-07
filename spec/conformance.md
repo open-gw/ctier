@@ -37,7 +37,7 @@ agent's behaviour on receiving a response. Those are other contracts.
 
 | Field | Why |
 |---|---|
-| `profile` | `standard` assumes an authorisation server enforcing scope reduction at token exchange; `constrained` does not, and puts delegation-chain checking back at the enforcement point where it becomes testable |
+| `profile` | `standard` bounds an exchanged token by the requesting client's entitlement; `constrained` does not assume that, and puts the check at the enforcement point |
 | `deployment` | `level-2` has no custody, so Tier 3 is a provisioning refusal; `level-3` has it, so Tier 3 withholds. Same classification, different disposition |
 | `sequence` | Accumulation is stateful. A single request cannot express a decomposition |
 
@@ -48,6 +48,24 @@ rewriting when the schema grew; the shape stayed valid.
 case. A case may override the document `profile`. `deployment` is
 declared once, on the document, because it is how the system is
 installed, not how one operation is classified.
+
+**`standard`** — the authorisation server bounds an exchanged token by
+the **entitlement of the client requesting the exchange**. An
+operation's scope cannot be obtained by a client to which it was never
+granted, whatever the exchange requests and whatever the subject token
+carried.
+
+This is a weaker requirement than reduction by token lineage, and
+deliberately so: it is satisfied by authorisation servers that
+implement no lineage enforcement at all, which is most of them at the
+time of writing. A reader who knows RFC 8693 will assume the omission
+is an oversight unless the document says it is a choice.
+
+Delegation is bounded to identities that exist at deploy time. An
+agent exchanges into an identity someone compiled; it cannot mint a
+sub-agent at runtime with an arbitrary narrower scope. Any
+implementation of this profile inherits that bound — it follows from
+the mechanism, not from a choice the reference implementation made.
 
 ---
 
