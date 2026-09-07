@@ -139,10 +139,8 @@ components:
         This is a SUCCESS outcome for the request, not a failure. The correct
         agent behaviour is to record the correlationId, continue with the rest
         of the task, and tell the user that this step is pending review. The
-        agent's involvement ends here. The response MUST NOT carry a polling
-        URL, a callback URL, a status endpoint, or any other affordance by
-        which the agent could observe the pending operation's progress. See
-        the response contracts in `spec/README.md`.
+        agent's involvement ends here. See the no-URL rule in
+        `spec/validation.md`, and the response contracts in `spec/README.md`.
       type: object
       required: [status, correlationId, classifiedTier, expiresAt, retryable, agentAction, authority]
       properties:
@@ -184,7 +182,9 @@ components:
       description: |
         Returned for operations refused at Tier 4. There is no pending
         operation and nothing to poll for — the human performs the action
-        separately, under their own identity.
+        separately, under their own identity. Subject to the no-URL rule
+        in `spec/validation.md`. A location in this body would make the
+        agent the mediator of a handover it was excluded from.
       type: object
       properties:
         status: { type: string, examples: [agent_suspended] }

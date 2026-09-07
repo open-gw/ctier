@@ -105,6 +105,21 @@ This is runtime interpretation of a request, not document shape. Schema sees
 request cases in `examples/bound-comparison.yaml` are the corpus a second
 implementation is held to.
 
+### No agent-facing URL
+
+**No response emitted to an agent carries a URL.** Not a polling URL, not a
+callback, not a status endpoint, not a handoff location, and not a
+documentation link that resolves to any of those.
+
+An agent-facing response carries a correlation id, a reason, an
+`agentAction` directive, an authority **class**, and — where the
+disposition has one — an expiry. Resolving an authority class to a
+person, a place or a channel is the consuming application's work, not
+the enforcement point's and not the policy service's.
+
+This is a property of every agent-facing disposition, including those
+not yet written. C5 and C9 reference it rather than restate it.
+
 ### No credential persistence
 
 A policy service MUST NOT persist any credential belonging to the agent. It

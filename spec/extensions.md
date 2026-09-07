@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.1.7. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.1.8. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -17,7 +17,8 @@ affordance; the policy service constructs the body; `authority` and
 `expiresAt` are required; a policy service never persists an agent
 credential; Tier 3 and Tier 4 execute under different identities; C6
 scopes byte-identity to method, target, query and body; C8's
-rejection is observed, not announced. The
+rejection is observed, not announced. 1.1.8: no agent-facing response
+carries a URL. The
 1.0.0 archive
 (DOI 10.5281/zenodo.22020288) is unaltered and remains resolvable.
 

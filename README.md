@@ -142,7 +142,7 @@ losing the other.
 | Path | What it is |
 |---|---|
 | `spec/consequence-tiered-api.yaml` | Complete worked OpenAPI 3.1 example — operations across all four tiers, plus one explicitly excluded and one deliberately unclassified |
-| `spec/README.md` | Specification 1.1.7 index and naming note |
+| `spec/README.md` | Specification 1.1.8 index and naming note |
 | `spec/extensions.md` | Flat `x-ctier-*` keys |
 | `spec/schemas/` | JSON Schema 2020-12 for the document contract, 0.1.0 |
 | `docs/` | Classification worksheet, domain walkthroughs, FAQ |
@@ -190,7 +190,7 @@ produce a governed operation.
 
 ## Status
 
-Specification **1.1.7** and reference example. A reference implementation is in
+Specification **1.1.8** and reference example. A reference implementation is in
 preparation.
 
 **Naming.** 1.0.0 — the archived specification at

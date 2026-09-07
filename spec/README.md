@@ -1,4 +1,4 @@
-# ctier specification 1.1.7
+# ctier specification 1.1.8
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -40,13 +40,12 @@ These are interface behaviour, not extension keys.
 outside conventionally retried classes. No `Retry-After`. `retryable: false`.
 A machine-readable `agentAction`, mirrored in an `X-Agent-Action` header.
 
-The withheld response MUST NOT carry a polling URL, a callback URL, a status
-endpoint, or any other affordance by which the agent could observe the pending
-operation's progress. An implementer who adds a `pollUrl` has not retried the
-operation — they have left the agent engaged with it. The effect is the one
-the design exists to prevent: custody acquires a caller for the length of a
-human review, and the connection occupancy that out-of-band approval was
-meant to eliminate reappears under another name.
+The withheld response is subject to the no-URL rule in
+`spec/validation.md`. An implementer who adds a `pollUrl` has not retried
+the operation — they have left the agent engaged with it. The effect is
+the one the design exists to prevent: custody acquires a caller for the
+length of a human review, and the connection occupancy that out-of-band
+approval was meant to eliminate reappears under another name.
 
 The agent's involvement with a withheld operation ends when it receives the
 response. What happens next happens to the operation, not to the agent.
@@ -97,9 +96,17 @@ discovers its state on its next attempt at an operation of that class, which
 is refused. No notification, callback or status affordance is created for
 it. The pause is state, not a message.
 
-**Tier 4 — `423`, `AgentSuspended`.** Carries `incidentId`, `autoResume: false`,
-and `agentAction: halt_and_hand_off`. No correlation identifier. The agent must
-not seek an alternative route to the same outcome.
+**C9 — Tier 4 has no resume path.** No state transition exists by which a
+Tier 4 operation executes under the agent's identity. Status `423`,
+`AgentSuspended`. Carries `incidentId`, `autoResume: false`, and
+`agentAction: halt_and_hand_off`. No correlation identifier. The agent
+must not seek an alternative route to the same outcome.
+
+The no-URL rule in `spec/validation.md` applies. Tier 4's content is the
+handover: a human performs the operation under their own credential, and
+the agent does not. A location in the agent's response makes the agent
+the mediator of a handover it was excluded from. The exclusion is the
+control.
 
 **Excluded — `403`.** Refused at credential validation, before consequence
 evaluation. If this is reached by a live token, a scope has been over-granted.
