@@ -152,7 +152,7 @@ which it relies on.
 
 The **record** of a decision is evidence that it was made, not the
 decision itself. It MUST carry the declared tier, the applied tier, the
-escalation reason and the composition digest. It MAY be written
+escalation reason and the deployment digest. It MAY be written
 asynchronously, and MUST be durable — an implementation whose records
 can be lost has not recorded them.
 
