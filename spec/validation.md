@@ -105,6 +105,17 @@ This is runtime interpretation of a request, not document shape. Schema sees
 request cases in `examples/bound-comparison.yaml` are the corpus a second
 implementation is held to.
 
+### No credential persistence
+
+A policy service MUST NOT persist any credential belonging to the agent. It
+receives the credential's expiry as a value, not the credential.
+
+`expiresAt` on the withheld response is derived from that value:
+`min(credential remaining lifetime, configured review period)`. An
+implementation that stores a token in order to compute a deadline has
+stored a token. Schema cannot see a request header; this is a security
+property of the design, not an implementation preference.
+
 ### Tier 2 requires a verified compensating action
 
 An operation declaring `x-ctier-tier: 2`, or criteria resolving to Tier 2,

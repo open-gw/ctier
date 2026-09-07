@@ -14,7 +14,8 @@ adds two reference operations that exercise the two divergence directions,
 and documents those signals. 1.1.6 defines the bound comparison as
 decimal-numeric. 1.1.7: the withheld response MUST NOT carry a polling
 affordance; the policy service constructs the body; `authority` and
-`expiresAt` are required. The 1.0.0 archive
+`expiresAt` are required; a policy service never persists an agent
+credential. The 1.0.0 archive
 (DOI 10.5281/zenodo.22020288) is unaltered and remains resolvable.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
