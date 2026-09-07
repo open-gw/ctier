@@ -13,7 +13,7 @@ unaltered and remains resolvable.
 | [`extensions.md`](extensions.md) | Flat `x-ctier-*` keys: meaning, location, type, required |
 | [`validation.md`](validation.md) | Schema-checked shape versus validator-checked semantics |
 | [`schemas/`](schemas/) | JSON Schema 2020-12 for the ctier-authored formats, 0.1.0 |
-| [`examples/`](examples/) | Valid instances, and invalid instances one per semantic rule |
+| [`examples/`](examples/) | Valid instances, invalid instances one per semantic rule, and bound-comparison request cases |
 | [`consequence-tiered-api.yaml`](consequence-tiered-api.yaml) | Worked OpenAPI 3.1 example |
 
 `exportStatements` is unclassified **on purpose**. It is the one `absent`

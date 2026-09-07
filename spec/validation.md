@@ -101,7 +101,9 @@ An implementation that parses it as an integer will fail to escalate on
 fractional values that exceed the bound, which is a fail-open.
 
 This is runtime interpretation of a request, not document shape. Schema sees
-`max` as an integer and `parameter` as a string; it cannot see `101.0`.
+`max` as an integer and `parameter` as a string; it cannot see `101.0`. The
+request cases in `examples/bound-comparison.yaml` are the corpus a second
+implementation is held to.
 
 ### Tier 2 requires a verified compensating action
 

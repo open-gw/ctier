@@ -1,0 +1,29 @@
+# Bound comparison (specification 1.1.6).
+# Runtime interpretation of a request against:
+#   x-ctier-bounds: { parameter: limit, max: 100 }
+# `max` is an integer. The parameter's value is a decimal number.
+# These cases are not schema checks. They are the corpus a second
+# implementation of the comparison is held to.
+
+# limit=101 against max: 100 — escalates
+- query:
+    limit: "101"
+
+# limit=101.0 — escalates
+- query:
+    limit: "101.0"
+
+# limit=1.01e2 — escalates
+- query:
+    limit: "1.01e2"
+
+# limit=100 — does not escalate
+- query:
+    limit: "100"
+
+# limit=abc — does not escalate
+- query:
+    limit: "abc"
+
+# parameter absent — does not escalate
+- query: {}

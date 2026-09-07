@@ -5,6 +5,11 @@ Valid instances pass the corresponding JSON Schema. Invalid instances are
 `../validation.md`. They are the corpus a validator in any language is written
 against.
 
+Bound comparison is different. `bound-comparison.yaml` is **runtime**: six
+request cases against `{ parameter: limit, max: 100 }`, with the expected
+outcome in the comment above each. Schema cannot see a query string. They are
+the corpus a second implementation of the comparison is held to.
+
 | File | Schema | Expected |
 |---|---|---|
 | `classification-rules.valid.yaml` | `classification-rules/0.1.0` | schema pass |
@@ -15,6 +20,7 @@ against.
 | `reversal.valid.yaml` | qualified spec | validator pass — Tier 2 named by another operation |
 | `self-reversal.valid.yaml` | qualified spec | validator pass — self-reversal, idempotency `safe` |
 | `recommended.valid.yaml` | `$defs/operation` | **schema pass** — `recommended` with `x-ctier-recommended-at` |
+| `bound-comparison.yaml` | — | **runtime** — six request cases; outcome in the comment |
 | `invalid/single-target.overlay.yaml` | Overlay + extensions | violates **single-target** against `consequence-tiered-api.yaml` |
 | `invalid/unidirectionality.operation.yaml` | extensions | violates **unidirectionality** |
 | `invalid/bounds-coherence.operation.yaml` | extensions | violates **bounds coherence** |
