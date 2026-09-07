@@ -19,7 +19,8 @@ credential; Tier 3 and Tier 4 execute under different identities; C6
 scopes byte-identity to method, target, query and body; C8's
 rejection is observed, not announced. 1.1.8: no agent-facing response
 carries a URL; C7 names `Idempotency-Key` and excludes headers from
-derivation. The
+derivation. 1.1.8 also records which criteria have been exercised.
+The
 1.0.0 archive
 (DOI 10.5281/zenodo.22020288) is unaltered and remains resolvable.
 

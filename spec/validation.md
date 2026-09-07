@@ -201,6 +201,19 @@ document. A document that omits a criteria field is invalid.
 Fail-closed is C2: an operation with no `x-ctier-*` declaration is Tier 4.
 That guarantee does not fill in a half-written criteria object.
 
+### On the maturity of these criteria
+
+C5, C6, C7 and C9 each turned out to have a gap that appeared only when
+something was built against them, and in every case the plain reading
+pointed the unsafe way — add a polling affordance, store a credential,
+derive a key from one, hand the agent a location. That is not
+coincidence: a criterion written from the design's intent omits
+prohibitions, because its author did not consider doing the wrong thing.
+
+C10 has not yet been built against. It should be treated as unverified
+rather than settled, and the implementation that first builds against it
+should expect to find something.
+
 ---
 
 ## What a validator is
