@@ -15,7 +15,8 @@ and documents those signals. 1.1.6 defines the bound comparison as
 decimal-numeric. 1.1.7: the withheld response MUST NOT carry a polling
 affordance; the policy service constructs the body; `authority` and
 `expiresAt` are required; a policy service never persists an agent
-credential. The 1.0.0 archive
+credential; Tier 3 and Tier 4 execute under different identities. The
+1.0.0 archive
 (DOI 10.5281/zenodo.22020288) is unaltered and remains resolvable.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
@@ -48,6 +49,21 @@ Appear on an Operation Object.
 
 Integer 1–4. Optional. The declared tier. Absence is Tier 4
 (`x-ctier-defaults.undeclaredTier`). Not used with `x-ctier-exclude: true`.
+
+| Tier | Who executes |
+|---|---|
+| 1 | The agent, under its own credential. |
+| 2 | The agent, under its own credential, with a verified compensating action. |
+| 3 | The policy service, under its own identity. |
+| 4 | The human, under the human's own credential. The agent does not execute. |
+
+**Tier 3** executes under the policy service's own identity, with the
+originating agent and the authorising person recorded as attribution.
+**Tier 4** executes under the human's own credential.
+
+In Tier 3 a named person authorised an action. In Tier 4 a named person
+performed one. The two records say different things, and the difference is
+the reason both tiers exist.
 
 ### `x-ctier-criteria`
 
