@@ -13,7 +13,8 @@ declaration must be complete; a proposal may be a non-empty subset. 1.1.5
 adds two reference operations that exercise the two divergence directions,
 and documents those signals. 1.1.6 defines the bound comparison as
 decimal-numeric. 1.1.7: the withheld response MUST NOT carry a polling
-affordance. The 1.0.0 archive
+affordance; the policy service constructs the body; `authority` and
+`expiresAt` are required. The 1.0.0 archive
 (DOI 10.5281/zenodo.22020288) is unaltered and remains resolvable.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
@@ -169,8 +170,10 @@ declared tier stands and the operation proceeds under it.
 
 ### `x-ctier-handoff`
 
-Object. Optional. The authority class a Tier 4 handoff is routed to. The class
-is declared; the person is resolved by the consuming application.
+Object. Optional. The authority class. For Tier 3, the class of person who
+can authorise the withheld operation. For Tier 4, the class a handoff is
+routed to. The class is declared; the person is resolved by the consuming
+application. The withheld response carries this class as `authority`.
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|

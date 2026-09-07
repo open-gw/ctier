@@ -51,7 +51,27 @@ meant to eliminate reappears under another name.
 The agent's involvement with a withheld operation ends when it receives the
 response. What happens next happens to the operation, not to the agent.
 
-Carries `correlationId`, `expiresAt`, `retryable: false`, and `agentAction`.
+The policy service constructs the complete response body. The enforcement
+point relays it unchanged and MUST NOT construct, augment, or reformat it.
+Resolve it once, in the place that knows, and let the edges carry it — the
+same reasoning as compiling the decision rather than the declaration.
+
+Required contents:
+
+| Field | Meaning |
+|---|---|
+| `correlationId` | Identifies the pending context. Not a status URL. |
+| `retryable` | `false`. Present so generic clients can branch on it. |
+| `agentAction` | `continue_task_without_this_step`: continue the rest of the task; do not resubmit this step. |
+| `authority` | The authority class from `x-ctier-handoff` — the class of person who can authorise this, not a person. |
+| `expiresAt` | When the pending authorisation lapses, derived as `min(credential remaining lifetime, configured review period)`. |
+
+`expiresAt` is derived from the credential's **expiry**, not from the
+credential. An implementation that stores a token in order to compute a
+deadline has stored a token. The enforcement point passes the `exp` claim
+as a value at persist time; the policy service records the deadline and
+never sees anything that authenticates.
+
 `202` sits outside the classes client resilience implementations retry by
 default.
 

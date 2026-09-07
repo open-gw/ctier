@@ -144,12 +144,19 @@ components:
         which the agent could observe the pending operation's progress. See
         the response contracts in `spec/README.md`.
       type: object
-      required: [status, correlationId, classifiedTier, expiresAt, retryable, agentAction]
+      required: [status, correlationId, classifiedTier, expiresAt, retryable, agentAction, authority]
       properties:
         status: { type: string, examples: [pending_authorization] }
         correlationId: { type: string }
         classifiedTier: { type: integer, examples: [3] }
-        expiresAt: { type: string, format: date-time }
+        expiresAt:
+          type: string
+          format: date-time
+          description: >
+            When the pending authorisation lapses. Derived as
+            min(credential remaining lifetime, configured review period)
+            from the credential's expiry as a value, never from a stored
+            credential.
         retryable:
           type: boolean
           const: false
@@ -161,6 +168,11 @@ components:
             Machine-readable instruction to the calling agent. Emitted so the
             expected behaviour does not depend on the agent's implementers
             having read the prose.
+        authority:
+          type: string
+          description: >
+            Authority class from x-ctier-handoff. The class of person who can
+            authorise this, not a person.
         userMessage:
           type: string
           description: >
@@ -197,9 +209,10 @@ components:
     PendingAuthorization:
       description: |
         Withheld pending out-of-band human authorisation. Not an error, and not
-        retryable. `Retry-After` is deliberately absent so that standard client
-        resilience logic does not resubmit an operation that was intentionally
-        withheld.
+        retryable. The policy service constructs this body; the enforcement
+        point relays it unchanged. `Retry-After` is deliberately absent so that
+        standard client resilience logic does not resubmit an operation that
+        was intentionally withheld.
       headers:
         X-Ctier-Tier: { schema: { type: integer }, description: Tier assigned at classification }
         X-Correlation-Id: { schema: { type: string } }
@@ -348,6 +361,8 @@ paths:
         - agentOAuth: [accounts:write]
       x-ctier-tier: 3
       x-ctier-status: declared
+      x-ctier-handoff:
+        authority: communications
       x-ctier-criteria:
         reversibility: undo-restores-record-only
         blast-radius: single-customer
@@ -440,6 +455,8 @@ paths:
         - agentOAuth: [accounts:write]
       x-ctier-tier: 3
       x-ctier-status: declared
+      x-ctier-handoff:
+        authority: customer-service
       x-ctier-criteria:
         reversibility: undo-restores-record-only
         blast-radius: single-customer
@@ -467,6 +484,8 @@ paths:
         - agentOAuth: [credit:write]
       x-ctier-tier: 3
       x-ctier-status: declared
+      x-ctier-handoff:
+        authority: credit-operations
       x-ctier-criteria:
         reversibility: undo-restores-record-only
         blast-radius: single-customer
@@ -488,6 +507,8 @@ paths:
         - agentOAuth: [disputes:write]
       x-ctier-tier: 3
       x-ctier-status: declared
+      x-ctier-handoff:
+        authority: disputes
       x-ctier-criteria:
         reversibility: undo-restores-record-only
         blast-radius: single-customer
