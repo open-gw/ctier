@@ -47,10 +47,12 @@ authorisation; `x-ctier-deployment` and `x-ctier-correlation-id` as
 the load-bearing pair; the entire `x-ctier-*` namespace stripped on
 ingress, regardless of what this target emits; custody's execute path
 exempt because it constructs rather than forwards. A closed strip set
-is a conformance failure against that property. The join key and the
-C7 derived `Idempotency-Key` are MUST on every request that reaches
-the backend; the reference implementation emits both only on custody's
-path today, declared.
+is a conformance failure against that property. The join key is MUST
+on every request that reaches the backend; the reference now emits
+it on the forwarding path. The C7 derived `Idempotency-Key` is MUST
+on every such request as written; the reference emits it only when
+custody is present (Level 3). Level 2 strips inbound keys and emits
+none. Declared.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.

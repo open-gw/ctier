@@ -36,17 +36,29 @@ The header contract in [`headers.md`](headers.md) is specified as of
 classifications and dispositions. It does not observe which headers
 reach a backend.
 
-Against the 1.5.0 property — no agent-supplied `x-ctier-*` header
-reaches a backend — Kong's prefix strip holds by construction. Apigee
-and APISIX closed sets do not: they omit `x-ctier-correlation-id` and
-every name not on the generate-time list. That is a conformance
-failure, not an evidence footnote.
+Against the 1.5.0 namespace property — no agent-supplied `x-ctier-*`
+header reaches a backend — the reference prefix-walks on all three
+targets and strips the aliases a prefix misses (`X-Correlation-Id`,
+and the idempotency names outside the namespace). That closed-set
+failure is gone.
 
-The reference implementation emits `x-ctier-correlation-id` and the
-derived `Idempotency-Key` only on custody's execute path. 1.5.0
-requires both on every request that reaches the backend. Declared,
-same class as Apigee's unproven differential. A small engine task
-closes it.
+The join key `x-ctier-correlation-id` is emitted on the forwarding
+path. Where a ledger exists, live tests compare it to
+`correlationId` on the decision record.
+
+**Declared gap — C7 at Level 2.** The derived `Idempotency-Key` is
+emitted on every execute *when custody is present*: copied from the
+ledger 201 onto a forwarded request, and set by custody on its own
+execute path. At Level 2 there is no persisted context to store a
+key that C7 forbids re-deriving at execution time. A Lua HMAC on the
+gateway 500'd every Level-2 execute; that was dropped rather than
+papered over. Inbound agent keys are still stripped. The backend
+therefore sees **no** `Idempotency-Key` at Level 2, and C7's
+duplicate-execution defence does not exist there. Same class of
+evidence as Apigee's unproven differential. Whether the 1.5.0 MUST
+should be scoped to deployments with custody, or Level 2 needs
+another mechanism, is a later decision. This document does not take
+it.
 
 A new case shape that observed what the backend received would make
 those failures visible in the corpus. This document does not take

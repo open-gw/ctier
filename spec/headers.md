@@ -27,16 +27,14 @@ namespace on ingress, regardless of which names this target emits.
 A closed list of names known at generate time is a mechanism. The
 property is the namespace.
 
-Kong's prefix strip satisfies it by construction. A closed set
-(Apigee `SC-StripCtierHeaders`, APISIX `proxy-rewrite` remove)
-conforms only if it is the entire namespace — which a finite list
-cannot be. Names the generator has never heard of, including
-`x-ctier-correlation-id` today, pass through. That is a conformance
-failure against this document, not an engine follow-on.
-
-Inbound aliases that carry the same values outside the namespace
-MUST be stripped too. Today that is `X-Correlation-Id` and
-`X-Ctier-Tier`. A prefix of `x-ctier-` will not catch them.
+Kong's prefix strip satisfies the namespace by construction. Apigee
+and APISIX now prefix-walk as well; `proxy-rewrite` remove is aliases
+only (A2). Inbound aliases that carry the same values outside the
+namespace MUST be stripped too. Today that is `X-Correlation-Id`
+(a prefix of `x-ctier-` will not catch it) and `X-Ctier-Tier` (a
+prefix will). `Idempotency-Key` and `X-Idempotency-Key` are outside
+the namespace and are stripped as the C7 inbound rule, not as
+aliases of a ctier name.
 
 **Exemption: custody's execute path.** Custody calls the backend
 directly. Nothing is stripped there. That is safe because custody
@@ -84,10 +82,10 @@ is a headline claim; it applies to ordinary Tier 1 and Tier 2
 traffic as well as approved execute. If this header does not arrive,
 that recovery has nothing to join.
 
-The reference implementation emits it only on custody's execute path
-today, the same class of evidence as Apigee's unproven differential.
-A small engine task closes it. Specifying ahead of that
-implementation is declared here, not implied.
+The reference implementation emits this on the forwarding path as
+well as on custody's execute. Where a ledger exists, the value is
+the decision record's `correlationId`. Apigee has no local runtime;
+that hop is artefact-only.
 
 ### `Idempotency-Key`
 
@@ -98,12 +96,14 @@ implementation is declared here, not implied.
 | Encoding | ASCII |
 | Requirement | **MUST** be the derived key. An inbound `Idempotency-Key` or `X-Idempotency-Key` is agent-supplied and MUST NOT reach the backend |
 
-C7 already says the derived key is transmitted to the target. The
-enforcement path does not emit one today, so an agent-supplied key
-is forwarded and the duplicate-execution defence is in the hands of
-the party it is defending against. The reference implementation
-sets the derived key only on custody's execute path. Same treatment
-as the correlation id: specified now, engine to follow, declared.
+C7 already says the derived key is transmitted to the target. An
+inbound `Idempotency-Key` or `X-Idempotency-Key` is stripped on the
+forwarding path. The reference emits the derived key on every
+execute **when custody is present**. At Level 2 it does not: there
+is no persisted context, and the gateway does not HMAC at request
+time. Declared. Whether this MUST should be scoped to deployments
+with custody, or Level 2 needs another mechanism, is not decided
+here.
 
 ### Other upstream names
 
