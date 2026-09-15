@@ -44,9 +44,13 @@ to `0.2.0`. The outcome record never carried a digest and stays
 1.5.0 specifies the HTTP headers that cross into software ctier does
 not control ([`headers.md`](headers.md)): provenance, not
 authorisation; `x-ctier-deployment` and `x-ctier-correlation-id` as
-the load-bearing pair; emit is a subset of strip on the forwarding
-path, with custody's execute path exempt because it constructs rather
-than forwards.
+the load-bearing pair; the entire `x-ctier-*` namespace stripped on
+ingress, regardless of what this target emits; custody's execute path
+exempt because it constructs rather than forwards. A closed strip set
+is a conformance failure against that property. The join key and the
+C7 derived `Idempotency-Key` are MUST on every request that reaches
+the backend; the reference implementation emits both only on custody's
+path today, declared.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
@@ -119,7 +123,10 @@ A derivation that includes a credential produces a key that changes when
 the credential rotates, which defeats the guarantee.
 
 The derived key is transmitted to the target in the `Idempotency-Key`
-request header.
+request header. An inbound `Idempotency-Key` or `X-Idempotency-Key` is
+agent-supplied and MUST NOT reach the backend. The key the target sees
+MUST be the derived one, on every request that reaches it, not only
+on custody's execute path.
 
 The key is derived once, when the operation is first classified, and stored
 with the persisted context. It is **not** re-derived at execution time.

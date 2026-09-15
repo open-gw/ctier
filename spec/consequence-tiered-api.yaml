@@ -215,7 +215,7 @@ components:
         was intentionally withheld.
       headers:
         X-Ctier-Tier: { schema: { type: integer }, description: Tier assigned at classification }
-        X-Correlation-Id: { schema: { type: string } }
+        x-ctier-correlation-id: { schema: { type: string }, description: Join key; same name upstream to the backend }
         Cache-Control: { schema: { type: string, examples: [no-store] } }
         X-Agent-Action:
           schema: { type: string, examples: [continue_task_without_this_step] }

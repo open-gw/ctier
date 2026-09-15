@@ -19,13 +19,43 @@ compromised by anything that can set a header.
 
 ---
 
+## The namespace is stripped on ingress
+
+**No header in the `x-ctier-*` namespace that reaches a backend may
+be agent-supplied.** The enforcement point MUST strip the entire
+namespace on ingress, regardless of which names this target emits.
+A closed list of names known at generate time is a mechanism. The
+property is the namespace.
+
+Kong's prefix strip satisfies it by construction. A closed set
+(Apigee `SC-StripCtierHeaders`, APISIX `proxy-rewrite` remove)
+conforms only if it is the entire namespace — which a finite list
+cannot be. Names the generator has never heard of, including
+`x-ctier-correlation-id` today, pass through. That is a conformance
+failure against this document, not an engine follow-on.
+
+Inbound aliases that carry the same values outside the namespace
+MUST be stripped too. Today that is `X-Correlation-Id` and
+`X-Ctier-Tier`. A prefix of `x-ctier-` will not catch them.
+
+**Exemption: custody's execute path.** Custody calls the backend
+directly. Nothing is stripped there. That is safe because custody
+**builds** the request from persisted context (C6: method, target,
+query, body) rather than forwarding a request the agent composed.
+There is no agent-supplied header on that hop to forge. The
+namespace strip protects the forwarding path; construction protects
+the other. Custody MUST still not copy agent-supplied `x-ctier-*`
+values from stored inbound headers onto the execute request.
+
+---
+
 ## Upstream — to the backend
 
 ### `x-ctier-deployment`
 
 | | |
 |---|---|
-| Direction | Request, enforcement point → backend, on executing tiers |
+| Direction | Request → backend, on a forwarded execute |
 | Value | The deployment digest in force (`sha256:` + 64 lowercase hex) |
 | Encoding | ASCII. Same spelling as `deploymentDigest` on the decision record |
 | Requirement | **MUST** be set by the enforcement point on a request it forwards |
@@ -42,33 +72,51 @@ from an Apigee hop unless the deployment adds that write.
 
 | | |
 |---|---|
-| Direction | Request, custody → backend, on approved execute |
-| Value | The pending context's `correlationId` |
-| Encoding | ASCII string; the same value as `correlationId` on the 202 body and the decision record |
-| Requirement | **MUST** be set by custody on the execute request |
+| Direction | Request → backend, on every execute that reaches it |
+| Value | Identifies the decision record for this call |
+| Encoding | ASCII. Same value as `correlationId` on that record, and on a 202 body when one exists |
+| Requirement | **MUST** be set on any request the enforcement point forwards, and on custody's execute request |
 
 This is the join key. Attribution of agent and approver lives on the
 decision record, not on this request. A backend recovers them as:
-correlation id → decision record → agent and approver. If this header
-does not arrive, that recovery has nothing to join.
+correlation id → decision record → agent and approver. Auditability
+is a headline claim; it applies to ordinary Tier 1 and Tier 2
+traffic as well as approved execute. If this header does not arrive,
+that recovery has nothing to join.
 
-The enforcement point does not set this header on a request it
-forwards. Tier 1 and Tier 2 execute with no pending context; there
-is no decision record to join. The load-bearing path is custody's.
+The reference implementation emits it only on custody's execute path
+today, the same class of evidence as Apigee's unproven differential.
+A small engine task closes it. Specifying ahead of that
+implementation is declared here, not implied.
 
-### Other upstream names the engine currently emits
+### `Idempotency-Key`
+
+| | |
+|---|---|
+| Direction | Request → backend, on every execute that reaches it |
+| Value | The C7 derived key |
+| Encoding | ASCII |
+| Requirement | **MUST** be the derived key. An inbound `Idempotency-Key` or `X-Idempotency-Key` is agent-supplied and MUST NOT reach the backend |
+
+C7 already says the derived key is transmitted to the target. The
+enforcement path does not emit one today, so an agent-supplied key
+is forwarded and the duplicate-execution defence is in the hands of
+the party it is defending against. The reference implementation
+sets the derived key only on custody's execute path. Same treatment
+as the correlation id: specified now, engine to follow, declared.
+
+### Other upstream names
 
 These also cross. They are provenance under the same paragraph. A
 backend MUST NOT authorise on them.
 
-| Name | Value | Requirement | Emitted by |
-|---|---|---|---|
-| `x-ctier-tier` | Applied tier, decimal 1–4 | **MAY** | Kong and APISIX, executing tiers |
-| `x-ctier-operation` | Compiled `operationId` | **MAY** | Kong (when the instance has `operation`) and APISIX |
-| `x-ctier-composition` | Same digest as `x-ctier-deployment` | **MAY** until engine 0.3.0, then MUST NOT | Kong only, dual-emit window (13h) |
+| Name | Value | Requirement |
+|---|---|---|
+| `x-ctier-tier` | Applied tier, decimal 1–4 | **MAY** |
+| `x-ctier-operation` | Compiled `operationId` | **MAY** |
+| `x-ctier-composition` | Same digest as `x-ctier-deployment` | **MAY** until engine 0.3.0, then MUST NOT |
 
-`Idempotency-Key` on custody's execute request is C7, not a ctier
-claim. `Authorization` on that request is the policy service
+`Authorization` on custody's execute request is the policy service
 authenticating as itself (C6). Pass-through of the agent's inbound
 headers (including `X-Agent-Id`) is not a ctier emit.
 
@@ -79,49 +127,22 @@ headers (including `X-Agent-Id`) is not a ctier emit.
 Already under C5, C9, and the example 202/423 responses. Listed here
 because they cross.
 
+The join key has **one** wire name: `x-ctier-correlation-id`, both
+directions. `X-Correlation-Id` is the name the 1.4.0 example used. It
+sits outside the namespace a prefix strip catches. Downstream, 1.5.0
+uses `x-ctier-correlation-id`. Inbound `X-Correlation-Id` is stripped
+under the alias rule above. The reference implementation still
+relays `X-Correlation-Id` on 202 today.
+
 | Name | Value | Requirement |
 |---|---|---|
 | `X-Agent-Action` | Machine-readable instruction (`continue_task_without_this_step`, `halt_and_hand_off`, `retry_later`) | **MUST** on 202 and 423; C5 |
-| `X-Correlation-Id` | Pending `correlationId` | **MUST** on 202; **MUST NOT** on 423 (C9: no correlation identifier) |
-| `X-Ctier-Tier` | Applied tier | **MAY** |
+| `x-ctier-correlation-id` | Pending `correlationId` | **MUST** on 202; **MUST NOT** on 423 (C9: no correlation identifier) |
+| `X-Ctier-Tier` | Applied tier | **MAY**. Inbound, stripped as an alias |
 
 `Retry-After` is **MUST NOT** on 202 (C5) and is present on 503 when
 custody is unavailable (ADR-005). `Cache-Control: no-store` on
 agent-facing faults is ordinary HTTP.
-
----
-
-## Emit is a subset of strip
-
-Every header ctier emits upstream on the **forwarding** path MUST be
-in the enforcement point's ingress strip set. Otherwise an agent
-sets it itself and the backend cannot tell the two apart. Adding a
-header and forgetting the strip is how this relation decays.
-
-Kong satisfies it by prefix-stripping `x-ctier-*` and then setting
-the names it emits. Apigee satisfies it vacuously for HTTP: the
-generated policies strip a closed set and do not set `x-ctier-*` on
-the target request. APISIX cannot list a name in both
-`proxy-rewrite` remove and set (same-name remove drops the set). It
-overwrites the three names it emits. The inbound value does not
-survive. That is not membership in the remove list; it is the
-outcome the subset exists to produce, under a platform constraint.
-
-**Exemption: custody's execute path.** Custody calls the backend
-directly. Nothing is stripped there. That is safe because custody
-**builds** the request from persisted context (C6: method, target,
-query, body) rather than forwarding a request the agent composed.
-There is no agent-supplied header on that hop to forge. The
-invariant protects the forwarding path; construction protects the
-other.
-
-Names emitted only on the custody path (`x-ctier-correlation-id`)
-are still forgeable on the forwarding path if a closed strip omits
-them. An enforcement point that strips by exact name MUST include
-every `x-ctier-*` name a backend might treat as provenance, including
-names it does not itself set. Prefix strip already does. A closed
-strip that omits `x-ctier-correlation-id` forwards an agent-supplied
-join key.
 
 The two conditions an adopter still owes — the backend reachable only
 from the enforcement point and from custody, and custody treated as a

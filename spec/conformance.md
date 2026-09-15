@@ -34,10 +34,23 @@ agent's behaviour on receiving a response. Those are other contracts.
 The header contract in [`headers.md`](headers.md) is specified as of
 1.5.0. **No conformance case asserts it.** The corpus compares
 classifications and dispositions. It does not observe which headers
-reach a backend, which are stripped on ingress, or whether
-`x-ctier-correlation-id` is present on custody's execute request.
-That is a real gap. Closing it is a new case shape, and this
-document does not take that decision.
+reach a backend.
+
+Against the 1.5.0 property — no agent-supplied `x-ctier-*` header
+reaches a backend — Kong's prefix strip holds by construction. Apigee
+and APISIX closed sets do not: they omit `x-ctier-correlation-id` and
+every name not on the generate-time list. That is a conformance
+failure, not an evidence footnote.
+
+The reference implementation emits `x-ctier-correlation-id` and the
+derived `Idempotency-Key` only on custody's execute path. 1.5.0
+requires both on every request that reaches the backend. Declared,
+same class as Apigee's unproven differential. A small engine task
+closes it.
+
+A new case shape that observed what the backend received would make
+those failures visible in the corpus. This document does not take
+that decision.
 
 ---
 
