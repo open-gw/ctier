@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.4.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.5.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -37,7 +37,9 @@ declared agent identities — so a record written under `composition`
 is obviously old. Decision and attempt records are `0.2.0`. The
 outcome record never carried a digest and stays `0.1.0`. The 1.0.0
 archive (DOI 10.5281/zenodo.22020288) is unaltered and remains
-resolvable.
+resolvable. 1.5.0 specifies the HTTP headers that cross the trust
+boundary (`spec/headers.md`). Document keys in this file are not
+those headers.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

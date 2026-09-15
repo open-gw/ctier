@@ -1,4 +1,4 @@
-# ctier specification 1.4.0
+# ctier specification 1.5.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -10,7 +10,7 @@ unaltered and remains resolvable.
 
 | Path | What it is |
 |---|---|
-| [`extensions.md`](extensions.md) | Flat `x-ctier-*` keys: meaning, location, type, required |
+| [`headers.md`](headers.md) | HTTP headers at the trust boundary: provenance, not authorisation |
 | [`validation.md`](validation.md) | Schema-checked shape versus validator-checked semantics |
 | [`conformance.md`](conformance.md) | What the corpus establishes, the case dimensions, and which targets have been run |
 | [`schemas/`](schemas/) | JSON Schema 2020-12 for the ctier-authored formats |
@@ -40,6 +40,13 @@ enum is unchanged.
 to cover declared agent identities. Decision and attempt records move
 to `0.2.0`. The outcome record never carried a digest and stays
 `0.1.0`. The corpus does not assert a digest value and is not bumped.
+
+1.5.0 specifies the HTTP headers that cross into software ctier does
+not control ([`headers.md`](headers.md)): provenance, not
+authorisation; `x-ctier-deployment` and `x-ctier-correlation-id` as
+the load-bearing pair; emit is a subset of strip on the forwarding
+path, with custody's execute path exempt because it constructs rather
+than forwards.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
@@ -167,3 +174,4 @@ guarantee the design cannot make.
 
 **Excluded — `403`.** Refused at credential validation, before consequence
 evaluation. If this is reached by a live token, a scope has been over-granted.
+
