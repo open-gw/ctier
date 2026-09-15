@@ -1,6 +1,6 @@
 # Headers at the trust boundary
 
-Specification 1.5.0.
+Specification 1.6.0.
 
 These are the HTTP headers that cross into software ctier does not
 control: the backend, and the agent. Document keys in
@@ -26,6 +26,24 @@ be agent-supplied.** The enforcement point MUST strip the entire
 namespace on ingress, regardless of which names this target emits.
 A closed list of names known at generate time is a mechanism. The
 property is the namespace.
+
+**The strip must run before any other component of the enforcement
+point reads such a header.** "On ingress" is temporal, not only
+spatial. 1.5.0 stated that no agent-supplied `x-ctier-*` header may
+reach a backend. It did not say the strip had to precede a read.
+A strip that still keeps those headers off the backend after CORS,
+jwt, or a request transformer has already seen them satisfies that
+letter and not the property the letter was protecting: another
+component may have acted on an agent-supplied value. The named
+aliases (`X-Correlation-Id`, `X-Ctier-Tier`, and the inbound
+idempotency keys) are in the same temporal scope.
+
+This order is free in bundle mode, because ctier owns the path. It
+is not free where ctier's configuration coexists with configuration
+it did not generate. That is deployment requirement 3
+([`README.md`](README.md#what-ctier-requires-of-the-deployment)).
+C11 remains the injected-tier rule — classification ignores a header
+an agent set. It is not restated here as a plugin-order criterion.
 
 Kong's prefix strip satisfies the namespace by construction. Apigee
 and APISIX now prefix-walk as well; `proxy-rewrite` remove is aliases

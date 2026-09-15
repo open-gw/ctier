@@ -1,4 +1,4 @@
-# ctier specification 1.5.0
+# ctier specification 1.6.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -53,6 +53,14 @@ it on the forwarding path. The C7 derived `Idempotency-Key` is MUST
 on every such request as written; the reference emits it only when
 custody is present (Level 3). Level 2 strips inbound keys and emits
 none. Declared.
+
+1.6.0 adds the third deployment requirement: where ctier's
+configuration coexists with configuration it did not generate, the
+ingress strip MUST run before any component that reads a request
+header. Bundle mode has that order because it owns the path. Fragment
+mode does not, on any of three gateways tested. The strip-before-read
+property is stated in [`headers.md`](headers.md); 1.5.0 had stated
+only that an agent-supplied header MUST NOT reach a backend.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
@@ -187,8 +195,8 @@ evaluation. If this is reached by a live token, a scope has been over-granted.
 ## What ctier requires of the deployment
 
 ctier compiles configuration into an enforcement point. It cannot
-make itself unavoidable. Two conditions have to hold in the
-deployment for the guarantees to hold. Neither is a defect.
+make itself unavoidable. The conditions below have to hold in the
+deployment for the guarantees to hold. None is a defect.
 
 1. **The backend MUST accept requests only from the enforcement point
    and from custody.** Network policy or mutual authentication does
@@ -198,6 +206,24 @@ deployment for the guarantees to hold. Neither is a defect.
    design.** The decision was already taken when custody executes.
    The backend MUST treat custody as a trusted caller by some means
    ctier does not provide.
+3. **Where ctier's configuration coexists with configuration it did
+   not generate, the deployment MUST ensure the ctier ingress strip
+   runs before any component that reads a request header.** ctier
+   emits the strip; it cannot guarantee its position relative to
+   configuration outside its artefact. An enforcement point where
+   another component reads a `x-ctier-*` header first has the
+   classifications and not the forgery protection.
+
+Requirements 1 and 2 are satisfied at deployment. Requirement 3 must
+be re-established whenever the enforcement point's configuration
+changes, whether or not ctier generated the change.
+
+An implementation SHOULD provide a means of detecting components that
+read reserved headers, and a deployment relying on requirement 3
+SHOULD re-run that detection whenever the enforcement point's
+configuration changes. In the reference implementation this is the
+generator's conflict report, which makes regeneration part of the
+operating procedure rather than only a build step.
 
 A specification that leaves these implicit invites someone to deploy
 it and believe more than it does.
