@@ -31,6 +31,14 @@ it does not prove the pair.
 Nor anything about custody's internals, the authorisation layer, or an
 agent's behaviour on receiving a response. Those are other contracts.
 
+The header contract in [`headers.md`](headers.md) is specified as of
+1.5.0. **No conformance case asserts it.** The corpus compares
+classifications and dispositions. It does not observe which headers
+reach a backend, which are stripped on ingress, or whether
+`x-ctier-correlation-id` is present on custody's execute request.
+That is a real gap. Closing it is a new case shape, and this
+document does not take that decision.
+
 ---
 
 ## The dimensions a case declares
