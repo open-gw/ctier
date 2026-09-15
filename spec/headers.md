@@ -122,3 +122,8 @@ every `x-ctier-*` name a backend might treat as provenance, including
 names it does not itself set. Prefix strip already does. A closed
 strip that omits `x-ctier-correlation-id` forwards an agent-supplied
 join key.
+
+The two conditions an adopter still owes — the backend reachable only
+from the enforcement point and from custody, and custody treated as a
+trusted caller by some means ctier does not provide — are in
+[`README.md`](README.md#what-ctier-requires-of-the-deployment).

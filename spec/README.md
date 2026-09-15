@@ -175,3 +175,22 @@ guarantee the design cannot make.
 **Excluded — `403`.** Refused at credential validation, before consequence
 evaluation. If this is reached by a live token, a scope has been over-granted.
 
+## What ctier requires of the deployment
+
+ctier compiles configuration into an enforcement point. It cannot
+make itself unavoidable. Two conditions have to hold in the
+deployment for the guarantees to hold. Neither is a defect.
+
+1. **The backend MUST accept requests only from the enforcement point
+   and from custody.** Network policy or mutual authentication does
+   that. A deployment where the backend is reachable directly has the
+   classifications and none of the guarantees.
+2. **Custody's execute path bypasses the enforcement point by
+   design.** The decision was already taken when custody executes.
+   The backend MUST treat custody as a trusted caller by some means
+   ctier does not provide.
+
+A specification that leaves these implicit invites someone to deploy
+it and believe more than it does.
+
+
