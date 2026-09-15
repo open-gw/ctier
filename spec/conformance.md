@@ -32,9 +32,10 @@ Nor anything about custody's internals, the authorisation layer, or an
 agent's behaviour on receiving a response. Those are other contracts.
 
 The header contract in [`headers.md`](headers.md) is specified as of
-1.5.0. **No conformance case asserts it.** The corpus compares
+1.6.0. **No conformance case asserts it.** The corpus compares
 classifications and dispositions. It does not observe which headers
-reach a backend.
+reach a backend, and it does not observe whether another plugin read
+one first.
 
 Against the 1.5.0 namespace property — no agent-supplied `x-ctier-*`
 header reaches a backend — the reference prefix-walks on all three
@@ -143,6 +144,17 @@ reasoned about.
   differential against the reference adapter: that adapter constructs a
   fresh classifier per request and would escalate on the crossing
   call — a different mechanism, not a disagreement.
+  **Fragment mode** is differentially proven at level-2 and level-3
+  over a populated existing proxy (same 24/24). It is **not
+  C11-conformant**: strip precedence against coexisting plugins is
+  not guaranteed (deployment requirement 3). Bundle and fragment
+  agree on classification and disposition; they do not agree on
+  whether another component can read an agent-supplied header first.
+- **APISIX** — differentially proven at level-2 and level-3, standard
+  profile, for **stateless** cases (24/24), bundle mode. **Fragment
+  mode** is the same: 24/24 over a populated proxy, and **not
+  C11-conformant**, for the same reason as Kong (existing rewrite
+  Lua can run before the emitted strip).
 - **Standard profile** — implemented and live-verified against Keycloak
   26.3.3 in the reference rig. The deploy-time bound applies. Until
   13c, neither profile had an implementation of delegation-chain
@@ -153,6 +165,9 @@ reasoned about.
   to have one.
 - **Apigee** — golden-file correct, differentially **unproven**. No
   local runtime exists; verification waits on a real organisation.
+  **Fragment mode is artefact merge only.** It prepends strip steps
+  onto an existing ProxyEndpoint and does not inherit Kong or APISIX
+  live results. A PreProxy FlowHook is outside the artefact.
 - **Constrained profile** — no cases. Nothing has been built for it.
   It is now the only profile with no implementation.
 - **C8's rejection branch** — not exercisable until the authorisation
