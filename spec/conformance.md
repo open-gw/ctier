@@ -32,10 +32,10 @@ Nor anything about custody's internals, the authorisation layer, or an
 agent's behaviour on receiving a response. Those are other contracts.
 
 The header contract in [`headers.md`](headers.md) is specified as of
-1.6.0. **No conformance case asserts it.** The corpus compares
+1.7.0. **No conformance case asserts it.** The corpus compares
 classifications and dispositions. It does not observe which headers
-reach a backend, and it does not observe whether another plugin read
-one first.
+reach a backend, and it does not observe whether another component
+read one first.
 
 Against the 1.5.0 namespace property — no agent-supplied `x-ctier-*`
 header reaches a backend — the reference prefix-walks on all three
@@ -145,16 +145,14 @@ reasoned about.
   fresh classifier per request and would escalate on the crossing
   call — a different mechanism, not a disagreement.
   **Fragment mode** is differentially proven at level-2 and level-3
-  over a populated existing proxy (same 24/24). It is **not
-  C11-conformant**: strip precedence against coexisting plugins is
-  not guaranteed (deployment requirement 3). Bundle and fragment
-  agree on classification and disposition; they do not agree on
-  whether another component can read an agent-supplied header first.
+  over a populated existing proxy (same 24/24). Bundle and fragment
+  agree on classification and disposition. Strip precedence against
+  coexisting configuration is not a corpus claim; it is
+  estate-dependent (requirement 3) and recorded below.
 - **APISIX** — differentially proven at level-2 and level-3, standard
   profile, for **stateless** cases (24/24), bundle mode. **Fragment
-  mode** is the same: 24/24 over a populated proxy, and **not
-  C11-conformant**, for the same reason as Kong (existing rewrite
-  Lua can run before the emitted strip).
+  mode** is the same 24/24 over a populated proxy. Precedence is
+  likewise estate-dependent, not a general fragment result.
 - **Standard profile** — implemented and live-verified against Keycloak
   26.3.3 in the reference rig. The deploy-time bound applies. Until
   13c, neither profile had an implementation of delegation-chain
@@ -172,6 +170,21 @@ reasoned about.
   It is now the only profile with no implementation.
 - **C8's rejection branch** — not exercisable until the authorisation
   layer exists.
+
+**Strip precedence (requirement 3).** A precedence result depends on
+the estate it ran against. The boundary report names the estate.
+These rows are what has been run:
+
+| Target | Mode | Estate | Precedence |
+|---|---|---|---|
+| Kong | fragment | readers below 10000 | passes |
+| Kong | fragment | `pre-function` at 1e6 | fails |
+| APISIX | fragment | reader in ctier's slot | passes |
+| APISIX | fragment | reader outside the slot | fails |
+| Apigee | fragment | — | untestable, no local runtime |
+
+The corpus still does not assert precedence. Live observation is
+outside the classification corpus.
 
 The three record schemas (`decision-record/0.2.0`,
 `attempt-record/0.2.0`, `outcome-record/0.1.0`) have held a Decision,
