@@ -1,6 +1,6 @@
 # Headers at the trust boundary
 
-Specification 1.6.0.
+Specification 1.7.0.
 
 These are the HTTP headers that cross into software ctier does not
 control: the backend, and the agent. Document keys in
@@ -38,12 +38,16 @@ component may have acted on an agent-supplied value. The named
 aliases (`X-Correlation-Id`, `X-Ctier-Tier`, and the inbound
 idempotency keys) are in the same temporal scope.
 
-This order is free in bundle mode, because ctier owns the path. It
-is not free where ctier's configuration coexists with configuration
-it did not generate. That is deployment requirement 3
+This order is free in bundle mode, because ctier owns the path.
+Where ctier's configuration coexists with configuration it did not
+generate, the deployment owes requirement 3
 ([`README.md`](README.md#what-ctier-requires-of-the-deployment)).
-C11 remains the injected-tier rule — classification ignores a header
-an agent set. It is not restated here as a plugin-order criterion.
+An implementation that guarantees the order for some class of
+coexisting configuration MUST declare that class, including what
+the class excludes. The deployment remains responsible for every
+component outside it. C11 remains the injected-tier rule —
+classification ignores a header an agent set. It is not restated
+here as a plugin-order criterion.
 
 Kong's prefix strip satisfies the namespace by construction. Apigee
 and APISIX now prefix-walk as well; `proxy-rewrite` remove is aliases
