@@ -32,7 +32,7 @@ Nor anything about custody's internals, the authorisation layer, or an
 agent's behaviour on receiving a response. Those are other contracts.
 
 The header contract in [`headers.md`](headers.md) is specified as of
-1.7.0. **No conformance case asserts it.** The corpus compares
+1.8.0. **No conformance case asserts it.** The corpus compares
 classifications and dispositions. It does not observe which headers
 reach a backend, and it does not observe whether another component
 read one first.
@@ -47,19 +47,17 @@ The join key `x-ctier-correlation-id` is emitted on the forwarding
 path. Where a ledger exists, live tests compare it to
 `correlationId` on the decision record.
 
-**Declared gap — C7 at Level 2.** The derived `Idempotency-Key` is
-emitted on every execute *when custody is present*: copied from the
-ledger 201 onto a forwarded request, and set by custody on its own
-execute path. At Level 2 there is no persisted context to store a
-key that C7 forbids re-deriving at execution time. A Lua HMAC on the
-gateway 500'd every Level-2 execute; that was dropped rather than
-papered over. Inbound agent keys are still stripped. The backend
-therefore sees **no** `Idempotency-Key` at Level 2, and C7's
-duplicate-execution defence does not exist there. Same class of
-evidence as Apigee's unproven differential. Whether the 1.5.0 MUST
-should be scoped to deployments with custody, or Level 2 needs
-another mechanism, is a later decision. This document does not take
-it.
+**Declared gap — C7 at Level 2.** 1.8.0 restates C7 as a property
+(a duplicate attempt MUST NOT produce a second execution; no party
+can suppress another's operation by choosing the identifier). It
+does not make the criterion level-dependent. The reference still
+has no mechanism at Level 2 that satisfies it: inbound agent keys
+are stripped, and nothing is emitted in their place. A stored
+derived key is emitted when custody is present. Same class of
+evidence as Apigee's unproven differential. Whether the 1.5.0
+header MUST should be scoped to deployments with custody, or Level
+2 needs another mechanism, is a later decision. This document does
+not take it.
 
 A new case shape that observed what the backend received would make
 those failures visible in the corpus. This document does not take

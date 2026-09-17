@@ -1,4 +1,4 @@
-# ctier specification 1.7.0
+# ctier specification 1.8.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -72,6 +72,14 @@ what the class **excludes**, and the deployment remains responsible
 for every component outside it. Coverage without exclusion is not
 a description.
 
+1.8.0 restates C7 as the property a derived key was standing in for:
+a duplicate attempt MUST NOT produce a second execution, and no
+party can suppress another's operation by choosing the identifier a
+honouring backend uses to recognise a duplicate. Derivation remains
+one way to satisfy it. An implementation MUST state which it relies
+on. The 1.5.0 header MUST in [`headers.md`](headers.md) is not
+scoped here.
+
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
 
@@ -132,28 +140,37 @@ forbids. A store of live agent credentials awaiting replay is a larger
 liability than the one custody exists to manage, and credentials expire on
 a schedule unrelated to human review.
 
-**C7 — Idempotency keys are derived, not generated.** Derived from the
-declared `operationId` (or method + path template) plus a canonical
-serialisation of the request specifics, so a resubmission resolves to the
-pending context rather than creating a second one.
+**C7 — A duplicate attempt MUST NOT produce a second execution.** An
+operation that is the same in declared identity (`operationId`, or
+method + path template) and in request target, query, body, agent
+identity and task identity MUST NOT execute twice because it was
+submitted twice, or because an execution event was applied twice.
 
-Request specifics for the purpose of derivation are the **request target,
-query, body, agent identity and task identity**. Headers are not included.
-A derivation that includes a credential produces a key that changes when
-the credential rotates, which defeats the guarantee.
+That property may be satisfied by deriving a key from those fields
+when the operation is first classified, storing it with persisted
+context, and transmitting it so a honouring backend recognises the
+duplicate; or by another mechanism that meets the same property. An
+implementation MUST state which it relies on.
 
-The derived key is transmitted to the target in the `Idempotency-Key`
-request header. An inbound `Idempotency-Key` or `X-Idempotency-Key` is
-agent-supplied and MUST NOT reach the backend. The key the target sees
-MUST be the derived one, on every request that reaches it, not only
-on custody's execute path.
+**No party can cause another party's operation to be suppressed by
+choosing the identifier a honouring backend uses to recognise a
+duplicate.** An inbound `Idempotency-Key` or `X-Idempotency-Key` is
+a choice by the requesting agent. It MUST NOT be that identifier.
 
-The key is derived once, when the operation is first classified, and stored
-with the persisted context. It is **not** re-derived at execution time.
-Re-deriving from a reconstructed request risks deriving from something
-subtly different from the original, which defeats the guarantee it exists
-to provide. A second implementation choosing `X-Idempotency-Key` produces
-a backend that silently does not deduplicate, with no error raised
+Headers, including credentials, are not part of the operation's
+identity for this criterion. Including a credential produces an
+identifier that changes when the credential rotates, which defeats
+the guarantee.
+
+If the chosen mechanism derives a key from the request, the key is
+derived once, when the operation is first classified, and stored
+with the persisted context. It is **not** re-derived at execution
+time. Re-deriving from a reconstructed request risks deriving from
+something subtly different from the original.
+
+Where a header carries the identifier, its name is `Idempotency-Key`.
+A second implementation choosing `X-Idempotency-Key` produces a
+backend that silently does not deduplicate, with no error raised
 anywhere.
 
 **C8 — Expiry and rejection differ.** Rejection pauses the agent for the

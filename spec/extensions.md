@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.7.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.8.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -45,6 +45,10 @@ bound: a deployment MUST still ensure the strip precedes any
 component that reads a reserved header; where an implementation
 guarantees that for a class of coexisting configuration, it MUST
 state the class precisely, including what the class excludes.
+1.8.0 restates C7 as a property: a duplicate attempt MUST NOT
+produce a second execution, and no party can suppress another's
+operation by choosing the identifier a honouring backend uses.
+Derivation is one satisfying mechanism, not the criterion.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

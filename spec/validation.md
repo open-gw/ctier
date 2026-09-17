@@ -252,9 +252,9 @@ not only to its criteria. Four have been corrected after something
 was built against them — ADR-006's fail-closed floor, C10's
 record-before-act, the `standard` profile, and the composition digest
 on the ledger — and each named a mechanism where it meant a
-property. The remedy has been the same every time and it is not more
-careful writing: the correction was only ever found by an
-implementation.
+property. 1.8.0 restates C7 the same way, found by asking what the
+criterion requires rather than by another implementation colliding
+with the letter.
 
 ---
 

@@ -1,6 +1,6 @@
 # Headers at the trust boundary
 
-Specification 1.7.0.
+Specification 1.8.0.
 
 These are the HTTP headers that cross into software ctier does not
 control: the backend, and the agent. Document keys in
@@ -114,18 +114,19 @@ that hop is artefact-only.
 | | |
 |---|---|
 | Direction | Request → backend, on every execute that reaches it |
-| Value | The C7 derived key |
+| Value | The identifier C7's chosen mechanism produces, when that mechanism uses this header |
 | Encoding | ASCII |
-| Requirement | **MUST** be the derived key. An inbound `Idempotency-Key` or `X-Idempotency-Key` is agent-supplied and MUST NOT reach the backend |
+| Requirement | **MUST** be present as written in 1.5.0. An inbound `Idempotency-Key` or `X-Idempotency-Key` is agent-supplied and MUST NOT reach the backend |
 
-C7 already says the derived key is transmitted to the target. An
-inbound `Idempotency-Key` or `X-Idempotency-Key` is stripped on the
-forwarding path. The reference emits the derived key on every
-execute **when custody is present**. At Level 2 it does not: there
-is no persisted context, and the gateway does not HMAC at request
-time. Declared. Whether this MUST should be scoped to deployments
-with custody, or Level 2 needs another mechanism, is not decided
-here.
+C7 is the duplicate-execution property, not a requirement that this
+header be derived. 1.5.0 still names this header MUST as the derived
+key. An inbound `Idempotency-Key` or `X-Idempotency-Key` is stripped
+on the forwarding path. The reference emits a stored derived key on
+every execute **when custody is present**. At Level 2 it does not:
+there is no persisted context, and the gateway does not HMAC at
+request time. Declared. Whether this MUST should be scoped to
+deployments with custody, or Level 2 needs another mechanism, is
+not decided here.
 
 ### Other upstream names
 
