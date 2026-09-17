@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.9.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.10.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -50,7 +50,10 @@ produce a second execution, and no party can suppress another's
 operation by choosing the identifier a honouring backend uses.
 Derivation is one satisfying mechanism, not the criterion.
 1.9.0 attaches the derived-key header MUST to that mechanism, not
-to a deployment level.
+to a deployment level. 1.10.0 removes "tier on spans" from the
+adoption ladder — that capability has never existed in the
+reference — and adds the fourth deployment requirement: ctier does
+not guarantee durability of gateway-log decision records.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

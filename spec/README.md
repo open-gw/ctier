@@ -1,4 +1,4 @@
-# ctier specification 1.9.0
+# ctier specification 1.10.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -86,6 +86,16 @@ execute; another mechanism states itself instead, and the header
 requirement does not apply to it. The requirement is not scoped by
 deployment level. Level 2 of the reference does not satisfy C7; the
 declined alternative is named there and on the adoption ladder.
+
+1.10.0 removes "tier on spans" from the adoption ladder. That
+capability has never existed in the reference. Level 1 is classify
+and emit a decision record, enforcing nothing. The same release
+names what the other rungs do not give: Level 2's Tier 3 is a
+provisioning refusal, not a withhold; Level 4's accumulation is
+target-dependent. The join key at Levels 1 and 2 joins a gateway-log
+decision where that sink is the gateway's own log. Adds the fourth
+deployment requirement: ctier does not guarantee durability of
+those log records.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
@@ -246,6 +256,11 @@ deployment for the guarantees to hold. None is a defect.
    MUST state that class precisely, and the deployment remains
    responsible for every component outside it. The declared class
    MUST state what it **excludes**, not only what it covers.
+4. **ctier does not guarantee durability of gateway-log decision
+   records.** An operator who has not configured a durable collector
+   for `[ctier-decision]` lines has not recorded them. Custody, when
+   deployed, remains the durable ledger. This requirement does not
+   apply to records written there.
 
 An enforcement point where another component reads a reserved header
 first has the classifications and not the forgery protection.
@@ -254,7 +269,8 @@ Requirements 1 and 2 are satisfied at deployment. Requirement 3 must
 be re-established whenever the enforcement point's configuration
 changes, whether or not ctier generated the change — including when
 the change is a component outside the implementation's declared
-class.
+class. Requirement 4 is the exclusion for the log sink: a collector
+the operator does not run is not a record.
 
 An implementation SHOULD provide a means of detecting components that
 read reserved headers, and a deployment relying on requirement 3
@@ -287,7 +303,7 @@ a description.
 | Level | Deployed | Gives |
 |---|---|---|
 | 0 · Classify | nothing | a review queue in risk order, and a number: what share of the estate is unclassified |
-| 1 · Observe | proxy config | tier on spans, enforcing nothing; coverage warns |
+| 1 · Observe | proxy config | classify and emit a decision record, enforcing nothing; coverage warns |
 | 2 · Enforce 1/2/4 | proxy config + AS flags | first level with teeth, still no new runtime; coverage fails the build |
 | 3 · Withhold | custody | Tier 3 end to end |
 | 4 · Accumulate | scope floor | decomposition defence, and the cycle back to design |
@@ -302,5 +318,24 @@ operation — and was declined, because it would place an identity
 value on the request that ctier had removed for separate reasons.
 An implementation willing to make that trade could satisfy C7 at
 Level 2.
+
+**Level 1 does not stamp spans.** The ladder used to claim that.
+The capability has never existed in the reference. Level 1
+classifies and emits a decision record, and enforces nothing.
+
+**Level 2's Tier 3 is a provisioning refusal**, not a withhold.
+Withhold is Level 3.
+
+**The join key has something to join at Levels 1 and 2** where the
+gateway-log sink is the gateway's own structured log (Kong, APISIX).
+That is a note, not an exclusion. Apigee's generated `print()` is
+the Debug/Trace session (`stepExecution-stdout`), not Cloud Logging
+or any production log stream. An evaluator with a trace running can
+read the object; an operator without one cannot.
+
+**Level 4 accumulation is target-dependent.** The reference builds
+the scope-floor poller on Kong. It does not on APISIX. A
+deployment of this specification on APISIX at Level 4 does not have
+that defence.
 
 

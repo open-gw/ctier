@@ -32,7 +32,7 @@ Nor anything about custody's internals, the authorisation layer, or an
 agent's behaviour on receiving a response. Those are other contracts.
 
 The header contract in [`headers.md`](headers.md) is specified as of
-1.9.0. **No conformance case asserts it.** The corpus compares
+1.10.0. **No conformance case asserts it.** The corpus compares
 classifications and dispositions. It does not observe which headers
 reach a backend, and it does not observe whether another component
 read one first.
@@ -45,7 +45,10 @@ failure is gone.
 
 The join key `x-ctier-correlation-id` is emitted on the forwarding
 path. Where a ledger exists, live tests compare it to
-`correlationId` on the decision record.
+`correlationId` on the decision record. At Levels 1 and 2, Kong and
+APISIX write a schema-valid decision to the gateway log; the join
+key joins that line. Apigee remains artefact-only: generated
+`print()` is the Trace tool, not a production log.
 
 **Declared gap — C7 at Level 2.** The reference does not satisfy C7
 at Level 2: inbound agent keys are stripped, and nothing is emitted
