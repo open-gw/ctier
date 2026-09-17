@@ -47,17 +47,15 @@ The join key `x-ctier-correlation-id` is emitted on the forwarding
 path. Where a ledger exists, live tests compare it to
 `correlationId` on the decision record.
 
-**Declared gap — C7 at Level 2.** 1.8.0 restates C7 as a property
-(a duplicate attempt MUST NOT produce a second execution; no party
-can suppress another's operation by choosing the identifier). It
-does not make the criterion level-dependent. The reference still
-has no mechanism at Level 2 that satisfies it: inbound agent keys
-are stripped, and nothing is emitted in their place. A stored
-derived key is emitted when custody is present. Same class of
-evidence as Apigee's unproven differential. Whether the 1.5.0
-header MUST should be scoped to deployments with custody, or Level
-2 needs another mechanism, is a later decision. This document does
-not take it.
+**Declared gap — C7 at Level 2.** The reference does not satisfy C7
+at Level 2: inbound agent keys are stripped, and nothing is emitted
+in their place. That is a choice, recorded in
+[`README.md`](README.md#what-ctier-requires-of-the-deployment) and
+on the adoption ladder, not a level-scoped exemption from C7. A
+stored derived key is emitted when the implementation satisfies C7
+by derivation (custody present). The header MUST in
+[`headers.md`](headers.md) follows that stated mechanism. Same
+class of evidence as Apigee's unproven differential.
 
 A new case shape that observed what the backend received would make
 those failures visible in the corpus. This document does not take

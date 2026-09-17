@@ -84,7 +84,8 @@ scoped here.
 that satisfies C7 by derivation MUST emit the derived key on every
 execute; another mechanism states itself instead, and the header
 requirement does not apply to it. The requirement is not scoped by
-deployment level.
+deployment level. Level 2 of the reference does not satisfy C7; the
+declined alternative is named there and on the adoption ladder.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
@@ -266,5 +267,40 @@ does not enumerate target-specific thresholds.
 
 A specification that leaves these implicit invites someone to deploy
 it and believe more than it does.
+
+**Level 2 and C7.** Level 2 enforces Tiers 1, 2 and 4 with no ctier
+runtime component. It does not satisfy C7: duplicate execution under
+ordinary agent retry is not defended against at this level.
+
+A mechanism was available — an agent-supplied key namespaced by a
+ctier-supplied identifier, so that no agent can suppress another's
+operation — and was declined, because it would place an identity
+value on the request that ctier had removed for separate reasons.
+An implementation willing to make that trade could satisfy C7 at
+Level 2.
+
+## Adoption ladder
+
+Each rung is independently useful. Coverage without exclusion is not
+a description.
+
+| Level | Deployed | Gives |
+|---|---|---|
+| 0 · Classify | nothing | a review queue in risk order, and a number: what share of the estate is unclassified |
+| 1 · Observe | proxy config | tier on spans, enforcing nothing; coverage warns |
+| 2 · Enforce 1/2/4 | proxy config + AS flags | first level with teeth, still no new runtime; coverage fails the build |
+| 3 · Withhold | custody | Tier 3 end to end |
+| 4 · Accumulate | scope floor | decomposition defence, and the cycle back to design |
+
+Level 2 enforces Tiers 1, 2 and 4 with no ctier runtime component.
+It does not satisfy C7: duplicate execution under ordinary agent
+retry is not defended against at this level.
+
+A mechanism was available — an agent-supplied key namespaced by a
+ctier-supplied identifier, so that no agent can suppress another's
+operation — and was declined, because it would place an identity
+value on the request that ctier had removed for separate reasons.
+An implementation willing to make that trade could satisfy C7 at
+Level 2.
 
 
