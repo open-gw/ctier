@@ -1,4 +1,4 @@
-# ctier specification 1.8.0
+# ctier specification 1.9.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -79,6 +79,12 @@ honouring backend uses to recognise a duplicate. Derivation remains
 one way to satisfy it. An implementation MUST state which it relies
 on. The 1.5.0 header MUST in [`headers.md`](headers.md) is not
 scoped here.
+
+1.9.0 attaches that MUST to the stated mechanism: an implementation
+that satisfies C7 by derivation MUST emit the derived key on every
+execute; another mechanism states itself instead, and the header
+requirement does not apply to it. The requirement is not scoped by
+deployment level.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
