@@ -32,7 +32,7 @@ Nor anything about custody's internals, the authorisation layer, or an
 agent's behaviour on receiving a response. Those are other contracts.
 
 The header contract in [`headers.md`](headers.md) is specified as of
-1.10.0. **No conformance case asserts it.** The corpus compares
+1.11.0. **No conformance case asserts it.** The corpus compares
 classifications and dispositions. It does not observe which headers
 reach a backend, and it does not observe whether another component
 read one first.
@@ -149,7 +149,10 @@ reasoned about.
   coexisting configuration is not a corpus claim; it is
   estate-dependent (requirement 3) and recorded below.
 - **APISIX** — differentially proven at level-2 and level-3, standard
-  profile, for **stateless** cases (24/24), bundle mode. **Fragment
+  profile, for **stateless** cases (24/24), bundle mode. Sequential
+  cases have run live against APISIX at level-3 (the same five
+  properties as Kong). They are not differential against the
+  reference adapter, for the same reason as Kong. **Fragment
   mode** is the same 24/24 over a populated proxy. Precedence is
   likewise estate-dependent, not a general fragment result.
 - **Standard profile** — implemented and live-verified against Keycloak

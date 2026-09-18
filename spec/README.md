@@ -1,4 +1,4 @@
-# ctier specification 1.10.0
+# ctier specification 1.11.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -96,6 +96,13 @@ target-dependent. The join key at Levels 1 and 2 joins a gateway-log
 decision where that sink is the gateway's own log. Adds the fourth
 deployment requirement: ctier does not guarantee durability of
 those log records.
+
+1.11.0 replaces that Level 4 qualification. Accumulation is on both
+live targets. What still differs is how the timer starts, where the
+shared dictionary is declared, that memory-pressure behaviour of
+that dictionary is unmeasured, and that Apigee remains artefact-only
+for this rung. Coverage without those exclusions is not a
+description.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
@@ -333,9 +340,24 @@ the Debug/Trace session (`stepExecution-stdout`), not Cloud Logging
 or any production log stream. An evaluator with a trace running can
 read the object; an operator without one cannot.
 
-**Level 4 accumulation is target-dependent.** The reference builds
-the scope-floor poller on Kong. It does not on APISIX. A
-deployment of this specification on APISIX at Level 4 does not have
-that defence.
+**Level 4 accumulation is on both live targets, with remaining
+differences.** Kong and APISIX both publish a scope floor from an
+out-of-band poller into worker-local shared state and read it on
+the request path. What still differs:
+
+- How the timer starts. Kong starts it from the plugin worker
+  module. APISIX has no equivalent worker-init hook; the generated
+  Lua claims one timer per worker with a pid-keyed shared-dict
+  add, so copies on every classified route do not each start one.
+- Where the dictionary is declared. Kong's is compose configuration
+  of the plugin. APISIX's is node config, not the generated route
+  deck. An operator who omits it gets no escalation, not a refuse.
+- Memory-pressure behaviour of that shared dictionary has never
+  been observed.
+- Apigee has no live runtime for this rung. A generated bundle is
+  not a Level 4 deployment.
+
+"Both targets support Level 4" with nothing beside it is the
+positively-stated claim these exclusions exist to prevent.
 
 
