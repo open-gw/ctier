@@ -58,7 +58,10 @@ not guarantee durability of gateway-log decision records.
 live targets; the remaining differences (timer start, dictionary
 declaration, unmeasured memory pressure, Apigee artefact-only) are
 stated as exclusions. The escalation window is Derived from the
-configured poll interval, not measured.
+configured poll interval, not measured. The threat model records
+custody's execute path: it does not traverse the enforcement
+point, and compromise of custody yields direct backend access
+under the policy service's own identity.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

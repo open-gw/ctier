@@ -66,6 +66,8 @@ There is no agent-supplied header on that hop to forge. The
 namespace strip protects the forwarding path; construction protects
 the other. Custody MUST still not copy agent-supplied `x-ctier-*`
 values from stored inbound headers onto the execute request.
+What compromise of that path yields is in the threat model
+([`README.md`](README.md#threat-model)).
 
 ---
 

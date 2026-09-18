@@ -105,7 +105,10 @@ for this rung. Coverage without those exclusions is not a
 description. The same release restates the escalation window as
 Derived: the bound is threshold-crossing plus one poll interval.
 The 1000 ms figure follows from the configured interval; it is not
-a measurement.
+a measurement. It records the standing exception to the
+enforcement point as chokepoint: custody's execute path does not
+traverse that point, and compromise of custody yields direct
+backend access under the policy service's own identity.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
@@ -259,7 +262,8 @@ deployment for the guarantees to hold. None is a defect.
 2. **Custody's execute path bypasses the enforcement point by
    design.** The decision was already taken when custody executes.
    The backend MUST treat custody as a trusted caller by some means
-   ctier does not provide.
+   ctier does not provide. What an attacker gains if that caller
+   is compromised is in the threat model below.
 3. **A deployment MUST ensure the ctier ingress strip precedes any
    component that reads a reserved header.** Where an implementation
    guarantees this for some class of coexisting configuration, it
@@ -293,6 +297,23 @@ does not enumerate target-specific thresholds.
 
 A specification that leaves these implicit invites someone to deploy
 it and believe more than it does.
+
+## Threat model
+
+The enforcement point is not the only path to the backend. When a
+withheld operation is approved, custody executes it directly, and
+nothing compiled into the enforcement point applies to that request
+— including the ingress strip.
+
+This is safe for a different reason than the forwarding path:
+custody constructs the request from persisted context rather than
+forwarding one the agent composed, so there is no agent-supplied
+header to strip and no agent-chosen parameter to re-validate.
+
+It follows that a deployment must treat custody as a trusted caller
+by means ctier does not provide — deployment requirement 2 — and
+that compromise of custody yields direct backend access under the
+policy service's own identity.
 
 **Level 2 and C7.** Level 2 enforces Tiers 1, 2 and 4 with no ctier
 runtime component. It does not satisfy C7: duplicate execution under
