@@ -102,7 +102,10 @@ live targets. What still differs is how the timer starts, where the
 shared dictionary is declared, that memory-pressure behaviour of
 that dictionary is unmeasured, and that Apigee remains artefact-only
 for this rung. Coverage without those exclusions is not a
-description.
+description. The same release restates the escalation window as
+Derived: the bound is threshold-crossing plus one poll interval.
+The 1000 ms figure follows from the configured interval; it is not
+a measurement.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.

@@ -118,11 +118,14 @@ out of band and read from gateway-local state. Escalation is guaranteed
 within threshold-crossing plus one poll interval, not on a nominated
 request.
 
-The measured window, from the implementation that first built the
-poller (`ctier-engine` `docs/findings/12a.md`):
+The Derived bound, from the configured poll interval of the
+implementation that first built the poller:
 
-> With a poller the true window is **threshold-crossing plus up to one
-> poll interval (1000 ms)**.
+> Escalation is guaranteed within **threshold-crossing plus one poll
+> interval**. In the reference both live targets poll at 1000 ms, so
+> the bound is 1000 ms. That figure is Derived: it follows from the
+> interval. It is not a measurement, and a sample from a run does not
+> stand in for it.
 
 An exact expectation on the escalating request would encode that
 interval into the corpus and make it flaky. The assertion that matters

@@ -57,7 +57,8 @@ not guarantee durability of gateway-log decision records.
 1.11.0 replaces the Level 4 qualification: accumulation is on both
 live targets; the remaining differences (timer start, dictionary
 declaration, unmeasured memory pressure, Apigee artefact-only) are
-stated as exclusions.
+stated as exclusions. The escalation window is Derived from the
+configured poll interval, not measured.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.
