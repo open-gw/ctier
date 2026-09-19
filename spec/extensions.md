@@ -220,7 +220,17 @@ MUST NOT correlate or authorise
 on it. Live targets do not emit
 it, do not strip it, and do not
 believe it. They satisfy the
-trust rule.
+trust rule. It admits C14: no
+credential persistence. The
+body is unaltered. Property.
+Scope is the policy service, as
+written — not the enforcement
+point alone, and not everything
+ctier specifies. Declared
+evidence is none. The reference
+policy service strips
+`Authorization` from persisted
+context. It satisfies.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

@@ -120,7 +120,7 @@ the enforcement point's and not the policy service's.
 This is a property of every agent-facing disposition, including those
 not yet written. C5 and C9 reference it rather than restate it.
 
-### No credential persistence
+### C14 — No credential persistence
 
 A policy service MUST NOT persist any credential belonging to the agent. It
 receives the credential's expiry as a value, not the credential.
@@ -362,7 +362,17 @@ MUST NOT correlate or authorise
 on it. Live targets do not emit
 it, do not strip it, and do not
 believe it. They satisfy the
-trust rule.
+trust rule. **It admits C14: no
+credential persistence.** The
+body is unaltered. Property.
+Scope is the policy service, as
+written — not the enforcement
+point alone, and not everything
+ctier specifies. Declared
+evidence is none. The reference
+policy service strips
+`Authorization` from persisted
+context. It satisfies.
 
 ---
 
@@ -391,6 +401,7 @@ documents, and it does not admit a deployment condition
 the implementation cannot make unavoidable.
 
 C13 meets this rule. It is the thirteenth criterion.
+C14 meets this rule. It is the fourteenth criterion.
 
 ---
 

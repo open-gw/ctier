@@ -91,6 +91,11 @@ in the shape 38 already built: generate against
 one composition, present a different one, assert
 the assignment does not apply.
 
+**Declared evidence — C14.** None. The corpus does
+not observe a persisted pending context. Schema
+cannot see a request header. That absence is none
+under Configured, Derived, and Observed.
+
 **Declared evidence — C10 via gateway log.** Observed:
 a sample from a run, reproducible approximately by
 re-running under the same conditions. The runtime

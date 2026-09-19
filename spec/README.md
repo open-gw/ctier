@@ -276,7 +276,17 @@ MUST NOT correlate or authorise
 on it. Live targets do not emit
 it, do not strip it, and do not
 believe it. They satisfy the
-trust rule.
+trust rule. It admits C14: no
+credential persistence. The
+body is unaltered. Property.
+Scope is the policy service, as
+written — not the enforcement
+point alone, and not everything
+ctier specifies. Declared
+evidence is none. The reference
+policy service strips
+`Authorization` from persisted
+context. It satisfies.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
@@ -593,6 +603,8 @@ that cannot distinguish them cannot tell a provisioning defect
 from a governance outcome.
 
 **C13 — Digest discipline.** Stated in `spec/validation.md`.
+
+**C14 — No credential persistence.** Stated in `spec/validation.md`.
 
 **Excluded — `403`.** Refused at credential validation, before consequence
 evaluation. If this is reached by a live token, a scope has been over-granted.
