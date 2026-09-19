@@ -48,6 +48,15 @@ the class excludes. The deployment remains responsible for every
 component outside it. C11 is the honour-rule: the agent does
 not choose its tier. Classification ignores a header an agent
 set. It is not restated here as a plugin-order criterion.
+C11 depends on this strip only when it chooses strip.
+Integrity-protection and never-read still satisfy C11.
+They do not satisfy this criterion if an agent-supplied
+name in the namespace still reaches a backend.
+
+Besides C11, the strip keeps the join key, the deployment
+digest, `x-ctier-operation`, `x-ctier-composition`, unknown
+names, and any later emit from being agent-supplied at the
+backend. The property is the namespace.
 
 Kong's prefix strip satisfies the namespace by construction. Apigee
 and APISIX now prefix-walk as well; `proxy-rewrite` remove is aliases

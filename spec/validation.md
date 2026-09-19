@@ -41,15 +41,30 @@ name with a rule it can enforce.
 
 No header in the `x-ctier-*` namespace that reaches a
 backend may be agent-supplied. The action is **strip**.
-The mechanism is the one C11 already names for an
-injected tier. This rule does not restate it. C11 is
-the honour-rule and is unaltered.
+The property is the namespace: nothing the agent sends
+under this prefix crosses the boundary. C11 is the
+honour-rule for one name and is unaltered. C11 names
+strip as one way to meet that honour-rule. This
+criterion is not that way wearing a letter.
+
+C16 protects, besides C11: the join key, the
+deployment digest, `x-ctier-operation`,
+`x-ctier-composition`, an unknown `x-ctier-*`
+name, and any later emit in the namespace. A
+backend that authorises on presence of a ctier
+header is compromised by anything that can set
+one. C11 does not cover that.
+
+What depends on it: C11, when it chooses strip.
+The inbound rewrite of the join key. The
+provenance paragraph's assumption that a header
+at the backend is an enforcement-point write.
+C11's never-read still satisfies C11. It does
+not satisfy this rule if the header still
+reaches the backend.
 
 An implementation that ignores an unknown `x-ctier-*`
 header and forwards it does not satisfy this rule.
-C11's never-read still satisfies C11. It does not
-satisfy this rule if the header still reaches the
-backend.
 
 51 scoped Additive evolution to these headers with
 the word ignore. Nobody asked the permit-question:
@@ -628,11 +643,12 @@ never written. Ignore at
 the trust boundary newly
 permits forwarding an
 attacker-chosen header.
-The action is strip, the
-mechanism C11 already
-names. This rule does not
-restate it. C11 is
-unaltered.
+The action is strip.
+C11 names strip as one
+way to meet the
+honour-rule. This rule
+does not restate C11.
+C11 is unaltered.
 **It admits C16: the
 namespace is stripped on
 ingress.** A second
@@ -670,6 +686,20 @@ comparison; no
 agent-facing URL.
 Declared evidence is
 none.
+C16 is the namespace
+property: nothing the
+agent sends under this
+prefix reaches a
+backend. Besides C11
+it protects the join
+key, the deployment
+digest, unknown names,
+and later emits. C11
+depends on it only when
+C11 chooses strip.
+Never-read still
+satisfies C11. That is
+not circularity.
 
 ---
 

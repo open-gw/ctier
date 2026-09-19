@@ -465,11 +465,12 @@ never written. Ignore at
 the trust boundary newly
 permits forwarding an
 attacker-chosen header.
-The action is strip, the
-mechanism C11 already
-names. This rule does not
-restate it. C11 is
-unaltered.
+The action is strip.
+C11 names strip as one
+way to meet the
+honour-rule. This rule
+does not restate C11.
+C11 is unaltered.
 It admits C16: the
 namespace is stripped on
 ingress. A second
@@ -507,6 +508,20 @@ comparison; no
 agent-facing URL.
 Declared evidence is
 none.
+C16 is the namespace
+property: nothing the
+agent sends under this
+prefix reaches a
+backend. Besides C11
+it protects the join
+key, the deployment
+digest, unknown names,
+and later emits. C11
+depends on it only when
+C11 chooses strip.
+Never-read still
+satisfies C11. That is
+not circularity.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. **Additive evolution.** Consumers MUST ignore fields they do not recognise.
@@ -839,7 +854,7 @@ from a governance outcome.
 
 **C15 — Agent suspension is an authorisation concern.** Stated in `spec/validation.md`. This forbids gateway-local suspension.
 
-**C16 — The namespace is stripped on ingress.** Stated in `spec/validation.md`. The action is strip. C11 is the honour-rule and is not this criterion.
+**C16 — The namespace is stripped on ingress.** Stated in `spec/validation.md`. The property is the namespace: nothing the agent sends under this prefix reaches a backend. C11 is the honour-rule for one name and is not this criterion.
 
 **Excluded — `403`.** Refused at credential validation, before consequence
 evaluation. If this is reached by a live token, a scope has been over-granted.
