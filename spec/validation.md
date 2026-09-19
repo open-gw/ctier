@@ -39,6 +39,26 @@ deployment requirement 5, where a condition the
 implementation cannot make unavoidable does not share a
 name with a rule it can enforce.
 
+No header in the `x-ctier-*` namespace that reaches a
+backend may be agent-supplied. The action is **strip**.
+The mechanism is the one C11 already names for an
+injected tier. This rule does not restate it. C11 is
+the honour-rule and is unaltered.
+
+An implementation that ignores an unknown `x-ctier-*`
+header and forwards it does not satisfy this rule.
+C11's never-read still satisfies C11. It does not
+satisfy this rule if the header still reaches the
+backend.
+
+51 scoped Additive evolution to these headers with
+the word ignore. Nobody asked the permit-question:
+scoping felt like it cannot loosen. The scope landed
+where the rule was never written. Additive evolution
+was a document-evolution rule. Placed at the trust
+boundary it newly permitted forwarding an
+attacker-chosen header. That is not this rule.
+
 ---
 
 ## Schema-checked
@@ -595,6 +615,24 @@ accounting remains
 fifteen. Admission of the
 request half is on its
 own merits.
+The request half states
+one action: strip. 51
+scoped Additive evolution
+to those headers with the
+word ignore. Nobody asked
+the permit-question:
+scoping felt like it
+cannot loosen. The scope
+landed where the rule was
+never written. Ignore at
+the trust boundary newly
+permits forwarding an
+attacker-chosen header.
+The action is strip, the
+mechanism C11 already
+names. This rule does not
+restate it. C11 is
+unaltered.
 
 ---
 

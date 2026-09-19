@@ -380,6 +380,24 @@ accounting remains
 fifteen. Admission of the
 request half is on its
 own merits.
+The request half states
+one action: strip. 51
+scoped Additive evolution
+to those headers with the
+word ignore. Nobody asked
+the permit-question:
+scoping felt like it
+cannot loosen. The scope
+landed where the rule was
+never written. Ignore at
+the trust boundary newly
+permits forwarding an
+attacker-chosen header.
+The action is strip, the
+mechanism C11 already
+names. This rule does not
+restate it. C11 is
+unaltered.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

@@ -452,6 +452,24 @@ accounting remains
 fifteen. Admission of the
 request half is on its
 own merits.
+The request half states
+one action: strip. 51
+scoped Additive evolution
+to those headers with the
+word ignore. Nobody asked
+the permit-question:
+scoping felt like it
+cannot loosen. The scope
+landed where the rule was
+never written. Ignore at
+the trust boundary newly
+permits forwarding an
+attacker-chosen header.
+The action is strip, the
+mechanism C11 already
+names. This rule does not
+restate it. C11 is
+unaltered.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. **Additive evolution.** Consumers MUST ignore fields they do not recognise.
