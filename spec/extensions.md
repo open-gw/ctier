@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.18.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.19.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -170,6 +170,25 @@ the composition; that composition is the
 governed set by definition — is not a fifth
 copy of the scope paragraph. C4 remains
 deliberately unbounded.
+1.19.0 states what a record sink must
+provide. The record survives failure of
+the component whose behaviour it
+records. It is retrievable by someone
+who was not present when it was
+written. Absence of a record is
+detectable. A custody ledger and a
+gateway log both satisfy that
+property. An implementation MUST
+state which it relies on. C10's
+requirement sentence is unaltered.
+The sink obligation is on every
+record the implementation writes;
+coverage remains the governed set.
+The log and custody are not
+equivalent: the log does not give a
+ledger you can query for gaps.
+C10-via-gateway-log is Observed on
+both live engines.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

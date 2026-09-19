@@ -1,6 +1,6 @@
 # Headers at the trust boundary
 
-Specification 1.18.0.
+Specification 1.19.0.
 
 These are the HTTP headers that cross into software ctier does not
 control: the backend, and the agent. Document keys in

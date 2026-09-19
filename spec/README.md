@@ -1,4 +1,4 @@
-# ctier specification 1.18.0
+# ctier specification 1.19.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -226,6 +226,25 @@ the composition; that composition is the
 governed set by definition — is not a fifth
 copy of the scope paragraph. C4 remains
 deliberately unbounded.
+1.19.0 states what a record sink must
+provide. The record survives failure of
+the component whose behaviour it
+records. It is retrievable by someone
+who was not present when it was
+written. Absence of a record is
+detectable. A custody ledger and a
+gateway log both satisfy that
+property. An implementation MUST
+state which it relies on. C10's
+requirement sentence is unaltered.
+The sink obligation is on every
+record the implementation writes;
+coverage remains the governed set.
+The log and custody are not
+equivalent: the log does not give a
+ledger you can query for gaps.
+C10-via-gateway-log is Observed on
+both live engines.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
@@ -450,6 +469,21 @@ decision itself. It MUST carry the declared tier, the applied tier, the
 escalation reason and the deployment digest. It MAY be written
 asynchronously, and MUST be durable — an implementation whose records
 can be lost has not recorded them.
+
+A **sink** is where that record is written. The record MUST survive
+failure of the component whose behaviour it records. It MUST be
+retrievable by someone who was not present when it was written.
+Absence of a record MUST be detectable — a sink that cannot be
+audited for gaps lets this criterion hold for every request that
+was recorded.
+
+That property may be satisfied by writing to a custody ledger, or
+by writing to the gateway's own structured log. An implementation
+MUST state which it relies on. The gateway log qualifies because
+it is not the component whose failure a custody-unavailable
+Attempt records, and because a later reader can retrieve the line
+from the log — or from a collector the operator has configured —
+without having been present at the write.
 
 Where the policy service is unavailable and the enforcement point
 refuses without classifying, the refusal MUST itself be recorded,

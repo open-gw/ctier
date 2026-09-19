@@ -234,6 +234,13 @@ Their schemas are `decision-record/0.2.0`, `attempt-record/0.2.0` and
 `outcome-record/0.1.0`. They are normative. They reach 1.0.0 when an
 implementation other than the reference one has been held to them.
 
+A record is written to a sink. What the sink must provide is C10's,
+in `spec/README.md`: the record survives failure of the component
+whose behaviour it records, is retrievable by someone not present
+at the write, and absence is detectable. A custody ledger and a
+gateway log both satisfy. An implementation MUST state which it
+relies on.
+
 ### On the maturity of these criteria
 
 C5, C6, C7, C9 and C10 have each now been built against. Each turned
@@ -309,6 +316,21 @@ and C12 reference that identifier. No change
 in meaning. C2 was compared and is not
 collapsed: it names the undeclared default's
 subject, not the criterion boundary.
+**1.19.0 states what a record sink
+must provide.** The record survives
+failure of the component whose
+behaviour it records, is retrievable
+by someone not present at the write,
+and absence is detectable. A custody
+ledger and a gateway log both
+satisfy. An implementation MUST
+state which it relies on. C10's
+requirement sentence is unaltered.
+The sink obligation is on every
+record the implementation writes.
+The log and custody are not
+equivalent. C10-via-gateway-log is
+Observed on both live engines.
 
 ---
 
