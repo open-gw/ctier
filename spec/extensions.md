@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.11.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.12.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -62,6 +62,9 @@ configured poll interval, not measured. The threat model records
 custody's execute path: it does not traverse the enforcement
 point, and compromise of custody yields direct backend access
 under the policy service's own identity.
+1.12.0 restates C12 as coverage, not the generator: no reachable
+operation executes without a tier assignment in force; a miss is
+refused and recorded with the applied tier undetermined.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

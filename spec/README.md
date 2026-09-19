@@ -1,4 +1,4 @@
-# ctier specification 1.11.0
+# ctier specification 1.12.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -109,6 +109,14 @@ a measurement. It records the standing exception to the
 enforcement point as chokepoint: custody's execute path does not
 traverse that point, and compromise of custody yields direct
 backend access under the policy service's own identity.
+
+1.12.0 restates C12 as coverage, not as a generator: no operation
+reachable through the enforcement point executes without a tier
+assignment in force. A compile-time refuse-to-emit and a
+request-time refuse of an unassigned operation both satisfy it.
+An implementation MUST state which it relies on. Absence of an
+assignment MUST NOT be permissive: the operation is refused and
+the refusal is recorded with the applied tier undetermined.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
@@ -245,6 +253,27 @@ decision.
 If the record sink is unavailable alongside the policy service, that
 window has no record. ADR-005 accepts this rather than implying a
 guarantee the design cannot make.
+
+**C12 — No reachable operation executes without a tier assignment
+in force.** Reachable means it can arrive at the enforcement point
+within a granted scope. It MUST have a tier assignment in force
+before it executes.
+
+That assignment may be bound into the enforcement point's
+configuration at deploy time — a generator that refuses to emit an
+unassigned operation is one way — or evaluated at request time
+against a loaded description, where a miss is a refuse. Both
+satisfy this criterion. An implementation MUST state which it
+relies on.
+
+C2's undeclared default is an assignment in force: a known
+operation with no `x-ctier-tier` is classified (default Tier 4),
+not unassigned.
+
+The absence of an assignment MUST NOT resolve to a permissive
+outcome. Where no assignment is in force for a reachable
+operation, the operation MUST be refused, and **that refusal MUST
+be recorded**, marking the applied tier as undetermined.
 
 **Excluded — `403`.** Refused at credential validation, before consequence
 evaluation. If this is reached by a live token, a scope has been over-granted.
