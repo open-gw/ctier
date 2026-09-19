@@ -70,7 +70,12 @@ were standing in for: a withheld agent does not retry and does
 not stay engaged. The `202` field list remains one way. An
 implementation MUST state which it relies on. A response that
 ends the exchange without instructing the agent to continue
-the rest of the task does not satisfy it.
+the rest of the task does not satisfy it. It restates C6 as
+two properties that must both hold: the bytes that execute
+are the bytes that were approved, and the agent is not the
+client. Persist-and-execute remains one way. An
+implementation MUST state which it relies on. Loosening the
+store does not loosen either half.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

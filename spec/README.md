@@ -123,7 +123,12 @@ were standing in for: a withheld agent does not retry and does
 not stay engaged. The `202` field list remains one way. An
 implementation MUST state which it relies on. A response that
 ends the exchange without instructing the agent to continue
-the rest of the task does not satisfy it.
+the rest of the task does not satisfy it. It restates C6 as
+two properties that must both hold: the bytes that execute
+are the bytes that were approved, and the agent is not the
+client. Persist-and-execute remains one way. An
+implementation MUST state which it relies on. Loosening the
+store does not loosen either half.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
@@ -189,10 +194,23 @@ never sees anything that authenticates.
 `202` sits outside the classes client resilience implementations retry by
 default.
 
-**C6 — Execution is from persisted context.** On approval, the operation
-executed is byte-identical to the operation described in the approval event
-in **method, request target, query and body**. The agent does not resubmit
-and is not involved.
+**C6 — What executes is what was approved, and the agent is
+not the client.** On approval, the operation executed is
+byte-identical to the operation that was approved in
+**method, request target, query and body**. Those bytes MUST
+be the bytes that were approved, not reconstructed from a
+later submission. The agent does not resubmit and is not the
+HTTP client of the execute.
+
+That property may be satisfied by persisting the operation at
+withhold and executing from that store under the policy
+service's own identity; or by a signed snapshot the agent
+never resubmits, executed by a party that is not the agent.
+An implementation MUST state which it relies on.
+
+Loosening the store does not loosen either half. An agent
+that presents the approved bytes is still the client. A later
+submission that happens to match is not the approved bytes.
 
 Byte-identity does **not** extend to the credential. The executed request
 carries the policy service's own identity; the originating agent and the
