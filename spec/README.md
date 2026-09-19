@@ -1,4 +1,4 @@
-# ctier specification 1.13.0
+# ctier specification 1.14.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -137,6 +137,15 @@ at the enforcement point: the agent does not choose its tier.
 Strip and integrity-protection remain named ways. An
 implementation MUST state which it relies on. The 16c bound
 is requirement 3's, not this criterion's.
+
+1.14.0 scopes C12 to the governed set: the operations present
+in the composed description from which the enforcement
+configuration was generated. A path reachable at the
+enforcement point but absent from that composition is outside
+this criterion. An implementation MUST make that set
+discoverable. An undetermined refusal and a Tier 4 decision
+are different facts; a ledger that cannot distinguish them
+cannot tell a provisioning defect from a governance outcome.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
@@ -343,8 +352,11 @@ Without this, an agent declares itself Tier 1 and the model
 collapses.
 
 **C12 — No reachable operation executes without a tier assignment
-in force.** Reachable means it can arrive at the enforcement point
-within a granted scope. It MUST have a tier assignment in force
+in force.** C12 applies to the operations ctier governs: those
+present in the composed description from which the enforcement
+configuration was generated. A path reachable at the enforcement
+point but absent from that composition is outside this criterion.
+An operation in that set MUST have a tier assignment in force
 before it executes.
 
 That assignment may be bound into the enforcement point's
@@ -354,14 +366,23 @@ against a loaded description, where a miss is a refuse. Both
 satisfy this criterion. An implementation MUST state which it
 relies on.
 
+An implementation MUST make the governed set discoverable — an
+operator must be able to determine which operations are covered
+without reading generated configuration.
+
 C2's undeclared default is an assignment in force: a known
 operation with no `x-ctier-tier` is classified (default Tier 4),
 not unassigned.
 
 The absence of an assignment MUST NOT resolve to a permissive
-outcome. Where no assignment is in force for a reachable
+outcome. Where no assignment is in force for a governed
 operation, the operation MUST be refused, and **that refusal MUST
-be recorded**, marking the applied tier as undetermined.
+be recorded**, marking the applied tier as undetermined. An
+undetermined refusal records that no assignment was found. A
+Tier 4 decision records that a maximally consequential
+operation was refused. These are different facts, and a ledger
+that cannot distinguish them cannot tell a provisioning defect
+from a governance outcome.
 
 **Excluded — `403`.** Refused at credential validation, before consequence
 evaluation. If this is reached by a live token, a scope has been over-granted.
@@ -457,10 +478,11 @@ a description.
 | 4 · Accumulate | scope floor | decomposition defence, and the cycle back to design |
 
 Level 2's "coverage fails the build" is one C12 mechanism: the
-reference generator refuses to emit an unassigned reachable
-operation. C12 is the property (no reachable execute without an
-assignment in force), not the build failure. A request-time miss
-that refuses and records is the other named mechanism. Level 0
+reference generator refuses to emit an unassigned operation
+present in the composed description. C12 is the property (no
+operation in that set executes without an assignment in force),
+not the build failure. A request-time miss that refuses and
+records is the other named mechanism. Level 0
 deploys nothing, so C12 does not yet apply; the unclassified share
 is a coverage-report number, not an enforcement-point assignment.
 

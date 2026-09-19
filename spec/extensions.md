@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.13.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.14.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -84,6 +84,14 @@ at the enforcement point: the agent does not choose its tier.
 Strip and integrity-protection remain named ways. An
 implementation MUST state which it relies on. The 16c bound
 is requirement 3's, not this criterion's.
+1.14.0 scopes C12 to the governed set: those present in the
+composed description from which the enforcement configuration
+was generated. A path reachable at the enforcement point but
+absent from that composition is outside this criterion. An
+implementation MUST make the governed set discoverable. An
+undetermined refusal records that no assignment was found; a
+Tier 4 decision records that a maximally consequential
+operation was refused.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

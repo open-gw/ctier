@@ -217,9 +217,9 @@ tier, applied tier, escalation reason, disposition, deployment digest.
 
 **Attempt** — the enforcement point refused without classifying.
 The named case is the policy service unavailable. C12 adds another:
-a reachable operation with no assignment in force. Both carry the
-declared tier where known, the deployment digest and the reason,
-and mark the applied tier undetermined.
+an operation in the composed description with no assignment in
+force. Both carry the declared tier where known, the deployment
+digest and the reason, and mark the applied tier undetermined.
 
 **Outcome** — what happened when an approved Tier 3 executed.
 Correlation, approver, executed-at, result, whether it failed. Written
@@ -249,9 +249,13 @@ C6, C9 and C11 are restated as of 1.13.0** as the properties
 their prescriptions were standing in for; the named status,
 store, and strip remain satisfying mechanisms. **C12 is
 restated as of 1.12.0** as coverage, not as a generator; the
-compiled refuse-to-emit is one satisfying mechanism. **C8's
-rejection branch is not**, and cannot be until the authorisation layer
-exists. Expiry is distinct and does run.
+compiled refuse-to-emit is one satisfying mechanism. **1.14.0
+scopes that coverage to the composed description** from which
+the enforcement configuration was generated; a path reachable
+at the enforcement point but absent from that composition is
+outside the criterion. **C8's rejection branch is not**, and
+cannot be until the authorisation layer exists. Expiry is
+distinct and does run.
 
 The same finding now applies to the specification's own artefacts,
 not only to its criteria. Four have been corrected after something
