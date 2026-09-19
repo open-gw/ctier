@@ -187,6 +187,21 @@ mechanism, and is present on 503 when custody is unavailable
 (ADR-005). `Cache-Control: no-store` on agent-facing faults
 is ordinary HTTP.
 
+### `X-Incident-Id`
+
+| | |
+|---|---|
+| Direction | Response → agent, on a C9 refusal. MAY appear inbound if the agent sends it |
+| Who may set | The enforcement point MAY emit it on a C9 response. The agent MAY send it inbound |
+| Strip | Inbound, the enforcement point does not strip it. The name is outside `x-ctier-*` and is not in the 16c bound |
+| Value | Incident identifier for the refusal. Not the join key |
+| Requirement | **Not a join key.** A backend MUST NOT correlate or authorise on it. The join key is `x-ctier-correlation-id`. An inbound value is agent-supplied. C9 forbids a correlation identifier on this disposition; this header is not one |
+
+An agent can present any value. That does not forge the
+join: inbound `x-ctier-correlation-id` is stripped and the
+enforcement point writes its own. Forging this name forges
+an incident label, not the decision record.
+
 The two conditions an adopter still owes — the backend reachable only
 from the enforcement point and from custody, and custody treated as a
 trusted caller by some means ctier does not provide — are in

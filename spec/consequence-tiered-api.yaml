@@ -232,7 +232,11 @@ components:
       description: Refused at Tier 4. Agent suspended; human takeover initiated.
       headers:
         X-Ctier-Tier: { schema: { type: integer } }
-        X-Incident-Id: { schema: { type: string } }
+        X-Incident-Id:
+          schema: { type: string }
+          description: >
+            Incident label on a C9 refusal. Not the join key. An inbound
+            value is agent-supplied. See `spec/headers.md`.
       content:
         application/json:
           schema: { $ref: '#/components/schemas/AgentSuspended' }

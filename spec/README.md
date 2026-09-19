@@ -265,7 +265,18 @@ the bound; believing this header
 is a path around that
 replacement. Live Kong and
 APISIX do not read it. They
-satisfy.
+satisfy. It states trust status
+for `X-Incident-Id`. The header
+does not take a letter. It may
+be emitted on a C9 response and
+may be sent inbound. It is not
+the join key. An inbound value
+is agent-supplied. A backend
+MUST NOT correlate or authorise
+on it. Live targets do not emit
+it, do not strip it, and do not
+believe it. They satisfy the
+trust rule.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
