@@ -104,7 +104,12 @@ was generated. A path reachable at the enforcement point but
 absent from that composition is outside this criterion.
 It titles C3: Unidirectionality in validation.md is the
 criterion, wording unaltered. The escalate-to field remains
-the field-level echo.
+the field-level echo. It states C1 and C4. C1 is the
+property: no governed operation reaches its target
+unclassified; "recorded" was the PRD's mechanism. C4 is
+the property: no decision path blocks on human input,
+deliberately unbounded; occupancy is C5 and the
+suspension rule.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

@@ -30,7 +30,7 @@ An agent can authenticate perfectly and still be catastrophic. Identity is not c
 | **3 — High** | Undo restores the record, not the effect | Gateway blocks; async approval event; approver recorded | Out-of-band approval |
 | **4 — Critical** | Irreversible, regulated, or financial | Agent suspended before action; no auto-resume | Full ownership |
 
-**The architectural claim underneath all of it:** for Tiers 3 and 4 the human is never in the API request path. The gateway blocks execution and emits an asynchronous event; the human acts out-of-band. Anything else holds a connection open while somebody reads Slack.
+**The architectural claim underneath all of it:** no decision path blocks on human input (C4). The gateway decides without waiting; the human acts on a later path. Anything else waits on that path while somebody reads Slack.
 
 
 
@@ -198,7 +198,7 @@ It would, if it never reset. Decay the accumulated weight over time and reset it
 No, and the distinction is the whole argument. Scopes classify the caller's permission surface. Tiers classify the consequence of a specific call *within* an already-authorised scope. An agent holding a valid read scope can retrieve one appointment time or an entire longitudinal record — same scope, same token, radically different consequence. Scopes cannot see that difference because they were never designed to.
 
 **How is this different from human-in-the-loop?**
-Human-in-the-loop is an agent-level setting, and the human sits in the request path. This is action-level, and the human is out-of-band. That is not wordplay: a human in the loop breaks your timeouts, and a human out-of-band does not.
+Human-in-the-loop is an agent-level setting, and the human sits in the request path. This is action-level, and the human is out-of-band. C4 is the stronger requirement: no decision path blocks on human input. That is not wordplay: a decision that waits on a human breaks your timeouts, and a human on a later path does not.
 
 **You said Tier 3 isn't reversible, but I can undo a price change. Why isn't that Tier 2?**
 Because reversibility has three states rather than two, and the middle one is easy to miss. At Tier 2 the undo restores everything and nothing happened in between. At Tier 3 the undo restores the record but not the effect: you can put the price back, but the orders placed at that price were still placed; you can revoke an export, but the data is still out there. At Tier 4 there is no undo at all. The test is not whether the operation can be reversed — it is whether reversing it puts you back where you were.

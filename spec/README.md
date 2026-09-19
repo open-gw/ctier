@@ -160,7 +160,12 @@ configuration was generated. A path reachable at the
 enforcement point but absent from that composition is outside
 this criterion. It titles C3: Unidirectionality in
 validation.md is the criterion, wording unaltered. The
-escalate-to field remains the field-level echo.
+escalate-to field remains the field-level echo. It states
+C1 and C4. C1 is the property: no governed operation
+reaches its target unclassified; "recorded" was the PRD's
+mechanism. C4 is the property: no decision path blocks on
+human input, deliberately unbounded; occupancy is C5 and
+the suspension rule.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
@@ -171,9 +176,42 @@ demo, not before. Consumers MUST ignore fields they do not recognise.
 
 These are interface behaviour, not extension keys.
 
+**C1 — Classification precedes routing.** No governed
+operation reaches its target unclassified. C1 applies to
+the operations ctier governs: those present in the
+composed description from which the enforcement
+configuration was generated. A path reachable at the
+enforcement point but absent from that composition is
+outside this criterion.
+
+That precedence may arise from the classification being
+bound into the enforcement point's configuration at
+deploy time, or from a classification at request time
+before the request is routed. Both satisfy this
+criterion. An implementation MUST state which it relies
+on.
+
+The **record** of a classification is evidence that it
+was made, not the classification itself.
+
 **C3 — Escalation is unidirectional.** `x-ctier-escalate-to`
 may never resolve below the tier already reached at that
 point in evaluation.
+
+**C4 — No decision path blocks on human input.** A
+classification, a withhold, a refuse, or an escalation
+MUST complete without waiting for a human. Where a
+human must act, that action is a later, separate path
+— not a step the decision waits on.
+
+This criterion is deliberately unbounded. It applies to
+every decision the implementation takes, including a
+refuse of a path outside the composed description. A
+bound to the governed set would permit a synchronous
+approval of an unknown path, which is the failure this
+criterion exists to forbid.
+
+Where a human sits is not the requirement.
 
 **C5 — A withheld agent does not retry and does not stay
 engaged.** The agent's involvement with a withheld operation
