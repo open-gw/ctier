@@ -1,4 +1,4 @@
-# ctier specification 1.20.0
+# ctier specification 1.21.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -344,9 +344,30 @@ Any tooling that walks C1
 through C13 now silently skips
 C14 and C15 and reports
 conformance.
+1.21.0 titles Additive
+evolution: the orphan MUST
+43 found, in validation.md
+and at the close of this
+history, wording unaltered.
+It does not take a letter.
+The admission rule's scope
+is implementation behaviour
+that mints a C-series
+criterion. A consumer of
+records is a second
+implementation's client or
+auditor; this is a named
+validation rule about how
+those readers treat
+unrecognised fields, not
+enforcement-point behaviour.
+The accounting remains
+fifteen. The three remaining
+1.17.0 candidates are
+unchanged.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
-demo, not before. Consumers MUST ignore fields they do not recognise.
+demo, not before. **Additive evolution.** Consumers MUST ignore fields they do not recognise.
 
 ---
 

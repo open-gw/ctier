@@ -4,6 +4,8 @@ JSON Schema validates **shape**. Several rules in this specification are
 semantic. A second implementation that treats the schemas as the whole contract
 will accept documents this specification rejects.
 
+### Additive evolution
+
 Consumers MUST ignore fields they do not recognise. That is a rule about
 behaviour, not shape — the same invariant the runtime already requires of
 unknown `x-ctier-*` headers. It is what makes additive evolution safe. Adding a
@@ -437,6 +439,19 @@ Any tooling that walks C1
 through C13 now silently skips
 C14 and C15 and reports
 conformance.
+**1.21.0 titles Additive
+evolution:** the orphan MUST
+43 found, wording unaltered.
+It does not take a letter.
+A consumer of records is a
+second implementation's
+client or auditor; this is
+a named validation rule,
+not enforcement-point
+behaviour. The accounting
+remains fifteen. The three
+remaining 1.17.0 candidates
+are unchanged.
 
 ---
 
@@ -467,6 +482,8 @@ the implementation cannot make unavoidable.
 C13 meets this rule. It is the thirteenth criterion.
 C14 meets this rule. It is the fourteenth criterion.
 C15 meets this rule. It is the fifteenth criterion.
+Additive evolution does not. It is a named
+validation rule. The accounting remains fifteen.
 
 ---
 

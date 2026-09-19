@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.20.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.21.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -288,6 +288,23 @@ Any tooling that walks C1
 through C13 now silently skips
 C14 and C15 and reports
 conformance.
+1.21.0 titles Additive evolution:
+the orphan MUST 43 found, in
+validation.md and at the close of
+the README version history, wording
+unaltered. It does not take a
+letter. The admission rule's scope
+is implementation behaviour that
+mints a C-series criterion. A
+consumer of records is a second
+implementation's client or auditor;
+this is a named validation rule
+about how those readers treat
+unrecognised fields, not
+enforcement-point behaviour. The
+accounting remains fifteen. The
+three remaining 1.17.0 candidates
+are unchanged.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.
