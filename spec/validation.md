@@ -287,7 +287,9 @@ record object. `epoch` and `seq` on a log line sit on the
 sink. A consumer that extracts the JSON and discards the
 line envelope has left the sink. That arrangement is
 conformant. The closed ledger schemas do not grow these
-fields.
+fields. Records carried away from their sink must carry the
+sink's sequencing with them, or gap detection does
+not travel. That is deployment requirement 6.
 
 ### On the maturity of these criteria
 
@@ -547,6 +549,16 @@ line envelope has left
 the sink. 50's
 arrangement is
 conformant-by-statement.
+Records carried
+away from their sink
+must carry the sink's
+sequencing with them,
+or gap detection does
+not travel. That is
+deployment requirement
+6: a condition ctier
+states and does not
+enforce.
 
 ---
 

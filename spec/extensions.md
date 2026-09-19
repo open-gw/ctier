@@ -347,6 +347,14 @@ that extracts the JSON and
 discards the line envelope has
 left the sink. 50's arrangement
 is conformant-by-statement.
+Records carried away from
+their sink must carry the
+sink's sequencing with them,
+or gap detection does not
+travel. That is deployment
+requirement 6: a condition
+ctier states and does not
+enforce.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

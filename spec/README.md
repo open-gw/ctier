@@ -417,6 +417,16 @@ JSON and discards the line
 envelope has left the sink.
 50's arrangement is
 conformant-by-statement.
+Records carried
+away from their sink
+must carry the sink's
+sequencing with them,
+or gap detection does
+not travel. That is
+deployment requirement
+6: a condition ctier
+states and does not
+enforce.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. **Additive evolution.** Consumers MUST ignore fields they do not recognise.
@@ -663,6 +673,10 @@ the record object. `epoch` and `seq` on a log line sit
 on the sink. A consumer that extracts the JSON and
 discards the line envelope has left the sink. That
 arrangement is conformant.
+Records carried away from their sink must carry the
+sink's sequencing with them, or gap detection does
+not travel. That is deployment requirement 6. It
+is not this criterion.
 
 C10's coverage — no operation executes without a decision —
 remains the `governed-set`. The sink requirement is not that
@@ -779,6 +793,14 @@ deployment for the guarantees to hold. None is a defect.
    strip it. ctier cannot prevent a backend from believing it. A
    deployment that grants because this header is present has the
    header and none of the entitlement.
+6. **Records carried away from their sink must carry the sink's
+   sequencing with them, or gap detection does not travel.** A
+   SIEM, aggregator or compliance export that takes the JSON and
+   leaves the line envelope has left the sink. ctier cannot put
+   that sequence on the record — the schemas stay closed — and
+   cannot make the export carry it. An operator who ships the
+   extract without the sink's sequencing has the records and none
+   of the gap detection.
 
 An enforcement point where another component reads a reserved header
 first has the classifications and not the forgery protection.
@@ -788,7 +810,9 @@ be re-established whenever the enforcement point's configuration
 changes, whether or not ctier generated the change — including when
 the change is a component outside the implementation's declared
 class. Requirement 4 is the exclusion for the log sink: a collector
-the operator does not run is not a record.
+the operator does not run is not a record. Requirement 6 is the
+exclusion for export: records that leave the sink without its
+sequencing have left gap detection behind.
 
 An implementation SHOULD provide a means of detecting components that
 read reserved headers, and a deployment relying on requirement 3
@@ -895,7 +919,10 @@ that was recorded. That is the third property, met only as far
 as a collector can be joined to an independent request stream.
 `epoch` and `seq` on the line are the sink providing that
 property, not fields of the record. A consumer that extracts
-the JSON has left the sink. Durability remains requirement 4.
+the JSON has left the sink. Records carried away from their
+sink must carry the sink's sequencing with them, or gap
+detection does not travel. That is requirement 6.
+Durability remains requirement 4.
 Outcome records remain
 custody's — the log has never carried them.
 
