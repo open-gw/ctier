@@ -255,7 +255,8 @@ compiled refuse-to-emit is one satisfying mechanism. **1.14.0
 scopes that coverage to the composed description** from which
 the enforcement configuration was generated; a path reachable
 at the enforcement point but absent from that composition is
-outside the criterion. **C8's rejection branch is not**, and
+outside the criterion. **1.15.0 scopes C10 to that same
+governed set.** **C8's rejection branch is not**, and
 cannot be until the authorisation layer exists. Expiry is
 distinct and does run.
 

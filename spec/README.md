@@ -1,4 +1,4 @@
-# ctier specification 1.14.0
+# ctier specification 1.15.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -153,6 +153,12 @@ not to paths outside the composition. It records that
 neither live target satisfies C12's miss clause: Kong
 assigns Tier 4 via a global plugin; APISIX does nothing;
 the criterion requires an undetermined refusal.
+
+1.15.0 scopes C10 to the governed set: the operations present
+in the composed description from which the enforcement
+configuration was generated. A path reachable at the
+enforcement point but absent from that composition is outside
+this criterion.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
@@ -311,8 +317,12 @@ content is the handover. The no-correlation-identifier rule
 is the same prohibition: a handle the agent can watch is a
 resume path.
 
-**C10 — No operation executes without a decision having been made.** The
-decision MUST precede the action. That precedence may arise from the
+**C10 — No operation executes without a decision having been made.**
+C10 applies to the operations ctier governs: those
+present in the composed description from which the enforcement
+configuration was generated. A path reachable at the enforcement
+point but absent from that composition is outside this criterion.
+The decision MUST precede the action. That precedence may arise from the
 decision being bound into the enforcement point's configuration at
 deploy time, or from a synchronous evaluation before the request
 proceeds; both satisfy this criterion and an implementation MUST state

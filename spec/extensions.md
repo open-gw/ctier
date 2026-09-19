@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.14.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.15.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -98,6 +98,10 @@ composition. It records that neither live target satisfies
 C12's miss clause: Kong assigns Tier 4 via a global plugin;
 APISIX does nothing; the criterion requires an undetermined
 refusal.
+1.15.0 scopes C10 to the governed set: those present in the
+composed description from which the enforcement configuration
+was generated. A path reachable at the enforcement point but
+absent from that composition is outside this criterion.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.
