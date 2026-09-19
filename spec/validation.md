@@ -285,6 +285,11 @@ identifiers and classes the sweep used — a floor for a
 reader-complete inventory; a later reader naming another
 class raises both.
 
+**1.17.0 admits C13.** The accounting is thirteen.
+The audit of tasks 25, 26, 39 and 42 covered twelve
+criteria. C13 was not among them; its classification
+was recorded in 1.17.0, after the audit closed.
+
 ---
 
 ## What a C-series criterion is

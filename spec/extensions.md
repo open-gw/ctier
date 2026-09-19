@@ -132,6 +132,13 @@ composition other than the one it was computed
 from — is not restated here. The digest is over
 the composition; that composition is the governed
 set by definition. C13's declared evidence is none.
+The accounting is thirteen. The audit of tasks 25,
+26, 39 and 42 covered twelve criteria. C13 was not
+among them; its classification was recorded in
+1.17.0, after the audit closed. Conforming to
+twelve is not conforming to thirteen. Digest
+discipline has been in force since 1.4.0, so
+nothing an implementation must do has changed.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.
