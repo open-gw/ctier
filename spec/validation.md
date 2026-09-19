@@ -280,7 +280,10 @@ with the letter.
 
 **1.16.0 is the identifier pass.** Of **195** identifiers across
 **33** classes, **22** had no requirement sentence and **3**
-were stated under a different name.
+were stated under a different name. The numbers count the
+identifiers and classes the sweep used — a floor for a
+reader-complete inventory; a later reader naming another
+class raises both.
 
 ---
 
