@@ -75,7 +75,11 @@ two properties that must both hold: the bytes that execute
 are the bytes that were approved, and the agent is not the
 client. Persist-and-execute remains one way. An
 implementation MUST state which it relies on. Loosening the
-store does not loosen either half.
+store does not loosen either half. It restates C9 as the
+identity prohibition: a Tier 4 operation does not execute
+under the agent's identity, or under one derived from it.
+The `423` field list remains one way. An implementation MUST
+state which it relies on.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

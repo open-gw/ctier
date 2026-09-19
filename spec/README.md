@@ -128,7 +128,11 @@ two properties that must both hold: the bytes that execute
 are the bytes that were approved, and the agent is not the
 client. Persist-and-execute remains one way. An
 implementation MUST state which it relies on. Loosening the
-store does not loosen either half.
+store does not loosen either half. It restates C9 as the
+identity prohibition: a Tier 4 operation does not execute
+under the agent's identity, or under one derived from it.
+The `423` field list remains one way. An implementation MUST
+state which it relies on.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
@@ -262,17 +266,30 @@ discovers its state on its next attempt at an operation of that class, which
 is refused. No notification, callback or status affordance is created for
 it. The pause is state, not a message.
 
-**C9 — Tier 4 has no resume path.** No state transition exists by which a
-Tier 4 operation executes under the agent's identity. Status `423`,
-`AgentSuspended`. Carries `incidentId`, `autoResume: false`, and
-`agentAction: halt_and_hand_off`. No correlation identifier. The agent
-must not seek an alternative route to the same outcome.
+**C9 — A Tier 4 operation does not execute under the agent's
+identity.** No state transition exists by which a Tier 4
+operation executes under the agent's identity, or under an
+identity derived from it. A service identity minted from the
+agent's token is the agent's identity in all but name. The
+human performs the operation under their own credential, and
+the agent does not.
 
-The no-URL rule in `spec/validation.md` applies. Tier 4's content is the
-handover: a human performs the operation under their own credential, and
-the agent does not. A location in the agent's response makes the agent
-the mediator of a handover it was excluded from. The exclusion is the
-control.
+That property may be satisfied by status `423`,
+`AgentSuspended`, carrying `incidentId`, `autoResume: false`,
+and `agentAction: halt_and_hand_off`, with no correlation
+identifier; or by another response that names no resume
+handle and instructs the agent to halt and hand off. An
+implementation MUST state which it relies on.
+
+The agent must not seek an alternative route to the same
+outcome. A location in the agent's response makes the agent
+the mediator of a handover it was excluded from. The
+exclusion is the control.
+
+The no-URL rule in `spec/validation.md` applies. Tier 4's
+content is the handover. The no-correlation-identifier rule
+is the same prohibition: a handle the agent can watch is a
+resume path.
 
 **C10 — No operation executes without a decision having been made.** The
 decision MUST precede the action. That precedence may arise from the
