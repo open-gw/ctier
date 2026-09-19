@@ -86,6 +86,10 @@ not the bytes. 1.4.0 recorded that the corpus is not a
 digest claim. That absence is none under Configured,
 Derived, and Observed: not a chosen figure, not
 arithmetic from one, and not a sample from a run.
+The obvious next evidence is a runtime-suite case
+in the shape 38 already built: generate against
+one composition, present a different one, assert
+the assignment does not apply.
 
 ---
 
