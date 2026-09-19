@@ -12,6 +12,22 @@ unknown `x-ctier-*` headers. It is what makes additive evolution safe. Adding a
 field is a minor version; removing one, or changing what an existing field
 means, is major.
 
+The ledger record schemas (`decision-record`, `attempt-record`,
+`outcome-record`) set `additionalProperties: false`. An unrecognised
+field on those objects is invalid. The rule says a consumer ignores
+that field. Both cannot hold of the same object.
+
+The schemas stay closed. The rule is scoped. It applies to unknown
+`x-ctier-*` headers at the trust boundary, and to unrecognised keys
+in a named extensions object where a document type defines one. It
+does not apply to the closed property set of a ledger record. Adding
+a field to a closed record is a new record-type version. The MUST
+is unaltered. Closed schema is a mechanism for catching a misspelt
+name. Additive evolution is the property that an unrecognised
+header, or an unrecognised key in a named extensions object, does
+not fail the consumer. Withdrawing the named requirement because
+the schemas were closed would let the mechanism mint the format.
+
 ---
 
 ## Schema-checked
@@ -451,7 +467,28 @@ not enforcement-point
 behaviour. The accounting
 remains fifteen. The three
 remaining 1.17.0 candidates
-are unchanged.
+are unchanged. **It states
+the contradiction:**
+consumers MUST ignore fields
+they do not recognise, and
+the ledger schemas set
+additionalProperties: false.
+An unrecognised field on a
+closed record is invalid.
+Both cannot hold of the same
+object. The schemas stay
+closed. The rule is scoped
+to unknown `x-ctier-*`
+headers at the trust
+boundary, and to
+unrecognised keys in a
+named extensions object
+where a document type
+defines one. The MUST is
+unaltered. Withdrawing it
+because the schemas were
+closed would let the
+mechanism mint the format.
 
 ---
 

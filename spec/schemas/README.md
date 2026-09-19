@@ -9,7 +9,9 @@ then it defines the contract but has only ever been read by its author,
 which is a weaker claim than stability.
 
 Pre-1.0 these formats may break. **Additive evolution.** Consumers MUST ignore fields they do not
-recognise.
+recognise. The ledger record schemas stay closed. That rule is scoped
+in `../validation.md`: unknown `x-ctier-*` headers, and unrecognised
+keys in a named extensions object where a document type defines one.
 
 | Schema | Document |
 |---|---|

@@ -304,7 +304,24 @@ unrecognised fields, not
 enforcement-point behaviour. The
 accounting remains fifteen. The
 three remaining 1.17.0 candidates
-are unchanged.
+are unchanged. It states the
+contradiction: consumers MUST
+ignore fields they do not
+recognise, and the ledger schemas
+set additionalProperties: false.
+An unrecognised field on a closed
+record is invalid. Both cannot
+hold of the same object. The
+schemas stay closed. The rule is
+scoped to unknown x-ctier-*
+headers at the trust boundary,
+and to unrecognised keys in a
+named extensions object where a
+document type defines one. The
+MUST is unaltered. Withdrawing it
+because the schemas were closed
+would let the mechanism mint the
+format.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.
