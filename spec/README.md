@@ -255,10 +255,13 @@ header rule is a header rule.
 The header is agent-supplied
 lineage. The enforcement point
 does not strip it; the name is
-outside the 16c bound. A
-backend MUST NOT treat it as a
-grant. Under `standard` the
-enforcement point MUST NOT
+outside the 16c bound. The
+backend rule is deployment
+requirement 5: the header is
+information; treating it as
+authority is a condition ctier
+states and does not enforce.
+The enforcement point MUST NOT
 classify from it. Compiled
 client entitlement (1.3.0) is
 the bound; believing this header
@@ -322,7 +325,13 @@ The sentence is an engine local
 choice. It is to come out of
 engine documents; this
 specification does not edit
-them. Of the five 1.17.0
+them. The claimed C10 sink is
+`[ctier-decision]` in the error
+log; an error-log line has no
+request sequencing, so 1.19.0's
+absence-detectable clause is
+unmet there. Named gap; C10 is
+unaltered. Of the five 1.17.0
 candidates, two now have
 letters. Three remain: bound
 comparison; no agent-facing
@@ -685,11 +694,16 @@ deployment for the guarantees to hold. None is a defect.
    for `[ctier-decision]` lines has not recorded them. Custody, when
    deployed, remains the durable ledger. This requirement does not
    apply to records written there.
+5. **A backend MUST NOT treat `X-Delegation-Chain` as a grant.** The
+   header is agent-supplied lineage. The enforcement point does not
+   strip it. ctier cannot prevent a backend from believing it. A
+   deployment that grants because this header is present has the
+   header and none of the entitlement.
 
 An enforcement point where another component reads a reserved header
 first has the classifications and not the forgery protection.
 
-Requirements 1 and 2 are satisfied at deployment. Requirement 3 must
+Requirements 1, 2 and 5 are satisfied at deployment. Requirement 3 must
 be re-established whenever the enforcement point's configuration
 changes, whether or not ctier generated the change — including when
 the change is a component outside the implementation's declared

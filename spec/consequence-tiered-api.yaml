@@ -102,7 +102,7 @@ components:
         Ordered ancestry of the delegation that produced this call, root first,
         e.g. `orchestrator-7 > kyc-agent-2 > enrichment-agent-9`. Agent-supplied.
         Not compiled entitlement. The enforcement point does not classify from
-        this header under the `standard` profile. See `spec/headers.md`.
+        this header. See `spec/headers.md` and deployment requirement 5.
 
   schemas:
     Balance:

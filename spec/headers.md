@@ -151,7 +151,7 @@ Pass-through of the agent's inbound headers (including
 | Who may set | The agent. The enforcement point does not emit it. An estate component MAY inject it |
 | Strip | The enforcement point does not strip it. The name is outside `x-ctier-*`. Requirement 3's 16c bound is the namespace and the named aliases (`X-Correlation-Id`, `X-Ctier-Tier`, the inbound idempotency keys). This name is not in that bound |
 | Value | Ordered ancestry the agent asserts, root first |
-| Requirement | **Provenance, not entitlement.** A backend MUST NOT treat this header as evidence of a grant. Under the `standard` profile the enforcement point MUST NOT classify from it |
+| Requirement | **Provenance, not entitlement.** The backend rule is deployment requirement 5. The enforcement point MUST NOT classify from it |
 
 1.3.0 restated `standard` as compiled client entitlement, not
 token lineage. This header carries lineage. It is not that
@@ -202,7 +202,8 @@ join: inbound `x-ctier-correlation-id` is stripped and the
 enforcement point writes its own. Forging this name forges
 an incident label, not the decision record.
 
-The two conditions an adopter still owes — the backend reachable only
-from the enforcement point and from custody, and custody treated as a
-trusted caller by some means ctier does not provide — are in
+The conditions an adopter still owes — the backend reachable only
+from the enforcement point and from custody, custody treated as a
+trusted caller by some means ctier does not provide, and a backend
+that does not treat `X-Delegation-Chain` as a grant — are in
 [`README.md`](README.md#what-ctier-requires-of-the-deployment).

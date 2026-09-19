@@ -347,10 +347,13 @@ header rule is a header rule.
 The header is agent-supplied
 lineage. The enforcement point
 does not strip it; the name is
-outside the 16c bound. A
-backend MUST NOT treat it as a
-grant. Under `standard` the
-enforcement point MUST NOT
+outside the 16c bound. The
+backend rule is deployment
+requirement 5: the header is
+information; treating it as
+authority is a condition ctier
+states and does not enforce.
+The enforcement point MUST NOT
 classify from it. Compiled
 client entitlement (1.3.0) is
 the bound; believing this header
@@ -415,7 +418,13 @@ The sentence is an engine local
 choice. It is to come out of
 engine documents; this
 specification does not edit
-them. Of the five 1.17.0
+them. The claimed C10 sink is
+`[ctier-decision]` in the error
+log; an error-log line has no
+request sequencing, so 1.19.0's
+absence-detectable clause is
+unmet there. Named gap; C10 is
+unaltered. Of the five 1.17.0
 candidates, two now have
 letters. Three remain: bound
 comparison; no agent-facing
