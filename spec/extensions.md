@@ -230,7 +230,22 @@ ctier specifies. Declared
 evidence is none. The reference
 policy service strips
 `Authorization` from persisted
-context. It satisfies.
+context. It satisfies. It admits
+C15: agent suspension is an
+authorisation concern.
+Compiled-absence — the scope
+removed at the authorisation
+server — is the mechanism. This
+forbids gateway-local
+suspension. Declared evidence is
+none. The reference does not
+consult custody for suspension
+and does not keep a denylist.
+It satisfies the
+enforcement-point half. The
+authorisation server removing
+the scope remains the estate, as
+C8 already recorded.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

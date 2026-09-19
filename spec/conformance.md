@@ -96,6 +96,12 @@ not observe a persisted pending context. Schema
 cannot see a request header. That absence is none
 under Configured, Derived, and Observed.
 
+**Declared evidence — C15.** None. The corpus does
+not observe a scope removed at the authorisation
+server, and it does not observe the absence of a
+gateway-local denylist. That absence is none
+under Configured, Derived, and Observed.
+
 **Declared evidence — C10 via gateway log.** Observed:
 a sample from a run, reproducible approximately by
 re-running under the same conditions. The runtime

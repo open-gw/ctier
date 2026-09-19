@@ -131,7 +131,7 @@ implementation that stores a token in order to compute a deadline has
 stored a token. Schema cannot see a request header; this is a security
 property of the design, not an implementation preference.
 
-### Agent suspension is an authorisation concern
+### C15 — Agent suspension is an authorisation concern
 
 Agent suspension — required by both Tier 4 and by C8's rejection branch —
 is enforced at the authorisation layer as a property of the credential. An
@@ -139,6 +139,12 @@ implementation without it may record a rejection but cannot produce its
 effect, and MUST NOT simulate the effect by consulting the policy service
 on every request: that reintroduces into the request path the dependency
 the out-of-band design removes.
+
+Compiled-absence is the mechanism: the scope is removed at the
+authorisation server. This criterion forbids gateway-local
+suspension — a denylist at the enforcement point, a shared
+dictionary of suspended agents, or any consult of the policy
+service to ask whether an agent is suspended.
 
 ### Tier 2 requires a verified compensating action
 
@@ -372,7 +378,22 @@ ctier specifies. Declared
 evidence is none. The reference
 policy service strips
 `Authorization` from persisted
-context. It satisfies.
+context. It satisfies. **It
+admits C15: agent suspension is
+an authorisation concern.**
+Compiled-absence — the scope
+removed at the authorisation
+server — is the mechanism. This
+forbids gateway-local
+suspension. Declared evidence is
+none. The reference does not
+consult custody for suspension
+and does not keep a denylist.
+It satisfies the
+enforcement-point half. The
+authorisation server removing
+the scope remains the estate, as
+C8 already recorded.
 
 ---
 
@@ -402,6 +423,7 @@ the implementation cannot make unavoidable.
 
 C13 meets this rule. It is the thirteenth criterion.
 C14 meets this rule. It is the fourteenth criterion.
+C15 meets this rule. It is the fifteenth criterion.
 
 ---
 
