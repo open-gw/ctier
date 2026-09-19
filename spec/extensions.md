@@ -109,7 +109,8 @@ property: no governed operation reaches its target
 unclassified; "recorded" was the PRD's mechanism. C4 is
 the property: no decision path blocks on human input,
 deliberately unbounded; occupancy is C5 and the
-suspension rule.
+suspension rule. It corrects the criteria accounting: of
+twelve named criteria, three were never stated.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

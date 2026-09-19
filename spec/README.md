@@ -165,7 +165,8 @@ C1 and C4. C1 is the property: no governed operation
 reaches its target unclassified; "recorded" was the PRD's
 mechanism. C4 is the property: no decision path blocks on
 human input, deliberately unbounded; occupancy is C5 and
-the suspension rule.
+the suspension rule. It corrects the criteria accounting:
+of twelve named criteria, three were never stated.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.

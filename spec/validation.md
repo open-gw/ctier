@@ -245,8 +245,15 @@ did not consider doing the wrong thing. The remedy is not more careful
 writing; it is building something against each criterion and reporting
 what the plain reading permits.
 
-This closes that pattern. Of the remainder: C1, C2, C3 and C4
-are exercised by the compiled targets and the corpus. **C5,
+This closes that pattern. Of twelve named criteria, three
+were never stated: C1, C3 and C4 — C3's requirement existed
+unattached to its name, C1 and C4 not at all. Of the nine
+that were stated, seven prescribed a mechanism where a
+property was meant. Task 25 classified C1 from the engine
+PRD without noticing the sentence was not in this
+specification; task 26's conclusion that C1 was not a
+mechanism was reached about that same sentence. The method
+held; the corpus of documents it ran against did not. **C5,
 C6, C9 and C11 are restated as of 1.13.0** as the properties
 their prescriptions were standing in for; the named status,
 store, and strip remain satisfying mechanisms. **C12 is
