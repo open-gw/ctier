@@ -18,9 +18,10 @@ unaltered and remains resolvable.
 | [`consequence-tiered-api.yaml`](consequence-tiered-api.yaml) | Worked OpenAPI 3.1 example |
 
 `exportStatements` is unclassified **on purpose**. It is the one `absent`
-operation in the reference document. Absence is Tier 4 by C2 — fail-closed —
-and completing that classification as tidying would remove the example of the
-default the model rests on.
+operation in the reference document. Absence of a declaration on an
+operation in the composed description is Tier 4 by C2 — fail-closed —
+and completing that classification as tidying would remove the example of
+the default the model rests on.
 
 The qualified spec is an OpenAPI document carrying the Part 2 extensions. It
 has no schema of its own; it has a validation profile in `validation.md`.
@@ -146,6 +147,9 @@ this criterion. An implementation MUST make that set
 discoverable. An undetermined refusal and a Tier 4 decision
 are different facts; a ledger that cannot distinguish them
 cannot tell a provisioning defect from a governance outcome.
+C2's undeclared default applies to operations within the
+composed description that carry no explicit tier assignment,
+not to paths outside the composition.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
@@ -372,7 +376,9 @@ without reading generated configuration.
 
 C2's undeclared default is an assignment in force: a known
 operation with no `x-ctier-tier` is classified (default Tier 4),
-not unassigned.
+not unassigned. That default applies to operations within the
+composed description that carry no explicit tier assignment.
+It is not a default for paths outside the composition.
 
 The absence of an assignment MUST NOT resolve to a permissive
 outcome. Where no assignment is in force for a governed

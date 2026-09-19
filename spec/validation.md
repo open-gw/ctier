@@ -204,8 +204,10 @@ defaults so tests can construct objects without filling every field. Those
 defaults are **not** the document contract and must never be relied upon by a
 document. A document that omits a criteria field is invalid.
 
-Fail-closed is C2: an operation with no `x-ctier-*` declaration is Tier 4.
-That guarantee does not fill in a half-written criteria object.
+Fail-closed is C2: an operation in the composed description with no
+`x-ctier-*` declaration is Tier 4. That default is not a default for
+paths outside the composition. That guarantee does not fill in a
+half-written criteria object.
 
 ### Ledger records
 

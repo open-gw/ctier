@@ -91,7 +91,10 @@ absent from that composition is outside this criterion. An
 implementation MUST make the governed set discoverable. An
 undetermined refusal records that no assignment was found; a
 Tier 4 decision records that a maximally consequential
-operation was refused.
+operation was refused. C2's undeclared default applies to
+operations within the composed description that carry no
+explicit tier assignment, not to paths outside the
+composition.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.
@@ -108,7 +111,7 @@ Object. Optional. Fail-closed values apply when a field is omitted.
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
-| `undeclaredTier` | integer 1–4 | no | Tier applied to a reachable operation with no `x-ctier-tier`. Default `4`. Applies only inside a granted scope. |
+| `undeclaredTier` | integer 1–4 | no | Tier applied to an operation in the composed description with no `x-ctier-tier`. Default `4`. Applies only inside a granted scope; it is not a default for paths outside the composition. |
 | `escalateAbove` | integer ≥ 0 | no | Accumulated-weight threshold at which the scope floor rises. Default `9`. |
 | `decaySeconds` | integer ≥ 0 | no | Window after which accumulated weight is forgotten. Default `1800`. |
 | `recommendationTtlDays` | integer ≥ 0 | no | How long a `recommended` status remains current, aged against `x-ctier-recommended-at`. Default `90`. |
@@ -178,9 +181,10 @@ error naming the missing field; a fail-closed default says so with a Tier 4
 the author cannot account for. A proposal is allowed to be that unfinished
 object, because the missing fields are the human's.
 
-Fail-closed is unaffected. C2 operates one level up: an operation carrying no
-`x-ctier-*` declaration at all is Tier 4. Completeness *within* a declaration
-is a validation concern, not a classification one.
+Fail-closed is unaffected. C2 operates one level up: an operation in the
+composed description carrying no `x-ctier-*` declaration at all is Tier 4.
+It is not a default for paths outside the composition. Completeness
+*within* a declaration is a validation concern, not a classification one.
 
 Values are taken from the reference implementation's enumerations so the schema
 and the code cannot drift.
