@@ -94,7 +94,10 @@ Tier 4 decision records that a maximally consequential
 operation was refused. C2's undeclared default applies to
 operations within the composed description that carry no
 explicit tier assignment, not to paths outside the
-composition.
+composition. It records that neither live target satisfies
+C12's miss clause: Kong assigns Tier 4 via a global plugin;
+APISIX does nothing; the criterion requires an undetermined
+refusal.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

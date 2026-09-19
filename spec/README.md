@@ -149,7 +149,10 @@ are different facts; a ledger that cannot distinguish them
 cannot tell a provisioning defect from a governance outcome.
 C2's undeclared default applies to operations within the
 composed description that carry no explicit tier assignment,
-not to paths outside the composition.
+not to paths outside the composition. It records that
+neither live target satisfies C12's miss clause: Kong
+assigns Tier 4 via a global plugin; APISIX does nothing;
+the criterion requires an undetermined refusal.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
