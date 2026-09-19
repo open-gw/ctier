@@ -485,6 +485,15 @@ Attempt records, and because a later reader can retrieve the line
 from the log — or from a collector the operator has configured —
 without having been present at the write.
 
+C10's coverage — no operation executes without a decision —
+remains the `governed-set`. The sink requirement is not that
+coverage. It is an obligation on the implementation's own
+conduct: every record it writes, including a refusal of a path
+outside the composition. A bound to the governed set would
+permit a non-qualifying sink for those records. Coverage gets
+scoped; the obligation on how the implementation records does
+not.
+
 Where the policy service is unavailable and the enforcement point
 refuses without classifying, the refusal MUST itself be recorded,
 marking the applied tier as undetermined. A refusal to decide is a
@@ -679,6 +688,30 @@ That is a note, not an exclusion. Apigee's generated `print()` is
 the Debug/Trace session (`stepExecution-stdout`), not Cloud Logging
 or any production log stream. An evaluator with a trace running can
 read the object; an operator without one cannot.
+
+**The gateway log and custody are not equivalent sinks.** The
+reference writes to the log at Levels 1 and 2, and to custody at
+Level 3. An Attempt that records custody unavailable is written
+to the log.
+
+What the log provides. A schema-valid Decision or Attempt that
+survives the component whose failure it records — custody down
+is the named case. A later reader can retrieve the line from
+the gateway's structured log, or from a collector the operator
+has configured.
+
+What it does not. A ledger you can query for what is missing.
+Custody's records are the set; a missing correlation is a fact.
+A log you cannot audit for gaps lets C10 hold for every request
+that was recorded. That is the third property, met only as far
+as a collector can be joined to an independent request stream.
+Durability remains requirement 4. Outcome records remain
+custody's — the log has never carried them.
+
+That is why the ladder has three rungs below Level 4, not one.
+Level 1 and 2 emit through the log. Level 3 has custody. An
+operator who has the first has classified and recorded. They
+have not withheld, and they have not got a ledger.
 
 **Level 4 accumulation is on both live targets, with remaining
 differences.** Kong and APISIX both publish a scope floor from an
