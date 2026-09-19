@@ -253,11 +253,7 @@ These are interface behaviour, not extension keys.
 
 **C1 — Classification precedes routing.** No governed
 operation reaches its target unclassified. C1 applies to
-the operations ctier governs: those present in the
-composed description from which the enforcement
-configuration was generated. A path reachable at the
-enforcement point but absent from that composition is
-outside this criterion.
+the `governed-set`.
 
 That precedence may arise from the classification being
 bound into the enforcement point's configuration at
@@ -442,10 +438,7 @@ is the same prohibition: a handle the agent can watch is a
 resume path.
 
 **C10 — No operation executes without a decision having been made.**
-C10 applies to the operations ctier governs: those
-present in the composed description from which the enforcement
-configuration was generated. A path reachable at the enforcement
-point but absent from that composition is outside this criterion.
+C10 applies to the `governed-set`.
 The decision MUST precede the action. That precedence may arise from the
 decision being bound into the enforcement point's configuration at
 deploy time, or from a synchronous evaluation before the request
@@ -493,10 +486,7 @@ Without this, an agent declares itself Tier 1 and the model
 collapses.
 
 **C12 — No reachable operation executes without a tier assignment
-in force.** C12 applies to the operations ctier governs: those
-present in the composed description from which the enforcement
-configuration was generated. A path reachable at the enforcement
-point but absent from that composition is outside this criterion.
+in force.** C12 applies to the `governed-set`.
 An operation in that set MUST have a tier assignment in force
 before it executes.
 
