@@ -700,6 +700,14 @@ C11 chooses strip.
 Never-read still
 satisfies C11. That is
 not circularity.
+The admission rule
+gains a clause: a
+criterion is not another
+criterion's mechanism.
+Applied to the letters
+already minted, it newly
+excludes none. C13, C14,
+C15 and C16 stay.
 
 ---
 
@@ -727,10 +735,35 @@ not admit a rule about the specification's own
 documents, and it does not admit a deployment condition
 the implementation cannot make unavoidable.
 
+A criterion is not another criterion's
+mechanism. A named way one lettered
+criterion may be satisfied does not, by
+being visible and testable, become a
+second letter. The property that way
+serves is already lettered. A mechanism
+that protects something the other letter
+does not require may still be admitted —
+as that something, not as the way.
+
 C13 meets this rule. It is the thirteenth criterion.
 C14 meets this rule. It is the fourteenth criterion.
 C15 meets this rule. It is the fifteenth criterion.
 C16 meets this rule. It is the sixteenth criterion.
+The clause does not newly exclude
+anything already lettered. C13 states a
+mechanism for a property that is not
+another letter; it stays. C14 is a
+property; it stays. C15's
+compiled-absence is how C15 is
+satisfied, and how C8's rejection
+branch has effect; C15 is the
+placement — authorisation layer, not
+the gateway — not C8's mechanism. A
+denylist would satisfy C8 and fail
+C15. C15 stays. C16 is the namespace
+property, not C11's strip option
+wearing a letter. C11's never-read
+still satisfies C11. C16 stays.
 Additive evolution does not. It is a named
 validation rule about the reader of a
 document. The accounting is sixteen.

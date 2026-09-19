@@ -522,6 +522,14 @@ C11 chooses strip.
 Never-read still
 satisfies C11. That is
 not circularity.
+The admission rule
+gains a clause: a
+criterion is not another
+criterion's mechanism.
+Applied to the letters
+already minted, it newly
+excludes none. C13, C14,
+C15 and C16 stay.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. **Additive evolution.** Consumers MUST ignore fields they do not recognise.

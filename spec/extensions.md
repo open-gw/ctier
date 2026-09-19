@@ -450,6 +450,14 @@ C11 chooses strip.
 Never-read still
 satisfies C11. That is
 not circularity.
+The admission rule
+gains a clause: a
+criterion is not another
+criterion's mechanism.
+Applied to the letters
+already minted, it newly
+excludes none. C13, C14,
+C15 and C16 stay.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.
