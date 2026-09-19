@@ -322,7 +322,19 @@ The sentence is an engine local
 choice. It is to come out of
 engine documents; this
 specification does not edit
-them.
+them. Of the five 1.17.0
+candidates, two now have
+letters. Three remain: bound
+comparison; no agent-facing
+URL; the namespace strip in
+headers.md (the MUST strip, not
+requirement 3). The accounting
+is fifteen. A count change
+breaks downstream iteration.
+Any tooling that walks C1
+through C13 now silently skips
+C14 and C15 and reports
+conformance.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
