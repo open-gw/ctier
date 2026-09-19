@@ -655,11 +655,19 @@ Any tooling that walks
 C1 through C15 now
 silently skips C16 and
 reports conformance.
-Of the five 1.17.0
-candidates, three now
-have letters. Two
-remain: bound comparison;
-no agent-facing URL.
+The 1.17.0 namespace
+strip candidate — the
+MUST strip in headers.md,
+not requirement 3 — is
+resolved as C16. It is
+not a sixth candidate
+and it is not absorbed
+without a letter. Of the
+five 1.17.0 candidates,
+three now have letters.
+Two remain: bound
+comparison; no
+agent-facing URL.
 Declared evidence is
 none.
 
