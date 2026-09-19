@@ -287,6 +287,32 @@ class raises both.
 
 ---
 
+## What a C-series criterion is
+
+A requirement a second implementation must satisfy,
+testable against a running deployment or a compiled
+artefact. A validator-checked rule is a requirement a
+document must satisfy, testable against this
+specification's own files. Those are different tests.
+
+Appearing in `conformance.md` with declared evidence is
+not the test. That names a document location, and it
+would be circular: a paragraph would become a criterion
+by being listed. It is a cost of admission. A criterion
+so admitted obliges a declaration of evidence there,
+including none.
+
+The specification mints the letter. An implementation
+may propose a requirement; it does not mint the letter.
+
+This rule is a property, not a location. Its scope is
+requirements on an implementation's behaviour. It does
+not admit a rule about the specification's own
+documents, and it does not admit a deployment condition
+the implementation cannot make unavoidable.
+
+---
+
 ## What a validator is
 
 A program that loads a description, an overlay, a rule document, or a

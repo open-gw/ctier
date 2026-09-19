@@ -1,4 +1,4 @@
-# ctier specification 1.16.0
+# ctier specification 1.17.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -175,6 +175,12 @@ criterion, wording unaltered. It attaches
 Of 195 identifiers across 33 classes, 22 had no
 requirement sentence and 3 were stated under a
 different name.
+1.17.0 states what a C-series criterion is: a
+requirement a second implementation must satisfy,
+testable against a running deployment or a compiled
+artefact. A validator-checked rule is a requirement a
+document must satisfy. The specification mints the
+letter; an implementation proposes.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.

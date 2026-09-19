@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.16.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.17.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -119,6 +119,12 @@ criterion, wording unaltered. It attaches
 Of 195 identifiers across 33 classes, 22 had no
 requirement sentence and 3 were stated under a
 different name.
+1.17.0 states what a C-series criterion is: a
+requirement a second implementation must satisfy,
+testable against a running deployment or a compiled
+artefact. A validator-checked rule is a requirement a
+document must satisfy. The specification mints the
+letter; an implementation proposes.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.
