@@ -405,7 +405,18 @@ decision-record stays
 0.2.0: the field was
 already optional.
 outcome-record stays
-0.1.0.
+0.1.0. An auditable record
+does not carry its own
+sequence. Absence-detectable
+is a property of the sink,
+not of the record object.
+epoch and seq on the log
+line sit on the sink. A
+consumer that extracts the
+JSON and discards the line
+envelope has left the sink.
+50's arrangement is
+conformant-by-statement.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. **Additive evolution.** Consumers MUST ignore fields they do not recognise.
@@ -646,6 +657,13 @@ Attempt records, and because a later reader can retrieve the line
 from the log — or from a collector the operator has configured —
 without having been present at the write.
 
+An auditable record does not carry its own sequence.
+Absence-detectable is a property of the sink, not of
+the record object. `epoch` and `seq` on a log line sit
+on the sink. A consumer that extracts the JSON and
+discards the line envelope has left the sink. That
+arrangement is conformant.
+
 C10's coverage — no operation executes without a decision —
 remains the `governed-set`. The sink requirement is not that
 coverage. It is an obligation on the implementation's own
@@ -875,7 +893,10 @@ Custody's records are the set; a missing correlation is a fact.
 A log you cannot audit for gaps lets C10 hold for every request
 that was recorded. That is the third property, met only as far
 as a collector can be joined to an independent request stream.
-Durability remains requirement 4. Outcome records remain
+`epoch` and `seq` on the line are the sink providing that
+property, not fields of the record. A consumer that extracts
+the JSON has left the sink. Durability remains requirement 4.
+Outcome records remain
 custody's — the log has never carried them.
 
 That is why the ladder has three rungs below Level 4, not one.

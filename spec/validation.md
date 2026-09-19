@@ -281,6 +281,14 @@ at the write, and absence is detectable. A custody ledger and a
 gateway log both satisfy. An implementation MUST state which it
 relies on.
 
+An auditable record does not carry its own sequence.
+Absence-detectable is a property of the sink, not of the
+record object. `epoch` and `seq` on a log line sit on the
+sink. A consumer that extracts the JSON and discards the
+line envelope has left the sink. That arrangement is
+conformant. The closed ledger schemas do not grow these
+fields.
+
 ### On the maturity of these criteria
 
 C5, C6, C7, C9 and C10 have each now been built against. Each turned
@@ -525,7 +533,20 @@ decision-record stays
 0.2.0: the field was
 already optional.
 outcome-record stays
-0.1.0.
+0.1.0. **An auditable
+record does not carry
+its own sequence.**
+Absence-detectable is a
+property of the sink, not
+of the record object.
+epoch and seq on the log
+line sit on the sink. A
+consumer that extracts
+the JSON and discards the
+line envelope has left
+the sink. 50's
+arrangement is
+conformant-by-statement.
 
 ---
 
