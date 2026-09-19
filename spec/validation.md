@@ -247,7 +247,8 @@ did not consider doing the wrong thing. The remedy is not more careful
 writing; it is building something against each criterion and reporting
 what the plain reading permits.
 
-This closes that pattern. Of twelve named criteria, three
+This closes that pattern. Of the twelve named criteria
+the audit of tasks 25, 26, 39 and 42 covered, three
 were never stated: C1, C3 and C4 — C3's requirement existed
 unattached to its name, C1 and C4 not at all. Of the nine
 that were stated, seven prescribed a mechanism where a
