@@ -50,6 +50,13 @@ APISIX write a schema-valid decision to the gateway log; the join
 key joins that line. Apigee remains artefact-only: generated
 `print()` is the Trace tool, not a production log.
 
+**Declared gap — C12's miss path is not a corpus case.** The
+corpus compares classifications of operations that are in the
+composed description. It does not observe a reachable request
+that matches no assignment. The reference satisfies C12 by
+refusing to emit; that is a generator behaviour, not a corpus
+claim.
+
 **Declared gap — C7 at Level 2.** The reference does not satisfy C7
 at Level 2: inbound agent keys are stripped, and nothing is emitted
 in their place. That is a choice, recorded in

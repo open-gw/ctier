@@ -215,10 +215,11 @@ only record that proves C6 held.
 **Decision** — an operation was classified and acted upon. Declared
 tier, applied tier, escalation reason, disposition, deployment digest.
 
-**Attempt** — the enforcement point refused without classifying,
-because the policy service was unavailable. Carries the declared tier,
-the deployment digest and the reason, and marks the applied tier
-undetermined.
+**Attempt** — the enforcement point refused without classifying.
+The named case is the policy service unavailable. C12 adds another:
+a reachable operation with no assignment in force. Both carry the
+declared tier where known, the deployment digest and the reason,
+and mark the applied tier undetermined.
 
 **Outcome** — what happened when an approved Tier 3 executed.
 Correlation, approver, executed-at, result, whether it failed. Written
@@ -242,8 +243,10 @@ did not consider doing the wrong thing. The remedy is not more careful
 writing; it is building something against each criterion and reporting
 what the plain reading permits.
 
-This closes that pattern. Of the remainder: C1, C2, C3, C4, C11 and
-C12 are exercised by the compiled targets and the corpus. **C8's
+This closes that pattern. Of the remainder: C1, C2, C3, C4 and C11
+are exercised by the compiled targets and the corpus. **C12 is
+restated as of 1.12.0** as coverage, not as a generator; the
+compiled refuse-to-emit is one satisfying mechanism. **C8's
 rejection branch is not**, and cannot be until the authorisation layer
 exists. Expiry is distinct and does run.
 

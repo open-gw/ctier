@@ -368,6 +368,14 @@ a description.
 | 3 · Withhold | custody | Tier 3 end to end |
 | 4 · Accumulate | scope floor | decomposition defence, and the cycle back to design |
 
+Level 2's "coverage fails the build" is one C12 mechanism: the
+reference generator refuses to emit an unassigned reachable
+operation. C12 is the property (no reachable execute without an
+assignment in force), not the build failure. A request-time miss
+that refuses and records is the other named mechanism. Level 0
+deploys nothing, so C12 does not yet apply; the unclassified share
+is a coverage-report number, not an enforcement-point assignment.
+
 Level 2 enforces Tiers 1, 2 and 4 with no ctier runtime component.
 It does not satisfy C7: duplicate execution under ordinary agent
 retry is not defended against at this level.
