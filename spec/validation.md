@@ -278,6 +278,10 @@ property. 1.8.0 restates C7 the same way, found by asking what the
 criterion requires rather than by another implementation colliding
 with the letter.
 
+**1.16.0 is the identifier pass.** Of **195** identifiers across
+**33** classes, **22** had no requirement sentence and **3**
+were stated under a different name.
+
 ---
 
 ## What a validator is

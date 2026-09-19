@@ -116,6 +116,9 @@ in validation.md is the criterion, wording unaltered. It
 titles C13: Digest discipline in validation.md is the
 criterion, wording unaltered. It attaches
 `refuse-provisioning` to Level 2's provisioning refusal.
+Of 195 identifiers across 33 classes, 22 had no
+requirement sentence and 3 were stated under a
+different name.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.
