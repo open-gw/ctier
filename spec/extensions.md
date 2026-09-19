@@ -139,6 +139,9 @@ among them; its classification was recorded in
 twelve is not conforming to thirteen. Digest
 discipline has been in force since 1.4.0, so
 nothing an implementation must do has changed.
+A count change breaks downstream iteration. Any
+tooling that walks C1 through C12 now silently
+skips C13 and reports conformance.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.
