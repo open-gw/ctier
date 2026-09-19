@@ -22,7 +22,7 @@ openapi: 3.1.0
 
 info:
   title: Retail Banking API (consequence-tiered reference)
-  version: 1.19.0
+  version: 1.20.0
   description: |
     Illustrative banking API annotated with consequence tiers. The domain is
     incidental — the same annotations apply unchanged to healthcare, commerce,
@@ -100,9 +100,9 @@ components:
       name: X-Delegation-Chain
       description: |
         Ordered ancestry of the delegation that produced this call, root first,
-        e.g. `orchestrator-7 > kyc-agent-2 > enrichment-agent-9`. The gateway
-        checks each hop for authority expansion before classifying the
-        operation itself.
+        e.g. `orchestrator-7 > kyc-agent-2 > enrichment-agent-9`. Agent-supplied.
+        Not compiled entitlement. The enforcement point does not classify from
+        this header under the `standard` profile. See `spec/headers.md`.
 
   schemas:
     Balance:

@@ -1,6 +1,6 @@
 # Headers at the trust boundary
 
-Specification 1.19.0.
+Specification 1.20.0.
 
 These are the HTTP headers that cross into software ctier does not
 control: the backend, and the agent. Document keys in
@@ -142,6 +142,24 @@ backend MUST NOT authorise on them.
 authenticating as itself (C6: the agent is not the client).
 Pass-through of the agent's inbound headers (including
 `X-Agent-Id`) is not a ctier emit.
+
+### `X-Delegation-Chain`
+
+| | |
+|---|---|
+| Direction | Request → enforcement point. MAY reach a backend; the name is not stripped |
+| Who may set | The agent. The enforcement point does not emit it. An estate component MAY inject it |
+| Strip | The enforcement point does not strip it. The name is outside `x-ctier-*`. Requirement 3's 16c bound is the namespace and the named aliases (`X-Correlation-Id`, `X-Ctier-Tier`, the inbound idempotency keys). This name is not in that bound |
+| Value | Ordered ancestry the agent asserts, root first |
+| Requirement | **Provenance, not entitlement.** A backend MUST NOT treat this header as evidence of a grant. Under the `standard` profile the enforcement point MUST NOT classify from it |
+
+1.3.0 restated `standard` as compiled client entitlement, not
+token lineage. This header carries lineage. It is not that
+entitlement. Believing it — classifying from it, or granting
+because it is present — is a path around that replacement.
+1.3.0 removed the lineage mechanism; it did not deprecate it.
+The name remains so an agent can still send it. The name is
+not a second mechanism.
 
 ---
 

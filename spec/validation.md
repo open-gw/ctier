@@ -331,6 +331,27 @@ record the implementation writes.
 The log and custody are not
 equivalent. C10-via-gateway-log is
 Observed on both live engines.
+**1.20.0 states trust status for
+`X-Delegation-Chain`.** The header
+does not take a letter. The
+admission rule's scope is
+implementation behaviour that
+mints a C-series criterion; a
+header rule is a header rule.
+The header is agent-supplied
+lineage. The enforcement point
+does not strip it; the name is
+outside the 16c bound. A
+backend MUST NOT treat it as a
+grant. Under `standard` the
+enforcement point MUST NOT
+classify from it. Compiled
+client entitlement (1.3.0) is
+the bound; believing this header
+is a path around that
+replacement. Live Kong and
+APISIX do not read it. They
+satisfy.
 
 ---
 

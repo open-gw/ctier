@@ -1,4 +1,4 @@
-# ctier specification 1.19.0
+# ctier specification 1.20.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -245,6 +245,27 @@ equivalent: the log does not give a
 ledger you can query for gaps.
 C10-via-gateway-log is Observed on
 both live engines.
+1.20.0 states trust status for
+`X-Delegation-Chain`. The header
+does not take a letter. The
+admission rule's scope is
+implementation behaviour that
+mints a C-series criterion; a
+header rule is a header rule.
+The header is agent-supplied
+lineage. The enforcement point
+does not strip it; the name is
+outside the 16c bound. A
+backend MUST NOT treat it as a
+grant. Under `standard` the
+enforcement point MUST NOT
+classify from it. Compiled
+client entitlement (1.3.0) is
+the bound; believing this header
+is a path around that
+replacement. Live Kong and
+APISIX do not read it. They
+satisfy.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
