@@ -1,4 +1,4 @@
-# ctier specification 1.15.0
+# ctier specification 1.16.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -167,6 +167,11 @@ mechanism. C4 is the property: no decision path blocks on
 human input, deliberately unbounded; occupancy is C5 and
 the suspension rule. It corrects the criteria accounting:
 of twelve named criteria, three were never stated.
+1.16.0 is the identifier pass. It titles C2: Fail-closed
+in validation.md is the criterion, wording unaltered. It
+titles C13: Digest discipline in validation.md is the
+criterion, wording unaltered. It attaches
+`refuse-provisioning` to Level 2's provisioning refusal.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
@@ -194,6 +199,11 @@ on.
 
 The **record** of a classification is evidence that it
 was made, not the classification itself.
+
+**C2 — Fail-closed.** Fail-closed is C2: an operation in
+the composed description with no `x-ctier-*` declaration
+is Tier 4. That default is not a default for paths
+outside the composition.
 
 **C3 — Escalation is unidirectional.** `x-ctier-escalate-to`
 may never resolve below the tier already reached at that
@@ -448,6 +458,11 @@ operation was refused. These are different facts, and a ledger
 that cannot distinguish them cannot tell a provisioning defect
 from a governance outcome.
 
+**C13 — Digest discipline.** `compositionDigest` is over
+canonical JSON of the composed document (keys sorted
+lexicographically, no insignificant whitespace, UTF-8).
+That is the compose-time binding (C13).
+
 **Excluded — `403`.** Refused at credential validation, before consequence
 evaluation. If this is reached by a live token, a scope has been over-granted.
 
@@ -565,7 +580,7 @@ Level 2.
 The capability has never existed in the reference. Level 1
 classifies and emits a decision record, and enforces nothing.
 
-**Level 2's Tier 3 is a provisioning refusal**, not a withhold.
+**Level 2's Tier 3 is a provisioning refusal** (`refuse-provisioning`), not a withhold.
 Withhold is Level 3.
 
 **The join key has something to join at Levels 1 and 2** where the

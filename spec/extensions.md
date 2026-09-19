@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.15.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.16.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -111,6 +111,11 @@ the property: no decision path blocks on human input,
 deliberately unbounded; occupancy is C5 and the
 suspension rule. It corrects the criteria accounting: of
 twelve named criteria, three were never stated.
+1.16.0 is the identifier pass. It titles C2: Fail-closed
+in validation.md is the criterion, wording unaltered. It
+titles C13: Digest discipline in validation.md is the
+criterion, wording unaltered. It attaches
+`refuse-provisioning` to Level 2's provisioning refusal.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

@@ -173,7 +173,7 @@ Exclusion is an authorisation decision taken before any tier is considered.
 `coverage-report` `operations` is ordered by recommended tier descending,
 `absent` last. Schema cannot require that order.
 
-### Digest discipline
+### C13 — Digest discipline
 
 `compositionDigest` is over canonical JSON of the composed document (keys
 sorted lexicographically, no insignificant whitespace, UTF-8). That is
@@ -203,6 +203,8 @@ The reference implementation's `Criteria` model retains permissive Python
 defaults so tests can construct objects without filling every field. Those
 defaults are **not** the document contract and must never be relied upon by a
 document. A document that omits a criteria field is invalid.
+
+### C2 — Fail-closed
 
 Fail-closed is C2: an operation in the composed description with no
 `x-ctier-*` declaration is Tier 4. That default is not a default for

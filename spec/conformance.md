@@ -32,7 +32,7 @@ Nor anything about custody's internals, the authorisation layer, or an
 agent's behaviour on receiving a response. Those are other contracts.
 
 The header contract in [`headers.md`](headers.md) is specified as of
-1.15.0. **No conformance case asserts it.** The corpus compares
+1.16.0. **No conformance case asserts it.** The corpus compares
 classifications and dispositions. It does not observe which headers
 reach a backend, and it does not observe whether another component
 read one first.
@@ -87,7 +87,7 @@ that decision.
 | Field | Why |
 |---|---|
 | `profile` | `standard` bounds an exchanged token by the requesting client's entitlement; `constrained` does not assume that, and puts the check at the enforcement point |
-| `deployment` | `level-2` has no custody, so Tier 3 is a provisioning refusal; `level-3` has it, so Tier 3 withholds. Same classification, different disposition |
+| `deployment` | `level-2` has no custody, so Tier 3 is a provisioning refusal (`refuse-provisioning`); `level-3` has it, so Tier 3 withholds. Same classification, different disposition |
 | `sequence` | Accumulation is stateful. A single request cannot express a decomposition |
 
 A single-request case is a sequence of one. Existing cases did not need
