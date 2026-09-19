@@ -80,6 +80,13 @@ A new case shape that observed what the backend received would make
 those failures visible in the corpus. This document does not take
 that decision.
 
+**Declared evidence — C13.** None. The corpus does not
+assert a digest value. Schema checks the string form,
+not the bytes. 1.4.0 recorded that the corpus is not a
+digest claim. That absence is none under Configured,
+Derived, and Observed: not a chosen figure, not
+arithmetic from one, and not a sample from a run.
+
 ---
 
 ## The dimensions a case declares

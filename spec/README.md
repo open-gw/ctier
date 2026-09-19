@@ -187,7 +187,7 @@ property — an assignment cannot be applied to a
 composition other than the one it was computed
 from — is not restated here. The digest is over
 the composition; that composition is the governed
-set by definition.
+set by definition. C13's declared evidence is none.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.

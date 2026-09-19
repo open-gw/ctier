@@ -131,7 +131,7 @@ property — an assignment cannot be applied to a
 composition other than the one it was computed
 from — is not restated here. The digest is over
 the composition; that composition is the governed
-set by definition.
+set by definition. C13's declared evidence is none.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.
