@@ -1,4 +1,4 @@
-# ctier specification 1.17.0
+# ctier specification 1.18.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -211,9 +211,39 @@ requirement 3). The document does not state
 how many of the thirteen currently state a
 mechanism; seven of nine is the audit of a
 different set.
+1.18.0 defines the governed set (`governed-set`)
+once. C1, C10 and C12 each carried the same
+scope paragraph; the statement moves to that
+definition. Those three now reference the
+identifier. No change in meaning.
+C2 was compared and is not collapsed. It
+names the undeclared default's subject —
+operations in the composition that carry no
+explicit tier — not the criterion boundary.
+That difference is not a moved statement.
+C13's 1.17.0 sentence — the digest is over
+the composition; that composition is the
+governed set by definition — is not a fifth
+copy of the scope paragraph. C4 remains
+deliberately unbounded.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
+
+---
+
+## The governed set
+
+`governed-set`
+
+The operations ctier governs: those present in the
+composed description from which the enforcement
+configuration was generated. A path reachable at the
+enforcement point but absent from that composition is
+outside this set.
+
+A change to this definition is a change to every
+criterion that references it: C1, C10, C12.
 
 ---
 

@@ -303,6 +303,12 @@ different set. The audit of tasks 25, 26, 39
 and 42 covered twelve criteria. C13 was not
 among them; its classification was recorded
 in 1.17.0, after the audit closed.
+**1.18.0 defines the governed set once**
+(`governed-set` in spec/README.md). C1, C10
+and C12 reference that identifier. No change
+in meaning. C2 was compared and is not
+collapsed: it names the undeclared default's
+subject, not the criterion boundary.
 
 ---
 

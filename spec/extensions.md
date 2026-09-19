@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.17.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.18.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -155,6 +155,21 @@ requirement 3). The document does not state
 how many of the thirteen currently state a
 mechanism; seven of nine is the audit of a
 different set.
+1.18.0 defines the governed set (`governed-set`)
+once. C1, C10 and C12 each carried the same
+scope paragraph; the statement moves to that
+definition. Those three now reference the
+identifier. No change in meaning.
+C2 was compared and is not collapsed. It
+names the undeclared default's subject —
+operations in the composition that carry no
+explicit tier — not the criterion boundary.
+That difference is not a moved statement.
+C13's 1.17.0 sentence — the digest is over
+the composition; that composition is the
+governed set by definition — is not a fifth
+copy of the scope paragraph. C4 remains
+deliberately unbounded.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.
