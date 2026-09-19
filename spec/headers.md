@@ -45,9 +45,9 @@ generate, the deployment owes requirement 3
 An implementation that guarantees the order for some class of
 coexisting configuration MUST declare that class, including what
 the class excludes. The deployment remains responsible for every
-component outside it. C11 remains the injected-tier rule —
-classification ignores a header an agent set. It is not restated
-here as a plugin-order criterion.
+component outside it. C11 is the honour-rule: the agent does
+not choose its tier. Classification ignores a header an agent
+set. It is not restated here as a plugin-order criterion.
 
 Kong's prefix strip satisfies the namespace by construction. Apigee
 and APISIX now prefix-walk as well; `proxy-rewrite` remove is aliases
@@ -60,8 +60,9 @@ aliases of a ctier name.
 
 **Exemption: custody's execute path.** Custody calls the backend
 directly. Nothing is stripped there. That is safe because custody
-**builds** the request from persisted context (C6: method, target,
-query, body) rather than forwarding a request the agent composed.
+**builds** the request from persisted context (C6's named
+persist-and-execute mechanism: method, target, query, body)
+rather than forwarding a request the agent composed.
 There is no agent-supplied header on that hop to forge. The
 namespace strip protects the forwarding path; construction protects
 the other. Custody MUST still not copy agent-supplied `x-ctier-*`
@@ -138,14 +139,16 @@ backend MUST NOT authorise on them.
 | `x-ctier-composition` | Same digest as `x-ctier-deployment` | **MAY** until engine 0.3.0, then MUST NOT |
 
 `Authorization` on custody's execute request is the policy service
-authenticating as itself (C6). Pass-through of the agent's inbound
-headers (including `X-Agent-Id`) is not a ctier emit.
+authenticating as itself (C6: the agent is not the client).
+Pass-through of the agent's inbound headers (including
+`X-Agent-Id`) is not a ctier emit.
 
 ---
 
 ## Downstream — to the agent
 
-Already under C5, C9, and the example 202/423 responses. Listed here
+Already under C5 and C9. The example 202 and 423 responses
+are the named mechanisms, not the criteria. Listed here
 because they cross.
 
 The join key has **one** wire name: `x-ctier-correlation-id`, both
@@ -157,13 +160,14 @@ relays `X-Correlation-Id` on 202 today.
 
 | Name | Value | Requirement |
 |---|---|---|
-| `X-Agent-Action` | Machine-readable instruction (`continue_task_without_this_step`, `halt_and_hand_off`, `retry_later`) | **MUST** on 202 and 423; C5 |
-| `x-ctier-correlation-id` | Pending `correlationId` | **MUST** on 202; **MUST NOT** on 423 (C9: no correlation identifier) |
+| `X-Agent-Action` | Machine-readable instruction (`continue_task_without_this_step`, `halt_and_hand_off`, `retry_later`) | An implementation that satisfies C5 by the `202` mechanism MUST emit it on 202. An implementation that satisfies C9 by the `423` mechanism MUST emit it on 423. Another mechanism states itself instead. |
+| `x-ctier-correlation-id` | Pending `correlationId` | **MUST** on 202 when that is the C5 mechanism; **MUST NOT** on a C9 response (no resume handle) |
 | `X-Ctier-Tier` | Applied tier | **MAY**. Inbound, stripped as an alias |
 
-`Retry-After` is **MUST NOT** on 202 (C5) and is present on 503 when
-custody is unavailable (ADR-005). `Cache-Control: no-store` on
-agent-facing faults is ordinary HTTP.
+`Retry-After` is **MUST NOT** on 202 when that is the C5
+mechanism, and is present on 503 when custody is unavailable
+(ADR-005). `Cache-Control: no-store` on agent-facing faults
+is ordinary HTTP.
 
 The two conditions an adopter still owes — the backend reachable only
 from the enforcement point and from custody, and custody treated as a

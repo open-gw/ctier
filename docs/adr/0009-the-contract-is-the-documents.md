@@ -131,8 +131,10 @@ one rule that does the real work:
 
 > **Consumers MUST ignore fields they do not recognise.**
 
-That is the same invariant as C11's requirement that the enforcement point ignore
-unknown `x-ctier-*` headers, and it is what makes additive evolution safe. Adding
+That is the same invariant as the namespace strip in
+`spec/headers.md`: unknown `x-ctier-*` names are ignored, not
+honoured. C11 is the honour-rule for an injected tier, not
+the strip. Adding
 a field is a minor version; removing one, or changing what an existing field
 means, is major.
 

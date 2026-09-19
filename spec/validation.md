@@ -243,8 +243,11 @@ did not consider doing the wrong thing. The remedy is not more careful
 writing; it is building something against each criterion and reporting
 what the plain reading permits.
 
-This closes that pattern. Of the remainder: C1, C2, C3, C4 and C11
-are exercised by the compiled targets and the corpus. **C12 is
+This closes that pattern. Of the remainder: C1, C2, C3 and C4
+are exercised by the compiled targets and the corpus. **C5,
+C6, C9 and C11 are restated as of 1.13.0** as the properties
+their prescriptions were standing in for; the named status,
+store, and strip remain satisfying mechanisms. **C12 is
 restated as of 1.12.0** as coverage, not as a generator; the
 compiled refuse-to-emit is one satisfying mechanism. **C8's
 rejection branch is not**, and cannot be until the authorisation layer

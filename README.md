@@ -76,9 +76,9 @@ Instead, for Tier 3 the gateway:
 3. **Emits** an asynchronous authorisation event to an orchestration layer.
 4. **Returns** a terminal, deliberately non-retryable response to the agent, which is then free
    to continue with the rest of its task.
-5. **Executes from the persisted context** on approval — method, request target, query and body
-   byte-identical to what the reviewer saw. The policy service is the HTTP client. The agent is
-   not involved.
+5. **Executes what was approved** — method, request target, query and body
+   byte-identical to what the reviewer saw. Persist-and-execute is how the
+   reference meets C6; the agent is not the HTTP client.
 
 The human decides on human timescales. No connection, worker, or client timeout is consumed.
 
