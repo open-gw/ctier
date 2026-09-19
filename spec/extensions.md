@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.12.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.13.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -65,6 +65,12 @@ under the policy service's own identity.
 1.12.0 restates C12 as coverage, not the generator: no reachable
 operation executes without a tier assignment in force; a miss is
 refused and recorded with the applied tier undetermined.
+1.13.0 restates C5 as the property a status and a constructor
+were standing in for: a withheld agent does not retry and does
+not stay engaged. The `202` field list remains one way. An
+implementation MUST state which it relies on. A response that
+ends the exchange without instructing the agent to continue
+the rest of the task does not satisfy it.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

@@ -1,4 +1,4 @@
-# ctier specification 1.12.0
+# ctier specification 1.13.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -118,6 +118,13 @@ An implementation MUST state which it relies on. Absence of an
 assignment MUST NOT be permissive: the operation is refused and
 the refusal is recorded with the applied tier undetermined.
 
+1.13.0 restates C5 as the property a status and a constructor
+were standing in for: a withheld agent does not retry and does
+not stay engaged. The `202` field list remains one way. An
+implementation MUST state which it relies on. A response that
+ends the exchange without instructing the agent to continue
+the rest of the task does not satisfy it.
+
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
 
@@ -127,9 +134,27 @@ demo, not before. Consumers MUST ignore fields they do not recognise.
 
 These are interface behaviour, not extension keys.
 
-**C5 — The withheld response is terminal and non-retryable.** Status `202`,
-outside conventionally retried classes. No `Retry-After`. `retryable: false`.
-A machine-readable `agentAction`, mirrored in an `X-Agent-Action` header.
+**C5 — A withheld agent does not retry and does not stay
+engaged.** The agent's involvement with a withheld operation
+ends when it receives the response. What happens next happens
+to the operation, not to the agent. The response MUST be
+terminal, MUST NOT invite retry of this step, and MUST
+instruct the agent to continue the rest of the task without
+this step.
+
+That property may be satisfied by status `202`, outside
+conventionally retried classes, with no `Retry-After`,
+`retryable: false`, and a machine-readable `agentAction:
+continue_task_without_this_step` mirrored in an
+`X-Agent-Action` header, the policy service constructing the
+complete body and the enforcement point relaying it unchanged;
+or by another response that meets the same property. An
+implementation MUST state which it relies on.
+
+A response that ends the exchange without instructing the
+agent to continue the rest of the task does not satisfy this
+criterion. Silence that merely stops the agent is not the
+withheld disposition.
 
 The withheld response is subject to the no-URL rule in
 `spec/validation.md`. An implementer who adds a `pollUrl` has not retried
@@ -138,15 +163,14 @@ the one the design exists to prevent: custody acquires a caller for the
 length of a human review, and the connection occupancy that out-of-band
 approval was meant to eliminate reappears under another name.
 
-The agent's involvement with a withheld operation ends when it receives the
-response. What happens next happens to the operation, not to the agent.
+Where the named `202` mechanism is used, the policy service
+constructs the complete response body. The enforcement point
+relays it unchanged and MUST NOT construct, augment, or
+reformat it. Resolve it once, in the place that knows, and let
+the edges carry it — the same reasoning as compiling the
+decision rather than the declaration.
 
-The policy service constructs the complete response body. The enforcement
-point relays it unchanged and MUST NOT construct, augment, or reformat it.
-Resolve it once, in the place that knows, and let the edges carry it — the
-same reasoning as compiling the decision rather than the declaration.
-
-Required contents:
+Required contents of that mechanism:
 
 | Field | Meaning |
 |---|---|
