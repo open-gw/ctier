@@ -19,7 +19,7 @@ compromised by anything that can set a header.
 
 ---
 
-## The namespace is stripped on ingress
+## C16 — The namespace is stripped on ingress
 
 **No header in the `x-ctier-*` namespace that reaches a backend may
 be agent-supplied.** The enforcement point MUST strip the entire

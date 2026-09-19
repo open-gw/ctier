@@ -470,6 +470,35 @@ mechanism C11 already
 names. This rule does not
 restate it. C11 is
 unaltered.
+It admits C16: the
+namespace is stripped on
+ingress. A second
+implementation must strip
+the entire x-ctier-*
+namespace on ingress.
+Testable against a
+running deployment. Not a
+document rule. Not a
+deployment condition the
+implementation cannot
+make unavoidable. The
+action is strip. C11 is
+the honour-rule and is
+not this criterion. The
+accounting is sixteen. A
+count change breaks
+downstream iteration.
+Any tooling that walks
+C1 through C15 now
+silently skips C16 and
+reports conformance.
+Of the five 1.17.0
+candidates, three now
+have letters. Two
+remain: bound comparison;
+no agent-facing URL.
+Declared evidence is
+none.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. **Additive evolution.** Consumers MUST ignore fields they do not recognise.
@@ -801,6 +830,8 @@ from a governance outcome.
 **C14 — No credential persistence.** Stated in `spec/validation.md`.
 
 **C15 — Agent suspension is an authorisation concern.** Stated in `spec/validation.md`. This forbids gateway-local suspension.
+
+**C16 — The namespace is stripped on ingress.** Stated in `spec/validation.md`. The action is strip. C11 is the honour-rule and is not this criterion.
 
 **Excluded — `403`.** Refused at credential validation, before consequence
 evaluation. If this is reached by a live token, a scope has been over-granted.

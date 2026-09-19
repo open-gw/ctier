@@ -102,6 +102,12 @@ server, and it does not observe the absence of a
 gateway-local denylist. That absence is none
 under Configured, Derived, and Observed.
 
+**Declared evidence — C16.** None. The corpus does
+not observe an unknown `x-ctier-*` header at the
+backend. Schema cannot see a request header.
+That absence is none under Configured, Derived,
+and Observed.
+
 **Declared evidence — C10 via gateway log.** Observed:
 a sample from a run, reproducible approximately by
 re-running under the same conditions. The runtime

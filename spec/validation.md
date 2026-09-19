@@ -28,7 +28,7 @@ unrecognised key in a named extensions object does not fail
 the consumer. Withdrawing the named requirement because the
 schemas were closed would let the mechanism mint the format.
 
-### Namespace strip
+### C16 — The namespace is stripped on ingress
 
 Unknown `x-ctier-*` headers at the trust boundary are a
 different rule. That rule is the namespace strip in
@@ -633,6 +633,35 @@ mechanism C11 already
 names. This rule does not
 restate it. C11 is
 unaltered.
+**It admits C16: the
+namespace is stripped on
+ingress.** A second
+implementation must strip
+the entire `x-ctier-*`
+namespace on ingress.
+Testable against a
+running deployment. Not a
+document rule. Not a
+deployment condition the
+implementation cannot
+make unavoidable. The
+action is strip. C11 is
+the honour-rule and is
+not this criterion. The
+accounting is sixteen. A
+count change breaks
+downstream iteration.
+Any tooling that walks
+C1 through C15 now
+silently skips C16 and
+reports conformance.
+Of the five 1.17.0
+candidates, three now
+have letters. Two
+remain: bound comparison;
+no agent-facing URL.
+Declared evidence is
+none.
 
 ---
 
@@ -663,11 +692,10 @@ the implementation cannot make unavoidable.
 C13 meets this rule. It is the thirteenth criterion.
 C14 meets this rule. It is the fourteenth criterion.
 C15 meets this rule. It is the fifteenth criterion.
+C16 meets this rule. It is the sixteenth criterion.
 Additive evolution does not. It is a named
 validation rule about the reader of a
-document. The request half — the
-namespace strip — is assessed on its own
-merits. The accounting remains fifteen.
+document. The accounting is sixteen.
 
 ---
 

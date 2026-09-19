@@ -398,6 +398,35 @@ mechanism C11 already
 names. This rule does not
 restate it. C11 is
 unaltered.
+It admits C16: the
+namespace is stripped on
+ingress. A second
+implementation must strip
+the entire x-ctier-*
+namespace on ingress.
+Testable against a
+running deployment. Not a
+document rule. Not a
+deployment condition the
+implementation cannot
+make unavoidable. The
+action is strip. C11 is
+the honour-rule and is
+not this criterion. The
+accounting is sixteen. A
+count change breaks
+downstream iteration.
+Any tooling that walks
+C1 through C15 now
+silently skips C16 and
+reports conformance.
+Of the five 1.17.0
+candidates, three now
+have letters. Two
+remain: bound comparison;
+no agent-facing URL.
+Declared evidence is
+none.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.
