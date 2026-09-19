@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/open-gw/ctier/spec/schemas/attempt-record-0.3.0.json",
+  "title": "ctier attempt record",
+  "description": "The enforcement point refused without classifying. The named case is the policy service unavailable; C12 adds an operation in the composed description with no assignment in force. Not a Decision with a null applied tier. declaredTier is present when a declaration was made and absent when it was not — these are different facts. 0.2.0 required an integer 1–4 and could not say unknown. deploymentDigest identifies the deployment in force — composed description, tier declarations, and declared agent identities. This format reaches 1.0.0 when an implementation other than the reference one has been held to records in it. Until then it is normative — it defines what an Attempt is — but it has only ever been read by its author, which is a weaker claim than stability.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "ctierSchema",
+    "id",
+    "timestamp",
+    "operationAnchor",
+    "appliedTier",
+    "deploymentDigest",
+    "reason"
+  ],
+  "properties": {
+    "ctierSchema": { "const": "attempt-record/0.3.0" },
+    "id": { "type": "string", "minLength": 1 },
+    "timestamp": { "type": "string", "minLength": 1 },
+    "operationAnchor": { "type": "string", "minLength": 1 },
+    "agentId": { "type": ["string", "null"] },
+    "correlationScope": { "type": ["string", "null"] },
+    "declaredTier": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4,
+      "description": "The declaration that was made. Omit the field when no declaration was made. Do not write 4 to mean unknown."
+    },
+    "appliedTier": { "type": "null" },
+    "deploymentDigest": {
+      "$ref": "ctier-extensions-0.1.0.json#/$defs/digest"
+    },
+    "reason": { "type": "string", "minLength": 1 }
+  }
+}

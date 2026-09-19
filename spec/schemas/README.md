@@ -21,8 +21,8 @@ keys in a named extensions object where a document type defines one.
 | `recommendation-set-0.1.0.json` | Overlay 1.1.0 plus per-action provenance |
 | `coverage-report-0.1.0.json` | Declared / recommended / absent |
 | `conformance-corpus-0.3.0.json` | Classification-agreement cases; a case is a sequence |
-| `decision-record-0.2.0.json` | An operation was classified and acted upon. Carries `deploymentDigest`. |
-| `attempt-record-0.2.0.json` | The enforcement point refused without classifying. Carries `deploymentDigest`. |
+| `decision-record-0.2.0.json` | An operation was classified and acted upon. Carries `deploymentDigest`. `declaredTier` is optional. |
+| `attempt-record-0.3.0.json` | The enforcement point refused without classifying. Carries `deploymentDigest`. `declaredTier` is present when a declaration was made and absent when it was not. |
 | `outcome-record-0.1.0.json` | What happened when an approved Tier 3 executed. No digest; joined by `correlationId`. |
 
 The qualified spec is OpenAPI plus the extensions in `../extensions.md`. It has

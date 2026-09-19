@@ -249,14 +249,30 @@ an operation in the composed description with no assignment in
 force. Both carry the declared tier where known, the deployment
 digest and the reason, and mark the applied tier undetermined.
 
+A present `declaredTier` is the declaration that was made. Absence
+is the declaration that was not. These are different facts. They
+were collapsed into one integer: 0.2.0 required 1–4, and 4 was
+written when the declaration was not known. Do not write 4 to
+mean unknown. `decision-record/0.2.0` also permits `null`; absence
+is the specified expression of unknown.
+
+| Field | Decision `0.2.0` | Attempt `0.3.0` |
+|---|---|---|
+| `declaredTier` | optional integer 1–4 (also `null`) | optional integer 1–4 |
+| present | the declaration that was made | the declaration that was made |
+| absent | the declaration that was not | the declaration that was not |
+
 **Outcome** — what happened when an approved Tier 3 executed.
 Correlation, approver, executed-at, result, whether it failed. Written
 after the fact by definition. No digest; it joins a Decision by
 `correlationId`.
 
-Their schemas are `decision-record/0.2.0`, `attempt-record/0.2.0` and
+Their schemas are `decision-record/0.2.0`, `attempt-record/0.3.0` and
 `outcome-record/0.1.0`. They are normative. They reach 1.0.0 when an
 implementation other than the reference one has been held to them.
+`attempt-record/0.2.0` required `declaredTier`. A 0.2.0 validator
+rejects a 0.3.0 Attempt that omits the field. Writers emit
+`attempt-record/0.3.0`.
 
 A record is written to a sink. What the sink must provide is C10's,
 in `spec/README.md`: the record survives failure of the component
@@ -489,6 +505,27 @@ unaltered. Withdrawing it
 because the schemas were
 closed would let the
 mechanism mint the format.
+**attempt-record moves to
+0.3.0.** declaredTier is no
+longer required. A present
+declaredTier is the
+declaration that was made.
+Absence is the declaration
+that was not. These are
+different facts. 0.2.0
+required an integer 1–4 and
+could not say unknown; 4
+was the worst value and
+was written. A 0.2.0
+validator rejects a 0.3.0
+Attempt that omits the
+field. Writers emit
+attempt-record/0.3.0.
+decision-record stays
+0.2.0: the field was
+already optional.
+outcome-record stays
+0.1.0.
 
 ---
 

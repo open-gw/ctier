@@ -385,6 +385,27 @@ unaltered. Withdrawing it
 because the schemas were
 closed would let the
 mechanism mint the format.
+attempt-record moves to
+0.3.0. declaredTier is no
+longer required. A present
+declaredTier is the
+declaration that was made.
+Absence is the declaration
+that was not. These are
+different facts. 0.2.0
+required an integer 1–4 and
+could not say unknown; 4
+was the worst value and
+was written. A 0.2.0
+validator rejects a 0.3.0
+Attempt that omits the
+field. Writers emit
+attempt-record/0.3.0.
+decision-record stays
+0.2.0: the field was
+already optional.
+outcome-record stays
+0.1.0.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. **Additive evolution.** Consumers MUST ignore fields they do not recognise.
