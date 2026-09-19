@@ -79,7 +79,11 @@ store does not loosen either half. It restates C9 as the
 identity prohibition: a Tier 4 operation does not execute
 under the agent's identity, or under one derived from it.
 The `423` field list remains one way. An implementation MUST
-state which it relies on.
+state which it relies on. It restates C11 as the honour-rule
+at the enforcement point: the agent does not choose its tier.
+Strip and integrity-protection remain named ways. An
+implementation MUST state which it relies on. The 16c bound
+is requirement 3's, not this criterion's.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

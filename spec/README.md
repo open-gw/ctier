@@ -132,7 +132,11 @@ store does not loosen either half. It restates C9 as the
 identity prohibition: a Tier 4 operation does not execute
 under the agent's identity, or under one derived from it.
 The `423` field list remains one way. An implementation MUST
-state which it relies on.
+state which it relies on. It restates C11 as the honour-rule
+at the enforcement point: the agent does not choose its tier.
+Strip and integrity-protection remain named ways. An
+implementation MUST state which it relies on. The 16c bound
+is requirement 3's, not this criterion's.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
@@ -312,6 +316,31 @@ decision.
 If the record sink is unavailable alongside the policy service, that
 window has no record. ADR-005 accepts this rather than implying a
 guarantee the design cannot make.
+
+**C11 — The agent does not choose its tier.** A tier arriving
+as an inbound client header MUST NOT be honoured. The
+enforcement point classifies from its own assignment, not
+from a value the agent set.
+
+That property may be satisfied by stripping any
+client-supplied tier at the edge before setting the
+enforcement point's own; or by integrity-protecting the
+value so a gateway-set tier is distinguishable from a
+caller-set one; or by binding the assignment at deploy time
+and never reading an inbound tier header. An implementation
+MUST state which it relies on.
+
+Honouring means treating the inbound value as the assigned
+tier. An implementation that never reads the header for
+classification still satisfies this criterion. The namespace
+strip — no agent-supplied `x-ctier-*` header reaches a
+backend — remains independently required by
+[`headers.md`](headers.md) and is not this criterion. Plugin
+order is deployment requirement 3, bounded per target, and
+is not restated here (16a, 16c).
+
+Without this, an agent declares itself Tier 1 and the model
+collapses.
 
 **C12 — No reachable operation executes without a tier assignment
 in force.** Reachable means it can arrive at the enforcement point
