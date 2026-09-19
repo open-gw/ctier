@@ -102,6 +102,9 @@ refusal.
 composed description from which the enforcement configuration
 was generated. A path reachable at the enforcement point but
 absent from that composition is outside this criterion.
+It titles C3: Unidirectionality in validation.md is the
+criterion, wording unaltered. The escalate-to field remains
+the field-level echo.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.
@@ -319,7 +322,7 @@ Absent means the default weight for the applied tier.
 
 Integer 1–4. Optional. Per-operation accumulation target. May never resolve
 below the tier already reached. That check is validator-enforced; see
-`validation.md`.
+`validation.md` (C3).
 
 ---
 

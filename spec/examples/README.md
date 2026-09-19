@@ -22,7 +22,7 @@ the corpus a second implementation of the comparison is held to.
 | `recommended.valid.yaml` | `$defs/operation` | **schema pass** — `recommended` with `x-ctier-recommended-at` |
 | `bound-comparison.yaml` | — | **runtime** — six request cases; outcome in the comment |
 | `invalid/single-target.overlay.yaml` | Overlay + extensions | violates **single-target** against `consequence-tiered-api.yaml` |
-| `invalid/unidirectionality.operation.yaml` | extensions | violates **unidirectionality** |
+| `invalid/unidirectionality.operation.yaml` | extensions | violates **C3** |
 | `invalid/bounds-coherence.operation.yaml` | extensions | violates **bounds coherence** |
 | `invalid/exclusion-exclusivity.operation.yaml` | extensions | violates **exclusion exclusivity** |
 | `invalid/criteria-incomplete.yaml` | `classification-rules/0.1.0` | **schema fail** — missing `compliance-trigger` (declaration `$defs/criteria`, not `criteriaProposal`) |

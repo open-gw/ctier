@@ -1,4 +1,4 @@
-# Violates: unidirectionality
+# Violates: C3 — unidirectionality
 # escalate-to resolves below the declared tier. Schema accepts the integers;
 # a validator with evaluation context must reject.
 operationId: listTransactions

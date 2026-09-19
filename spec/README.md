@@ -158,7 +158,9 @@ the criterion requires an undetermined refusal.
 in the composed description from which the enforcement
 configuration was generated. A path reachable at the
 enforcement point but absent from that composition is outside
-this criterion.
+this criterion. It titles C3: Unidirectionality in
+validation.md is the criterion, wording unaltered. The
+escalate-to field remains the field-level echo.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
@@ -168,6 +170,10 @@ demo, not before. Consumers MUST ignore fields they do not recognise.
 ## Response contracts
 
 These are interface behaviour, not extension keys.
+
+**C3 — Escalation is unidirectional.** `x-ctier-escalate-to`
+may never resolve below the tier already reached at that
+point in evaluation.
 
 **C5 — A withheld agent does not retry and does not stay
 engaged.** The agent's involvement with a withheld operation

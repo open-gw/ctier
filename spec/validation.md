@@ -85,7 +85,7 @@ Two consequences:
 2. The check requires computing a tier from criteria. The validator depends on
    the classification rules, not only on the schema.
 
-### Unidirectionality
+### C3 — Unidirectionality
 
 `x-ctier-escalate-to` may never resolve below the tier already reached at that
 point in evaluation. Schema cannot see the evaluation context.
