@@ -286,10 +286,23 @@ identifiers and classes the sweep used — a floor for a
 reader-complete inventory; a later reader naming another
 class raises both.
 
-**1.17.0 admits C13.** The accounting is thirteen.
-The audit of tasks 25, 26, 39 and 42 covered twelve
-criteria. C13 was not among them; its classification
-was recorded in 1.17.0, after the audit closed.
+**1.17.0 admits C13.** The accounting is thirteen —
+the adjudicated count, not the total of
+paragraphs that meet the admission rule. Five
+further paragraphs meet that rule and have no
+letter, named here as candidates under review:
+bound comparison (interpret a bound as a
+decimal); no agent-facing URL; no credential
+persistence; agent suspension is an
+authorisation concern; and the namespace
+strip in headers.md (the MUST strip, not
+requirement 3). The document does not state
+how many of the thirteen currently state a
+mechanism; seven of nine is the audit of a
+different set. The audit of tasks 25, 26, 39
+and 42 covered twelve criteria. C13 was not
+among them; its classification was recorded
+in 1.17.0, after the audit closed.
 
 ---
 

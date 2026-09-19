@@ -197,7 +197,20 @@ discipline has been in force since 1.4.0, so
 nothing an implementation must do has changed.
 A count change breaks downstream iteration. Any
 tooling that walks C1 through C12 now silently
-skips C13 and reports conformance.
+skips C13 and reports conformance. Thirteen is
+the adjudicated count, not the total of
+paragraphs that meet the admission rule. Five
+further paragraphs meet that rule and have no
+letter, named here as candidates under review:
+bound comparison (interpret a bound as a
+decimal); no agent-facing URL; no credential
+persistence; agent suspension is an
+authorisation concern; and the namespace
+strip in headers.md (the MUST strip, not
+requirement 3). The document does not state
+how many of the thirteen currently state a
+mechanism; seven of nine is the audit of a
+different set.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
