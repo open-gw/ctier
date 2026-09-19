@@ -461,10 +461,7 @@ operation was refused. These are different facts, and a ledger
 that cannot distinguish them cannot tell a provisioning defect
 from a governance outcome.
 
-**C13 — Digest discipline.** `compositionDigest` is over
-canonical JSON of the composed document (keys sorted
-lexicographically, no insignificant whitespace, UTF-8).
-That is the compose-time binding (C13).
+**C13 — Digest discipline.** Stated in `spec/validation.md`.
 
 **Excluded — `403`.** Refused at credential validation, before consequence
 evaluation. If this is reached by a live token, a scope has been over-granted.
