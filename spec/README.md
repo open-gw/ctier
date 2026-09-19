@@ -301,7 +301,28 @@ It satisfies the
 enforcement-point half. The
 authorisation server removing
 the scope remains the estate, as
-C8 already recorded.
+C8 already recorded. It rejects
+"recorded before acted on" as a
+specification requirement. C10
+already states the property: the
+decision precedes the act; the
+record MAY be written
+asynchronously and MUST be
+durable. Re-adopting "before"
+would undo 1.1.9. Both live
+targets write `[ctier-decision]`
+in the access phase before
+proxy; a ledger POST that fails
+is fail-open, and log durability
+is requirement 4. Neither writes
+a durable record before the
+operation proceeds. Adopting
+would make both non-conformant.
+The sentence is an engine local
+choice. It is to come out of
+engine documents; this
+specification does not edit
+them.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
