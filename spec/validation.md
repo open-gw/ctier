@@ -311,6 +311,8 @@ not admit a rule about the specification's own
 documents, and it does not admit a deployment condition
 the implementation cannot make unavoidable.
 
+C13 meets this rule. It is the thirteenth criterion.
+
 ---
 
 ## What a validator is

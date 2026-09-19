@@ -180,7 +180,14 @@ requirement a second implementation must satisfy,
 testable against a running deployment or a compiled
 artefact. A validator-checked rule is a requirement a
 document must satisfy. The specification mints the
-letter; an implementation proposes.
+letter; an implementation proposes. It admits C13
+as the thirteenth criterion. C13 states a
+mechanism: how the digests are computed. The
+property — an assignment cannot be applied to a
+composition other than the one it was computed
+from — is not restated here. The digest is over
+the composition; that composition is the governed
+set by definition.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. Consumers MUST ignore fields they do not recognise.
