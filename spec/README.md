@@ -1,4 +1,4 @@
-# ctier specification 1.21.0
+# ctier specification 1.22.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -427,6 +427,31 @@ deployment requirement
 6: a condition ctier
 states and does not
 enforce.
+1.22.0 splits Additive
+evolution. The document
+half is the reader of a
+document: consumers MUST
+ignore fields they do not
+recognise, in a named
+extensions object where a
+document type defines one.
+It does not take a letter.
+The request half is the
+namespace strip in
+headers.md: unknown
+x-ctier-* headers at the
+trust boundary. The two
+must not share a name. A
+reader-of-documents rule
+and an enforcement-point
+rule are not the same
+requirement — the same
+principle as deployment
+requirement 5. The
+accounting remains
+fifteen. Admission of the
+request half is on its
+own merits.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. **Additive evolution.** Consumers MUST ignore fields they do not recognise.

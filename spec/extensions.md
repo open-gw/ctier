@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.21.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.22.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -355,6 +355,31 @@ travel. That is deployment
 requirement 6: a condition
 ctier states and does not
 enforce.
+1.22.0 splits Additive
+evolution. The document
+half is the reader of a
+document: consumers MUST
+ignore fields they do not
+recognise, in a named
+extensions object where a
+document type defines one.
+It does not take a letter.
+The request half is the
+namespace strip in
+headers.md: unknown
+x-ctier-* headers at the
+trust boundary. The two
+must not share a name. A
+reader-of-documents rule
+and an enforcement-point
+rule are not the same
+requirement — the same
+principle as deployment
+requirement 5. The
+accounting remains
+fifteen. Admission of the
+request half is on its
+own merits.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

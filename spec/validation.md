@@ -6,27 +6,38 @@ will accept documents this specification rejects.
 
 ### Additive evolution
 
-Consumers MUST ignore fields they do not recognise. That is a rule about
-behaviour, not shape — the same invariant the runtime already requires of
-unknown `x-ctier-*` headers. It is what makes additive evolution safe. Adding a
-field is a minor version; removing one, or changing what an existing field
-means, is major.
+Consumers MUST ignore fields they do not recognise. That is a rule
+about the reader of a document, not about a request at the trust
+boundary. It is what makes additive evolution of these formats
+safe. Adding a field is a minor version; removing one, or changing
+what an existing field means, is major.
 
 The ledger record schemas (`decision-record`, `attempt-record`,
 `outcome-record`) set `additionalProperties: false`. An unrecognised
 field on those objects is invalid. The rule says a consumer ignores
 that field. Both cannot hold of the same object.
 
-The schemas stay closed. The rule is scoped. It applies to unknown
-`x-ctier-*` headers at the trust boundary, and to unrecognised keys
-in a named extensions object where a document type defines one. It
-does not apply to the closed property set of a ledger record. Adding
-a field to a closed record is a new record-type version. The MUST
-is unaltered. Closed schema is a mechanism for catching a misspelt
-name. Additive evolution is the property that an unrecognised
-header, or an unrecognised key in a named extensions object, does
-not fail the consumer. Withdrawing the named requirement because
-the schemas were closed would let the mechanism mint the format.
+The schemas stay closed. The rule applies to unrecognised keys
+in a named extensions object where a document type defines one.
+It does not apply to the closed property set of a ledger record.
+It does not apply to headers at the trust boundary. Adding a
+field to a closed record is a new record-type version. The MUST
+is unaltered. Closed schema is a mechanism for catching a
+misspelt name. Additive evolution is the property that an
+unrecognised key in a named extensions object does not fail
+the consumer. Withdrawing the named requirement because the
+schemas were closed would let the mechanism mint the format.
+
+### Namespace strip
+
+Unknown `x-ctier-*` headers at the trust boundary are a
+different rule. That rule is the namespace strip in
+[`headers.md`](headers.md). The two must not share a name.
+A reader-of-documents rule and an enforcement-point rule
+are not the same requirement — the same principle as
+deployment requirement 5, where a condition the
+implementation cannot make unavoidable does not share a
+name with a rule it can enforce.
 
 ---
 
@@ -559,6 +570,31 @@ deployment requirement
 6: a condition ctier
 states and does not
 enforce.
+**1.22.0 splits Additive
+evolution.** The document
+half is the reader of a
+document: consumers MUST
+ignore fields they do not
+recognise, in a named
+extensions object where a
+document type defines one.
+It does not take a letter.
+The request half is the
+namespace strip in
+headers.md: unknown
+`x-ctier-*` headers at the
+trust boundary. The two
+must not share a name. A
+reader-of-documents rule
+and an enforcement-point
+rule are not the same
+requirement — the same
+principle as deployment
+requirement 5. The
+accounting remains
+fifteen. Admission of the
+request half is on its
+own merits.
 
 ---
 
@@ -590,7 +626,10 @@ C13 meets this rule. It is the thirteenth criterion.
 C14 meets this rule. It is the fourteenth criterion.
 C15 meets this rule. It is the fifteenth criterion.
 Additive evolution does not. It is a named
-validation rule. The accounting remains fifteen.
+validation rule about the reader of a
+document. The request half — the
+namespace strip — is assessed on its own
+merits. The accounting remains fifteen.
 
 ---
 
