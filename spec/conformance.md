@@ -91,6 +91,18 @@ in the shape 38 already built: generate against
 one composition, present a different one, assert
 the assignment does not apply.
 
+**Declared evidence — C10 via gateway log.** Observed:
+a sample from a run, reproducible approximately by
+re-running under the same conditions. The runtime
+suite asserts schema-valid Decision and Attempt
+records on the gateway log of both live engines
+(Kong, APISIX). Task 35 built the Attempt path
+after a 503 that recorded nothing; task 37 added
+the record assertions. This is the first Observed
+evidence in this specification. The escalation
+bound below is Derived. C13's evidence remains
+none under Configured, Derived, and Observed.
+
 ---
 
 ## The dimensions a case declares
