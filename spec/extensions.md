@@ -536,6 +536,24 @@ It titles
 the C9 sentence that
 already defined it,
 wording unaltered.
+The response-identifier
+set is closed. An
+implementation MUST NOT
+emit a status or
+agentAction this
+specification does not
+list. A client that
+receives one it does not
+recognise MUST NOT retry
+and MUST NOT stay
+engaged. Additive
+evolution is unknown
+keys on a document; this
+is unknown values of a
+known key. Same
+question, different
+surface, different
+answer.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

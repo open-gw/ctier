@@ -615,6 +615,24 @@ It titles
 the C9 sentence that
 already defined it,
 wording unaltered.
+The response-identifier
+set is closed. An
+implementation MUST NOT
+emit a status or
+agentAction this
+specification does not
+list. A client that
+receives one it does not
+recognise MUST NOT retry
+and MUST NOT stay
+engaged. Additive
+evolution is unknown
+keys on a document; this
+is unknown values of a
+known key. Same
+question, different
+surface, different
+answer.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. **Additive evolution.** Consumers MUST ignore fields they do not recognise.
@@ -1092,6 +1110,42 @@ initiated. Not in 43's list. The specification did not mention
 it. Emitted on `unassigned` and on Kong `unauthorized`. A caller
 may conclude: this exchange is over for this step; nothing will
 happen out of band.
+
+### The set is closed
+
+This set is **closed**. An implementation MUST NOT emit a
+`status` or `agentAction` this specification does not list.
+
+When it needs a condition the set does not cover, it proposes.
+It does not mint. 47: the specification mints the format; an
+implementation proposes. `provisioning_defect` is evidence
+this happens when the rule is unstated: the engine needed a
+token for Level 2 Tier 3, the specification had none on the
+wire, and one appeared.
+
+A client that receives an identifier it does not recognise
+MUST NOT retry and MUST NOT stay engaged. That is fail-closed
+for the agent. It is not a definition of a new identifier,
+and it does not licence the implementation that emitted it.
+
+**Additive evolution is the same question on a different
+surface, and the answer is not the same.** Additive evolution
+is unknown *keys* on a document: a reader ignores them, in a
+named extensions object where a document type defines one,
+so adding a field is safe. Ledger records stay closed:
+unknown keys are invalid. Unknown `x-ctier-*` headers at the
+trust boundary are stripped (C16). Unknown values of `status`
+and `agentAction` are this rule. Ignoring an unknown status
+would be fail-open: the agent might retry a withhold or
+proceed as if a suspension were ordinary. The specification
+mints the format on every surface. The action differs:
+ignore a document key, strip a header, do not mint a
+response identifier.
+
+Unrecognised *keys* on an agent-facing body are not
+identifiers. A client ignores those keys. They must not be
+used to mint a `status` or `agentAction` the set does not
+contain.
 
 ## What ctier requires of the deployment
 
