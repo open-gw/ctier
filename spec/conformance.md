@@ -80,6 +80,24 @@ A new case shape that observed what the backend received would make
 those failures visible in the corpus. This document does not take
 that decision.
 
+**Declared evidence — C4.** Observed
+witnesses of a property that cannot
+be exhaustively observed (taxonomy
+33). Three on Kong and on APISIX,
+engine 54: a withhold is `202` with
+no `pollUrl`; Level 2 Tier 3 is
+`403` `provisioning_defect` — a
+decision, not a wait; Tier 4 is
+`423` `halt_and_hand_off` and that
+`correlationId` is not in custody
+pending. Passing does not establish
+C4. The suite cannot verify a
+negative property. It can falsify
+it. It can witness consequences
+that would be present if C4 were
+violated. These witnesses are that,
+not a verification.
+
 **Declared evidence — C13.** None. The corpus does not
 assert a digest value. Schema checks the string form,
 not the bytes. 1.4.0 recorded that the corpus is not a
@@ -90,6 +108,12 @@ The obvious next evidence is a runtime-suite case
 in the shape 38 already built: generate against
 one composition, present a different one, assert
 the assignment does not apply.
+1.23.0 leaves that none. Engine
+task 55 has not landed on
+ctier-engine origin: no
+`findings/55.md`, and no live
+C13 tests. This file does not
+anticipate a result.
 
 **Declared evidence — C14.** None. The corpus does
 not observe a persisted pending context. Schema

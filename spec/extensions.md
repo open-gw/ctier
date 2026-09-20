@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.22.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.23.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -458,6 +458,28 @@ Applied to the letters
 already minted, it newly
 excludes none. C13, C14,
 C15 and C16 stay.
+1.23.0 records C4's
+evidence. Observed
+witnesses of a property
+that cannot be
+exhaustively observed
+(taxonomy 33). Three on
+Kong and on APISIX: a
+withhold is 202 with no
+pollUrl; Level 2 Tier 3
+is 403
+provisioning_defect — a
+decision, not a wait;
+Tier 4 is 423
+halt_and_hand_off and
+that correlationId is
+not in custody pending.
+Passing does not
+establish C4. C13's
+declared evidence
+remains none. Engine 55
+has not landed on
+origin.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

@@ -1,4 +1,4 @@
-# ctier specification 1.22.0
+# ctier specification 1.23.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -530,6 +530,28 @@ Applied to the letters
 already minted, it newly
 excludes none. C13, C14,
 C15 and C16 stay.
+1.23.0 records C4's
+evidence. Observed
+witnesses of a property
+that cannot be
+exhaustively observed
+(taxonomy 33). Three on
+Kong and on APISIX: a
+withhold is 202 with no
+pollUrl; Level 2 Tier 3
+is 403
+provisioning_defect — a
+decision, not a wait;
+Tier 4 is 423
+halt_and_hand_off and
+that correlationId is
+not in custody pending.
+Passing does not
+establish C4. C13's
+declared evidence
+remains none. Engine 55
+has not landed on
+origin.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. **Additive evolution.** Consumers MUST ignore fields they do not recognise.
