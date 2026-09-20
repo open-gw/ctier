@@ -1,4 +1,4 @@
-# ctier specification 1.23.0
+# ctier specification 1.24.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -576,6 +576,29 @@ ctier-engine
 C12's live miss
 observation is that
 commit's, not 38's.
+1.24.0 inventories the
+response identifiers a
+client can observe, from
+the wire, both live
+engines, every
+disposition, every
+level that emits an
+agent-facing body. Not
+from schemas. Not from
+43's list. 43's 195
+identifiers across 33
+classes is confirmed as
+a floor: five tokens on
+the wire were not in
+that list. It records
+what this class owes: a
+definition — meaning,
+when emitted, what a
+caller may conclude —
+not a requirement
+sentence. A criterion
+owes a requirement. A
+record field owes both.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. **Additive evolution.** Consumers MUST ignore fields they do not recognise.
@@ -912,6 +935,121 @@ from a governance outcome.
 
 **Excluded — `403`.** Refused at credential validation, before consequence
 evaluation. If this is reached by a live token, a scope has been over-granted.
+
+---
+
+## Response identifiers
+
+A **response identifier** is a token a client can observe on an
+agent-facing response and reasonably branch on: the body `status`,
+the body `agentAction` (mirrored on `X-Agent-Action` when that header
+is emitted), and the HTTP status the enforcement point sets for that
+disposition.
+
+These are not ledger dispositions. `withhold` is a disposition;
+`pending_authorization` is what the agent sees. `refuse-and-suspend`
+is a disposition; `agent_suspended` is what the agent sees.
+`refuse-provisioning` is a disposition; its body token is not this
+list's to assume.
+
+Inventoried from observable responses of both live engines (Kong,
+APISIX), every disposition, every deployment level that emits an
+agent-facing body. Not from schemas. Not from 43's list. Execute
+at Levels 1 and 2 is `200` and carries no ctier body token: the
+client sees the backend.
+
+### What this class owes
+
+A criterion owes a requirement. A response identifier owes a
+definition: what it means, when it is emitted, and what a caller
+may conclude from it. Some identifiers additionally carry a
+requirement — C5: a withheld agent MUST NOT retry. The baseline
+is the definition.
+
+A record field owes both: a requirement on the writer, and a
+definition a later reader can apply. A disposition owes both. An
+escalation reason owes a definition. A measurement kind owes a
+definition. A header owes a requirement. A validation rule owes
+a requirement.
+
+43 asked whether each identifier had a requirement sentence.
+That is the right test for a criterion. It is the wrong test
+for this class. A sweep finds what its question can see.
+
+### `status`
+
+**`pending_authorization`.** The operation is withheld. Something
+is pending out of band. Emitted on `202` at Level 3, Tier 3, when
+custody accepted the persist. The specification mentioned it only
+in the example yaml, not under its own name. A caller may conclude:
+do not resubmit this step; continue the rest of the task; a human
+path exists for this operation. C5 is the requirement that
+attaches. `agentAction` is `continue_task_without_this_step`.
+
+**`agent_suspended`.** The operation is a Tier 4 refusal. The
+agent is not the client of any later execute. Emitted on `423`
+when the applied tier is 4. The specification mentioned it only
+in the example yaml, as the `status` example under
+`AgentSuspended`, not under its own name. A caller may conclude:
+halt; hand off; nothing is pending; do not seek another route to
+the same outcome. C9 is the requirement that attaches.
+`agentAction` is `halt_and_hand_off`.
+
+**`custody_unavailable`.** The persist failed. Emitted on `503`
+when a withhold cannot be recorded, both engines, Level 3.
+The specification mentioned `503` and `Retry-After` (ADR-005);
+it did not name this token. A caller may conclude: this is
+infrastructure, not a classification and not a suspension; the
+same step may be retried. `agentAction` is `retry_later`.
+`retryable` is `true`.
+
+**`unassigned`.** No assignment is in force for this path. Emitted
+on `423` when the path is outside the governed set — C12's miss,
+recorded undetermined, not a Tier 4 decision. Both live engines.
+The specification named the fact `undetermined`; it did not name
+this token. A caller may conclude: this is not a classified
+operation; it is not a suspension; do not retry this path as if
+it were withheld. `agentAction` is `halt`.
+
+**`unauthorized`.** The credential does not entitle this
+operation. Emitted on `401` by Kong when the required scope is
+absent. APISIX does not emit this token: missing scope is a
+stock-plugin `403` with no ctier body. The specification did not
+name this token. Excluded — `403` is a different fact: credential
+validation before consequence evaluation. A caller may conclude:
+this credential cannot call this operation; do not retry with
+the same token. `agentAction` is `halt`.
+
+**`provisioning_defect`.** Observed on `403` at Level 2 Tier 3,
+and on an excluded operation a live token reached, both live
+engines. Not in 43's list. The specification mentioned it only
+as a C4 witness in 1.23.0. It has no definition here.
+
+### `agentAction`
+
+**`continue_task_without_this_step`.** Continue the rest of the
+task; do not resubmit this step. Defined under its own name in
+C5's field table. Emitted on a withhold, and on the Level 2
+Tier 3 `403`. A caller may conclude: this step is finished for
+the agent; the rest of the task is not.
+
+**`halt_and_hand_off`.** Instructs the agent to halt and hand
+off. C9 names it; the sentence that defines it is untitled.
+Emitted on a Tier 4 `423`. A caller may conclude: stop; a human
+performs this; do not retry and do not seek another route.
+
+**`retry_later`.** This step may be retried later. Listed in
+[`headers.md`](headers.md) among `X-Agent-Action` values; no
+definition of its own, no title. Emitted on `503` when custody
+is unavailable. A caller may conclude: the refusal is temporary
+infrastructure; it is not a withhold and not a suspension.
+
+**`halt`.** Stop. Do not retry this step. Do not treat it as
+pending. Distinct from `halt_and_hand_off`: no handover is being
+initiated. Not in 43's list. The specification did not mention
+it. Emitted on `unassigned` and on Kong `unauthorized`. A caller
+may conclude: this exchange is over for this step; nothing will
+happen out of band.
 
 ## What ctier requires of the deployment
 

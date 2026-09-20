@@ -754,6 +754,28 @@ ctier-engine
 C12's live miss
 observation is that
 commit's, not 38's.
+**1.24.0 inventories the
+response identifiers a
+client can observe**,
+from the wire, both live
+engines. Not from
+schemas. Not from 43's
+list. 43's **195**
+identifiers across
+**33** classes is
+confirmed as a floor:
+five tokens on the wire
+were not in that list
+(`provisioning_defect`,
+`unassigned`,
+`custody_unavailable`,
+`unauthorized`, `halt`).
+A response identifier
+owes a definition, not a
+requirement sentence. A
+criterion owes a
+requirement. A record
+field owes both.
 
 ---
 

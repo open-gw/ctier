@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.23.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.24.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -504,6 +504,24 @@ ctier-engine
 C12's live miss
 observation is that
 commit's, not 38's.
+1.24.0 inventories the
+response identifiers a
+client can observe, from
+the wire, both live
+engines. Not from
+schemas. Not from 43's
+list. 43's 195
+identifiers across 33
+classes is confirmed as
+a floor: five tokens on
+the wire were not in
+that list. It records
+what this class owes: a
+definition, not a
+requirement sentence. A
+criterion owes a
+requirement. A record
+field owes both.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.

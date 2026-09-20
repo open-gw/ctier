@@ -1,6 +1,6 @@
 # Headers at the trust boundary
 
-Specification 1.23.0.
+Specification 1.24.0.
 
 These are the HTTP headers that cross into software ctier does not
 control: the backend, and the agent. Document keys in
@@ -187,7 +187,7 @@ relays `X-Correlation-Id` on 202 today.
 
 | Name | Value | Requirement |
 |---|---|---|
-| `X-Agent-Action` | Machine-readable instruction (`continue_task_without_this_step`, `halt_and_hand_off`, `retry_later`) | An implementation that satisfies C5 by the `202` mechanism MUST emit it on 202. An implementation that satisfies C9 by the `423` mechanism MUST emit it on 423. Another mechanism states itself instead. |
+| `X-Agent-Action` | Machine-readable instruction (`continue_task_without_this_step`, `halt_and_hand_off`, `retry_later`, `halt`) | An implementation that satisfies C5 by the `202` mechanism MUST emit it on 202. An implementation that satisfies C9 by the `423` mechanism MUST emit it on 423. Another mechanism states itself instead. |
 | `x-ctier-correlation-id` | Pending `correlationId` | **MUST** on 202 when that is the C5 mechanism; **MUST NOT** on a C9 response (no resume handle) |
 | `X-Ctier-Tier` | Applied tier | **MAY**. Inbound, stripped as an alias |
 
