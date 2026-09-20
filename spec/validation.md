@@ -825,6 +825,23 @@ seven remaining
 over-claims from 46 are
 each declined. The
 declined list is below.
+The accounting remains
+sixteen. That count is
+final unless something
+new arrives. The
+candidate list is
+empty. Engine documents
+must stop stating
+declined candidates as
+requirements. That is
+engine 60. This
+specification does not
+edit them. Further
+criteria arrive through
+the admission rule, not
+another audit. This
+pass closes the
+structural work.
 
 ---
 
@@ -921,6 +938,9 @@ wearing a letter.
 Additive evolution does not. It is a named
 validation rule about the reader of a
 document. The accounting is sixteen.
+That count is final unless something
+new arrives. The candidate list is
+empty.
 
 ---
 
@@ -953,6 +973,8 @@ Considered and declined: C7 "derived not generated" — C7 is the duplicate-exec
 Considered and declined: C12 "bound to the deployed interface revision" — C12 is coverage of the governed set (1.12.0); binding an assignment to a composition is C13.
 
 Considered and declined: C13's minting — 47 admitted C13 and wrote that the specification mints the letter. Historical. Closed.
+
+The candidate list is empty.
 
 ---
 

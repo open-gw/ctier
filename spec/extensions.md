@@ -571,7 +571,24 @@ seven remaining
 over-claims from 46 are
 each declined. The
 declined list is in
-validation.md.
+validation.md. The
+accounting remains
+sixteen. That count is
+final unless something
+new arrives. The
+candidate list is
+empty. Engine documents
+must stop stating
+declined candidates as
+requirements. That is
+engine 60. This
+specification does not
+edit them. Further
+criteria arrive through
+the admission rule, not
+another audit. This
+pass closes the
+structural work.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.
