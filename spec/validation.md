@@ -776,6 +776,15 @@ requirement sentence. A
 criterion owes a
 requirement. A record
 field owes both.
+It specifies
+`provisioning_defect`:
+the client-facing
+token for
+`refuse-provisioning`.
+The condition is real;
+no existing body token
+covers it. Not specified
+because it was observed.
 
 ---
 

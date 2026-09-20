@@ -599,6 +599,17 @@ not a requirement
 sentence. A criterion
 owes a requirement. A
 record field owes both.
+It specifies
+`provisioning_defect`:
+the client-facing
+token for
+`refuse-provisioning`.
+The condition is real;
+no existing body token
+covers it; the ladder
+already named the
+outcome. Not specified
+because it was observed.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. **Additive evolution.** Consumers MUST ignore fields they do not recognise.
@@ -949,8 +960,8 @@ disposition.
 These are not ledger dispositions. `withhold` is a disposition;
 `pending_authorization` is what the agent sees. `refuse-and-suspend`
 is a disposition; `agent_suspended` is what the agent sees.
-`refuse-provisioning` is a disposition; its body token is not this
-list's to assume.
+`refuse-provisioning` is a disposition; `provisioning_defect`
+is what the agent sees.
 
 Inventoried from observable responses of both live engines (Kong,
 APISIX), every disposition, every deployment level that emits an
@@ -1020,10 +1031,34 @@ validation before consequence evaluation. A caller may conclude:
 this credential cannot call this operation; do not retry with
 the same token. `agentAction` is `halt`.
 
-**`provisioning_defect`.** Observed on `403` at Level 2 Tier 3,
-and on an excluded operation a live token reached, both live
-engines. Not in 43's list. The specification mentioned it only
-as a C4 witness in 1.23.0. It has no definition here.
+**`provisioning_defect`.** A classified operation this deployment
+cannot enact. Emitted on `403` when Tier 3 is reached at Level 2
+(no custody, so no withhold), and when an excluded operation is
+reached by a live token. Both live engines. The ledger disposition
+is `refuse-provisioning` — 43 attached that name to Level 2's
+provisioning refusal; this is the body token, the same split as
+`withhold` / `pending_authorization`.
+
+No existing client-observable identifier covers the condition.
+`pending_authorization` would mean something is pending; nothing
+is. `agent_suspended` would mean a Tier 4 handover; this is not
+C9. `unassigned` is C12's miss — no assignment in force, a
+different fact, already on the wire under its own name. C12's
+English "provisioning defect" is that miss, not this token; the
+criterion is unaltered.
+
+This is a governance outcome. The ladder designed it: Level 2's
+Tier 3 is a provisioning refusal, not a withhold. It is not an
+operator error to keep off the wire. The specification mints the
+identifier; the engine proposed it. It is not specified because
+it was observed.
+
+A caller may conclude: do not resubmit this step; continue the
+rest of the task; nothing is pending; no one will approve this
+at this deployment. `agentAction` is
+`continue_task_without_this_step` — the same instruction as a
+withhold, which is why the `status` is the discriminator.
+`retryable` is `false`.
 
 ### `agentAction`
 
