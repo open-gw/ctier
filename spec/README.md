@@ -1,4 +1,4 @@
-# ctier specification 1.24.0
+# ctier specification 1.25.0
 
 The stable public surface is a set of versioned document formats and the
 transformations between them (`docs/adr/0009-the-contract-is-the-documents.md`).
@@ -633,6 +633,24 @@ known key. Same
 question, different
 surface, different
 answer.
+1.25.0 considers nine
+candidates.
+Decline-first: adopt
+only if declining would
+leave something a
+second implementation
+could get wrong with
+nothing to point at.
+True, sensible, or
+already implemented is
+not enough. The two
+remaining 1.17.0
+candidates and the
+seven remaining
+over-claims from 46 are
+each declined. The
+declined list is in
+validation.md.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. **Additive evolution.** Consumers MUST ignore fields they do not recognise.

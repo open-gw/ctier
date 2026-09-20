@@ -808,6 +808,23 @@ known key. Same
 question, different
 surface, different
 answer.
+**1.25.0 considers nine
+candidates.**
+Decline-first: adopt
+only if declining would
+leave something a
+second implementation
+could get wrong with
+nothing to point at.
+True, sensible, or
+already implemented is
+not enough. The two
+remaining 1.17.0
+candidates and the
+seven remaining
+over-claims from 46 are
+each declined. The
+declined list is below.
 
 ---
 
@@ -904,6 +921,38 @@ wearing a letter.
 Additive evolution does not. It is a named
 validation rule about the reader of a
 document. The accounting is sixteen.
+
+---
+
+## Considered and declined
+
+These were measured against the admission
+rule and the decline-first test: if this
+is not written down, what can a second
+implementation get wrong, and what would
+the author point at when it did? Nothing,
+or an existing criterion covers it, is a
+decline. A candidate returns only if
+something new arrives that the admission
+rule admits.
+
+Considered and declined: bound comparison — interpret a bound as a decimal. The named MUST and the request corpus already hold a second implementation; no C-series letter. Risk acceptable.
+
+Considered and declined: no agent-facing URL — C5 and C9 already attach the rule; the named MUST covers dispositions not yet written.
+
+Considered and declined: C1 "recorded" — C1 is no governed operation reaches its target unclassified; "recorded" was the PRD's mechanism (1.15.0). C10 is the record.
+
+Considered and declined: C2 "granted scope" — C2's subject is an operation in the composed description, not a granted scope.
+
+Considered and declined: C3 no-runtime-input / "+1 never past 4" — C3 forbids resolving below the tier already reached; the 1–4 enumeration forbids a tier past 4. The +1 cap is the generator's compiled consequence, not the criterion.
+
+Considered and declined: C4 occupancy — 1.15.0 replaced where the human sits with no decision path blocks on human input; occupancy is C5 and the suspension rule. Re-adopting occupancy undoes 1.15.0.
+
+Considered and declined: C7 "derived not generated" — C7 is the duplicate-execution property; derivation is one named way (1.8.0).
+
+Considered and declined: C12 "bound to the deployed interface revision" — C12 is coverage of the governed set (1.12.0); binding an assignment to a composition is C13.
+
+Considered and declined: C13's minting — 47 admitted C13 and wrote that the specification mints the letter. Historical. Closed.
 
 ---
 

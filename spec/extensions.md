@@ -1,6 +1,6 @@
 # ctier extension reference
 
-Specification 1.24.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
+Specification 1.25.0. Flat keys — the OpenAPI namespace format is `x-{namespace}-`,
 and a single-key overlay action targeting one operation is then trivial to write
 and to validate.
 
@@ -554,6 +554,24 @@ known key. Same
 question, different
 surface, different
 answer.
+1.25.0 considers nine
+candidates.
+Decline-first: adopt
+only if declining would
+leave something a
+second implementation
+could get wrong with
+nothing to point at.
+True, sensible, or
+already implemented is
+not enough. The two
+remaining 1.17.0
+candidates and the
+seven remaining
+over-claims from 46 are
+each declined. The
+declined list is in
+validation.md.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.
