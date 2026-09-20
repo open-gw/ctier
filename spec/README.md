@@ -567,6 +567,15 @@ does not require. C13
 and C12 are different
 facts. The clause was
 not sharpened.
+The observations in
+conformance.md are
+relative to
+ctier-engine
+455c5e66937ca3431f3859a205e8dca04f8b234f
+(origin/main after 54).
+C12's live miss
+observation is that
+commit's, not 38's.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. **Additive evolution.** Consumers MUST ignore fields they do not recognise.

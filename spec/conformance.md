@@ -12,6 +12,19 @@ stability. A format used by one implementation is a serialisation; a
 format used by two is an interface, and only the second has been tested
 as one.
 
+The observations in this file are
+relative to ctier-engine
+`455c5e66937ca3431f3859a205e8dca04f8b234f`
+(origin/main after 54). They are
+not a claim about any later
+engine commit. Without that pin
+a reader cannot tell a current
+observation from one that was
+true of an earlier tree. 46
+found C12's miss clause still
+asserted after 41 had fixed
+both live targets.
+
 ---
 
 ## What it establishes
@@ -50,21 +63,27 @@ APISIX write a schema-valid decision to the gateway log; the join
 key joins that line. Apigee remains artefact-only: generated
 `print()` is the Trace tool, not a production log.
 
-**Declared gap — C12's miss path is not a corpus case, and
-neither live target satisfies the miss clause.** The corpus
-compares classifications of operations that are in the
-composed description. It does not observe a request that
-matches no assignment. Task 38 sent one. Kong assigned
-Tier 4 through a global plugin: the path was stripped,
-classified, and recorded as a gateway-log decision. APISIX
-left the path ungoverned: 200, a forged header at echo,
-nothing stripped, classified, or recorded. Neither is the
-miss clause. The criterion requires a governed operation
-with no assignment refused and recorded with the applied
-tier undetermined. Neither live target does that. The
-engine task that follows this restatement is the
-implementation that must produce that refusal. Refusing to
-emit remains a generator behaviour, not a corpus claim.
+**Declared gap — C12's miss path is not a
+corpus case.** The corpus compares
+classifications of operations that are in
+the composed description. It does not
+observe a request that matches no
+assignment. Refusing to emit remains a
+generator behaviour, not a corpus claim.
+
+**Declared evidence — C12 miss, live.**
+Observed, relative to the engine commit
+this file names. Both live targets refuse
+a path with no assignment and record the
+applied tier undetermined (41). Task 38's
+disagreement — Kong Tier 4 via a global
+plugin, APISIX 200 ungoverned — is
+historical. A route added after
+generation can still escape; that bound
+is 41's, not a corpus claim. 46 found
+this file still asserting the 38
+disagreement after both engines had
+disproved it.
 
 **Declared gap — C7 at Level 2.** The reference does not satisfy C7
 at Level 2: inbound agent keys are stripped, and nothing is emitted
