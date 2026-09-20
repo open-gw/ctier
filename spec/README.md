@@ -552,6 +552,21 @@ declared evidence
 remains none. Engine 55
 has not landed on
 origin.
+It ran the retroactive
+check 53a asserted.
+Applied to C1 through
+C16, the clause newly
+excludes none. C8 and
+C15 are the shape the
+clause is about:
+compiled-absence is how
+C8's rejection has
+effect; C15 is the
+placement, which C8
+does not require. C13
+and C12 are different
+facts. The clause was
+not sharpened.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. **Additive evolution.** Consumers MUST ignore fields they do not recognise.

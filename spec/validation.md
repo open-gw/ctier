@@ -730,6 +730,21 @@ declared evidence
 remains none. Engine 55
 has not landed on
 origin.
+It ran the retroactive
+check 53a asserted.
+Applied to C1 through
+C16, the clause newly
+excludes none. C8 and
+C15 are the shape the
+clause is about:
+compiled-absence is how
+C8's rejection has
+effect; C15 is the
+placement, which C8
+does not require. C13
+and C12 are different
+facts. The clause was
+not sharpened.
 
 ---
 
@@ -786,6 +801,43 @@ C15. C15 stays. C16 is the namespace
 property, not C11's strip option
 wearing a letter. C11's never-read
 still satisfies C11. C16 stays.
+1.23.0 ran that check against
+C1 through C16. The clause newly
+excludes none. It was not
+sharpened.
+C8 and C15 are the shape the
+clause is about. C15's
+compiled-absence is how C8's
+rejection branch has effect in
+the reference. C15 is the
+placement, which C8 does not
+require. The engine's clause
+list states C8 as explicitly
+not the authorisation-server
+half of C15. A denylist would
+satisfy C8 and fail C15. Both
+stay.
+C13 and C12 are different
+facts. C12 is an assignment
+in force for a governed
+operation. C13 is that an
+assignment cannot be applied
+to a composition other than
+the one it was computed from.
+Wrong composition and missing
+assignment are not the same
+defect. Both stay.
+C2 and C12 remain different
+facts: undeclared inside the
+composition, versus no
+assignment in force. C1 and
+C10 share precedence and are
+not one the other's
+mechanism. C13 and C10: the
+record carries a digest; C13
+is the discipline of that
+digest, not C10's field list
+wearing a letter.
 Additive evolution does not. It is a named
 validation rule about the reader of a
 document. The accounting is sixteen.
