@@ -610,6 +610,11 @@ covers it; the ladder
 already named the
 outcome. Not specified
 because it was observed.
+It titles
+`halt_and_hand_off` on
+the C9 sentence that
+already defined it,
+wording unaltered.
 
 Pre-1.0 the ctier-authored formats may break. Freeze at v1.0.0 alongside the
 demo, not before. **Additive evolution.** Consumers MUST ignore fields they do not recognise.
@@ -803,6 +808,8 @@ identity derived from it. A service identity minted from the
 agent's token is the agent's identity in all but name. The
 human performs the operation under their own credential, and
 the agent does not.
+
+**`halt_and_hand_off`.**
 
 That property may be satisfied by status `423`,
 `AgentSuspended`, carrying `incidentId`, `autoResume: false`,
@@ -1069,7 +1076,7 @@ Tier 3 `403`. A caller may conclude: this step is finished for
 the agent; the rest of the task is not.
 
 **`halt_and_hand_off`.** Instructs the agent to halt and hand
-off. C9 names it; the sentence that defines it is untitled.
+off. C9 names it. Titled; wording unaltered.
 Emitted on a Tier 4 `423`. A caller may conclude: stop; a human
 performs this; do not retry and do not seek another route.
 

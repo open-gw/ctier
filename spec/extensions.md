@@ -531,6 +531,11 @@ The condition is real;
 no existing body token
 covers it. Not specified
 because it was observed.
+It titles
+`halt_and_hand_off` on
+the C9 sentence that
+already defined it,
+wording unaltered.
 
 The JSON Schemas in `schemas/` check shape. Semantic constraints are in
 `validation.md`.
