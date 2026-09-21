@@ -191,8 +191,8 @@ produce a governed operation.
 
 ## Status
 
-Specification **1.25.0** and reference example. A reference implementation is in
-preparation.
+Specification **1.25.0** and reference example. Reference implementation:
+[open-gw/ctier-engine](https://github.com/open-gw/ctier-engine).
 
 **Naming.** 1.0.0 — the archived specification at
 [doi.org/10.5281/zenodo.22020288](https://doi.org/10.5281/zenodo.22020288) —
