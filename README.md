@@ -194,6 +194,8 @@ produce a governed operation.
 Specification **1.25.0** and reference example. Reference implementation:
 [open-gw/ctier-engine](https://github.com/open-gw/ctier-engine).
 
+DOI 10.5281/zenodo.22020288 currently resolves to Zenodo v0.1.2, and the current specification is 1.25.0.
+
 **Naming.** 1.0.0 — the archived specification at
 [doi.org/10.5281/zenodo.22020288](https://doi.org/10.5281/zenodo.22020288) —
 used `x-consequence-*`. 1.1.0 renames those extensions to the `ctier`
