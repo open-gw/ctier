@@ -281,11 +281,6 @@ Fail-closed is C2: an operation in the composed description with no
 paths outside the composition. That guarantee does not fill in a
 half-written criteria object.
 
-Note. About the reference implementation, not a change to C2:
-`generate` does not re-validate, recorded in
-[KNOWN-ISSUES.md](https://github.com/open-gw/ctier-engine/blob/main/KNOWN-ISSUES.md)
-in open-gw/ctier-engine.
-
 ### Ledger records
 
 Three types. An attempt is not a decision with nulls. An outcome is the
